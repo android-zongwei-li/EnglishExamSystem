@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/widget_topbar" />
+
+    <include layout="@layout/widget_common_control_bar"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_exam"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            >
+
+            <TextView
+                android:id="@+id/tv_title_display"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </ScrollView>
+
+        <!-- 参考答案-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            >
+
+            <TextView
+                android:id="@+id/tv_correct_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="参考答案"
+                android:textSize="18dp"
+                />
+        </ScrollView>
+
+
+        <!--设置抽屉控件-->
+        <SlidingDrawer
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:content="@id/lv_drawer_content"
+            android:handle="@id/ll_handle"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+
+            <!-- 设置引导按钮-->
+            <LinearLayout
+                android:id="@+id/ll_handle"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_drawer_open"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/app_icon" />
+
+            </LinearLayout>
+
+            <!-- 设置抽屉显示内容-->
+            <ListView
+                android:id="@+id/lv_drawer_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_001"
+                />
+
+        </SlidingDrawer>
+
+    </RelativeLayout>
+
+    <!-- 仔细阅读的视图-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_exam"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#ffffff"
+        />
+
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toobar_main_ac"
+        android:background="#FFFFEB3B"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bov_main_nav"
+        android:layout_alignParentBottom="true"
+        custom:menu="@menu/bottom_menu"
+        custom:itemBackground="@android:color/white"
+        custom:itemIconTint="@color/color_bottom_nav"
+        custom:itemTextColor="@color/color_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_main_ac"
+        android:layout_below="@id/toobar_main_ac"
+        android:layout_above="@id/bov_main_nav"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+</RelativeLayout>

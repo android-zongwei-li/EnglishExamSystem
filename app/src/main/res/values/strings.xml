@@ -1,0 +1,25 @@
+<resources>
+    <!-- 页面的标题-->
+    <string name="app_name">英语考试系统</string>
+    <string name="title_writing">写作</string>
+    <string name="title_reading">阅读</string>
+    <string name="title_listening">听力</string>
+    <string name="title_translation">翻译</string>
+
+    <string name="year">2020</string>
+    <string name="month">02</string>
+    <string name="day">18</string>
+    <string name="cet4_distance">距离四级考试还有%1$s天</string>
+    <string name="todo">TODO</string>
+
+    <string name="uriString">%1$md</string>
+
+    <string name="dialog_exit_title">提示</string>
+    <string name="dialog_exit_content">考试在即，不学了吗</string>
+    <string name="dialog_exit_ok">休息一下</string>
+    <string name="dialog_exit_cancel">继续学习</string>
+
+    <string name="test_paper_name">试卷名称</string>
+
+
+</resources>

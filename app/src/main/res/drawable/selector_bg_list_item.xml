@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--~
+  ~ @(#)selector_bg_list_item.xml, 2014-06-04
+  ~
+  ~ Copyright 2014 Youdao, Inc. All rights reserved.
+  ~ YOUDAO PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+  -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@color/bg_item_press"/>
+    <item android:drawable="@color/bg_item"/>
+</selector>

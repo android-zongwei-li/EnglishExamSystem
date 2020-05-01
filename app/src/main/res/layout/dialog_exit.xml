@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
+        <!-- 标题 -->
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/dialog_exit_title"
+            android:textColor="@color/colorBlack"
+            android:textSize="16dp"
+            />
+        <!-- 提示文字-->
+        <TextView
+            android:id="@+id/tv_dialog_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp"
+            android:paddingTop="20dp"
+            android:text="@string/dialog_exit_content"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            />
+        <!-- 线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/exit_dialog_orange"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <!-- 确定-->
+        <Button
+            android:id="@+id/btn_determine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="@string/dialog_exit_ok"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/exit_dialog_orange"
+            />
+        <!-- 取消-->
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="@string/dialog_exit_cancel"
+            android:textSize="20dp"
+            android:textColor="@color/exit_dialog_orange"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

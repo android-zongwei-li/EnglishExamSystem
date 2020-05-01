@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/widget_topbar" />
+
+    <ScrollView
+        android:id="@+id/sv_writing_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topBar"
+        android:layout_above="@+id/tv_back_home"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <!-- 写作数据统计结果显示-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tv_actual_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="分数:"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_word_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="单词总数:"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_error_word_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="错误单词:"
+                    android:textSize="20sp"
+
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_submit_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="提交次数:"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_total_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="满分: 106.5"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_user_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="用时: "
+                        android:textSize="20sp"
+                        />
+
+                    <Chronometer
+                        android:id="@+id/result_chronometer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/tv_user_time"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!-- 作文内容-->
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="我的作文"
+                    android:textSize="25sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_writing_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="#ffffff"
+                    android:text="作文内容"
+                    android:textSize="18sp"
+                    />
+
+            </LinearLayout>
+
+            <!-- 作文点评-->
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="作文点评"
+                    android:textSize="25sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_writing_advice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="#ffffff"
+                    android:text="作文点评"
+                    android:textSize="18sp"
+                    />
+
+            </LinearLayout>
+
+            <!-- 作文点评-->
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="参考范文"
+                    android:textSize="25sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_writing_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="#ffffff"
+                    android:text="参考范文"
+                    android:textSize="18sp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_back_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="返回主页"
+        android:textSize="30dp"
+        />
+
+</RelativeLayout>

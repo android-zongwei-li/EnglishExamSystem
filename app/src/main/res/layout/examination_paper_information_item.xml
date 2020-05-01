@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <TextView
+        android:id="@+id/tv_item_test_paper_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/test_paper_name"
+        android:textSize="30dp"
+        android:gravity="center"
+        />
+
+    <!-- 显示部分题目-->
+    <TextView
+        android:id="@+id/tv_item_test_paper_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#E9E9C1"
+        android:text="题目信息"
+        android:textSize="20dp"
+        />
+
+   <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        &lt;!&ndash; 试卷&ndash;&gt;
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>-->
+
+</LinearLayout>

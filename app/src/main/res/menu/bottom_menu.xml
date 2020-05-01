@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_exam"
+        android:title="考试"
+        android:icon="@drawable/exam_icon_selector"/>
+    <item
+        android:id="@+id/nav_basic"
+        android:title="基础"
+        android:icon="@drawable/basic_icon_selector"/>
+    <item
+        android:id="@+id/nav_mine"
+        android:title="我的"
+        android:icon="@drawable/mine_icon_selector"/>
+
+</menu>

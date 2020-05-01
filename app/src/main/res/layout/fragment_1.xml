@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_in_fragment1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
+        />
+
+    <!-- 显示 距离考试时间 的控件-->
+    <LinearLayout
+        android:id="@+id/ll_display_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/banner_in_fragment1"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="距离四级考试还有"
+                android:textColor="#302A2A"
+                />
+
+            <TextView
+                android:id="@+id/tv_dayDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="#FF9800"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="天"
+                android:textColor="#302A2A"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2020.02.18"
+            />
+
+    </LinearLayout>
+
+    <!-- 水平测试模块-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/ll_words"
+        android:layout_below="@+id/ll_display_time"
+        android:background="#0500E5FF"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:paddingLeft="20dp"
+            android:text="水平测试"
+            android:gravity="center"
+            android:textColor="#131111"
+            android:textSize="20dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="看看你的英语水平在什么阶段吧"
+            android:textColor="#131111"
+            android:textSize="20dp"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="开始测试"
+            android:background="#5600E5FF"
+
+            />
+
+    </LinearLayout>
+
+    <!-- 单词模块-->
+    <LinearLayout
+        android:id="@+id/ll_words"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@+id/gv_examItem"
+        android:background="#0D00E5FF"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="单词"
+            android:textSize="30sp"
+            android:textColor="#1F1819"
+            />
+
+    </LinearLayout>
+
+    <!-- 显示考试题型控件，包括 ：听力，阅读，翻译，写作-->
+    <GridView
+        android:id="@+id/gv_examItem"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center_horizontal"
+        android:background="#1A00E5FF"
+        android:numColumns="4"
+        android:columnWidth="80dp"
+        android:stretchMode="columnWidth"
+        android:layout_above="@+id/ll_testpaper"
+        >
+
+    </GridView>
+
+    <!-- 真题模块-->
+    <LinearLayout
+        android:id="@+id/ll_testpaper"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#2600E5FF"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="真题实练"
+            android:textSize="30sp"
+            android:textColor="#1F1819"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/widget_topbar"/>
+
+    <include layout="@layout/widget_common_control_bar"/>
+
+    <TextView
+        android:id="@+id/tv_test_paper_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="试卷名称"
+        android:textSize="20sp"
+        />
+
+    <!-- 作文题目替换块-->
+    <TextView
+        android:id="@+id/tv_writing_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:text="显示题目"
+        android:textSize="16sp"
+        android:visibility="gone"
+        />
+
+    <!-- 作文题目-->
+    <TextView
+        android:id="@+id/tv_writing_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="作文题目"
+        android:textSize="16sp"
+        />
+
+    <!-- 写作框-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#ffffff"
+        >
+
+        <EditText
+            android:id="@+id/ed_writing_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="开始写作吧"
+            />
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.view.CommonControlBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/commonControlBar"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btn_chronometer"
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/chronometer"
+        android:text="开始"
+        />
+
+    <Button
+        android:id="@+id/btn_reference"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:text="参考"
+        />
+
+    <ImageView
+        android:id="@+id/iv_icon_collection"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_toLeftOf="@+id/tv_choose_word_num"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_collection_befor"
+        />
+
+    <TextView
+        android:id="@+id/tv_choose_word_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="1/3"
+        android:textSize="25dp"
+        />
+
+
+</com.example.view.CommonControlBar>

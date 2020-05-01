@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <TextView
+        android:id="@+id/tv_writing_and_translation_year"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="year"
+        android:textSize="25sp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/tv_writing_and_translation_month"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="left"
+        android:text="month"
+        android:textSize="25sp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/tv_writing_and_translation_index"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="left"
+        android:text="index"
+        android:textSize="25sp"
+        android:textColor="#000000"
+        />
+
+</LinearLayout>

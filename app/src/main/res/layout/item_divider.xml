@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--~
+  ~ @(#)item_divider.xml, 2014-06-04
+  ~
+  ~ Copyright 2014 Youdao, Inc. All rights reserved.
+  ~ YOUDAO PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+  -->
+<View
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp"
+    android:background="#e1e1e1"
+    />
+

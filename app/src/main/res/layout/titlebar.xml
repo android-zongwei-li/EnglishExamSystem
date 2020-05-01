@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.view.TitleBar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="#FFEB3B"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/ic_tab_audio"
+        />
+
+    <!-- 搜索框-->
+    <TextView
+        android:id="@+id/tv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="3dp"
+        android:drawableLeft="@drawable/tv_search_drawable_selector"
+        android:background="@drawable/tv_search_background_selector"
+        android:textColor="@drawable/tv_search_textcolor_selector"
+        android:text="搜索"
+        android:textSize="20sp"
+        android:clickable="true"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_game"
+            />
+
+        <ImageView
+            android:id="@+id/iv_game"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_alignRight="@id/tv_game"
+            android:background="@drawable/dot"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/ic_history"
+        />
+
+</com.example.view.TitleBar>

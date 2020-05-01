@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="bg_item">#fff</color>
+    <color name="bg_item_press">#f0f0f0</color>
+
+    <color name="textview_word_chinese_bg">#B0000000</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="trans">#00000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+    <color name="exit_dialog_line">#c6c6c6</color>
+    <color name="exit_dialog_blue">#037BFF</color>
+    <color name="exit_dialog_orange">#FD4A2E</color>
+    <color name="exit_dialog_gray">#8F8F8F</color>
+
+    <color name="text_finish">#57ED5D</color>
+
+    <color name="right_answer">#815CED57</color>
+    <color name="wrong_answer">#82F44336</color>
+
+</resources>

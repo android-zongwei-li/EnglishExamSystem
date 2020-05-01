@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <AutoCompleteTextView
+        android:id="@+id/actvWord"
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="10dp"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/btnSelectWord"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:text="查单词" />
+
+    <TextView
+        android:id="@+id/tv_searched_word"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:text="结果"
+        />
+
+</LinearLayout>

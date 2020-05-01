@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f1"
+    android:clipToPadding="true" >
+
+            <RelativeLayout
+                android:id="@+id/titleBar"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:background="#fff" >
+
+                <ImageView
+                    android:id="@+id/login_reback_btn"
+                    android:layout_width="28dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="9dp"
+                    android:clickable="true"
+                    android:onClick="loginBack"
+                    android:src="@drawable/backclose" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="15dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:maxWidth="260dp"
+                    android:text="单词释义"
+                    android:textColor="#808080"
+                    android:textSize="20sp" />
+
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    layout="@layout/item_divider" />
+            </RelativeLayout>
+    
+    <ScrollView
+        android:layout_below="@id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f1f1f1"
+            android:clipToPadding="true" >
+
+            <LinearLayout
+                android:id="@+id/contentContainer"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:orientation="vertical"
+                android:padding="20dp" >
+
+                <TextView
+                    android:id="@+id/input"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text=""
+                    android:textColor="#303030"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/startBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/titleBar"
+                    android:layout_margin="20dp"
+                    android:text="发音" />
+                <Button
+                    android:id="@+id/ukstartBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/titleBar"
+                    android:layout_margin="20dp"
+                    android:text="英式发音" />
+                <Button
+                    android:id="@+id/usstartBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/titleBar"
+                    android:layout_margin="20dp"
+                    android:text="美式发音" />
+                <TextView
+                    android:id="@+id/translation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text=""
+                    android:textColor="#303030"
+                    android:textSize="16sp" />
+                <Button
+                    android:id="@+id/startBtn1"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/titleBar"
+                    android:layout_margin="20dp"
+                    android:text="翻译结果发音" />
+                <TextView
+                    android:id="@+id/spell"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text=""
+                    android:textColor="#303030"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/ukSpell"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text=""
+                    android:textColor="#303030"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/usSpell"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text=""
+                    android:textColor="#303030"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/means"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text=""
+                    android:textColor="#303030"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/webmeans"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text=""
+                    android:textColor="#303030"
+                    android:textSize="16sp" />
+                
+                   <TextView
+                    android:id="@+id/moreBtn"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="left|top"
+                    android:text="查看更多释义"
+                    android:textColor="#3399ff"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
