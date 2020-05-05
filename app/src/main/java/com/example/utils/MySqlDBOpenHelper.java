@@ -13,9 +13,9 @@ public class MySqlDBOpenHelper {
     // 遇到的问题：https://blog.csdn.net/qq_36478274/article/details/105156418
     private static String ip = "10.0.2.2";
     //加入utf-8是为了后面往表中输入中文，表中不会出现乱码的情况
-    private static String url = "jdbc:mysql://"+ip+":3307/"+dataBase+"?characterEncoding=utf-8";
-    private static String user = "root";//用户名
-    private static String password = "lzw893846649";//密码
+    private static String url = "jdbc:mysql://"+ip+":3306/"+dataBase+"?characterEncoding=utf-8";
+    private static String user = "user";//用户名
+    private static String password = "1234";//密码
 
     /*
      * 连接数据库

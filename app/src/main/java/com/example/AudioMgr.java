@@ -4,7 +4,7 @@
  * Copyright 2015 Yodao, Inc. All rights reserved.
  * YODAO PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
-package com;
+package com.example;
 
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;

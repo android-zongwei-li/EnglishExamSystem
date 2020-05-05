@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.adapter;
+package com.example.adapter;
 
 import com.youdao.sdk.ydtranslate.Translate;
 import com.youdao.sdk.ydtranslate.WebExplain;

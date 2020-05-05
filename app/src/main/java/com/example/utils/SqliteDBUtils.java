@@ -25,9 +25,9 @@ import java.io.ObjectOutputStream;
  */
 public class SqliteDBUtils {
     //数据库存储路径
-    String filePath = "data/data/com.example.myapplication/english_exam_system_sqlite.db";
+    private String filePath = "data/data/com.example.myapplication/english_exam_system_sqlite.db";
     //数据库存放的文件夹 data/data/com.example.myapplication 下面
-    String pathStr = "data/data/com.example.myapplication";
+    private String pathStr = "data/data/com.example.myapplication";
 
     SQLiteDatabase database;
     public  SQLiteDatabase openDatabase(Context context){

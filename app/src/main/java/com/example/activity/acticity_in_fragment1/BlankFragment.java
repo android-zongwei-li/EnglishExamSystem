@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.activity.acticity_in_fragment1.reading.ChooseWordActivity;
+import com.example.activity.acticity_in_fragment1.reading.ReadingExamActivity;
 import com.example.myapplication.R;
 import com.example.utils.testPaperUtils.TestPaperFactory;
 import com.example.utils.testPaperUtils.TestPaperFromWord;
@@ -85,33 +85,25 @@ public class BlankFragment extends Fragment {
             @Override
             public View getView(final int position, View convertView, ViewGroup viewGroup) {
                 View view;
-                /**对ListView的优化，convertView为空时，创建一个新视图；
-                 * convertView不为空时，代表它是滚出,
-                 * 放入Recycler中的视图,若需要用到其他layout，
-                 * 则用inflate(),同一视图，用findViewBy()
-                 * **/
-                if(convertView == null )
-                {
+                if(convertView == null ) {
                     LayoutInflater inflater = BlankFragment.this.getLayoutInflater();
                     view = inflater.inflate(R.layout.examination_paper_information_item,null);
-                    //view = View.inflate(getBaseContext(),R.layout.item,null);
                 }
-                else
-                {
+                else {
                     view = convertView;
                 }
 
                 final TestPaperFromWord.TestPaperInfo info = allTestPaperInfo.get(position);
 
                 tv_test_paper_name = view.findViewById(R.id.tv_item_test_paper_name);
-                tv_test_paper_name.setText(info.getTestPaperName());
+                tv_test_paper_name.setText(info.getTestPaperName().trim());
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), ChooseWordActivity.class);
-                        intent.putExtra(ChooseWordActivity.TESTPAPER_INDEX,position);//告诉下一个页面是第几套试卷
-                        intent.putExtra(ChooseWordActivity.QUESTION_TYPE,index);//是什么题型
+                        Intent intent = new Intent(getActivity(), ReadingExamActivity.class);
+                        intent.putExtra(ReadingExamActivity.TEST_PAPER_INDEX,position);//告诉下一个页面是第几套试卷
+                        intent.putExtra(ReadingExamActivity.QUESTION_TYPE,index);//是什么题型
 
                         startActivity(intent);
                     }

@@ -33,7 +33,7 @@
         android:id="@+id/iv_icon_collection"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_toLeftOf="@+id/tv_choose_word_num"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:src="@drawable/icon_collection_befor"
         />
@@ -47,7 +47,7 @@
         android:layout_centerVertical="true"
         android:text="1/3"
         android:textSize="25dp"
+        android:visibility="gone"
         />
-
 
 </com.example.view.CommonControlBar>

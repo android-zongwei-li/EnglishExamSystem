@@ -17,8 +17,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.AudioMgr;
-import com.adapter.TranslateData;
+import com.example.adapter.TranslateData;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.myapplication.R;
 import com.example.utils.ToastUtils;

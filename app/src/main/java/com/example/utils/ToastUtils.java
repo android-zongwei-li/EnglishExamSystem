@@ -9,7 +9,7 @@ package com.example.utils;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.MyApplication;
+import com.example.MyApplication;
 
 public class ToastUtils {
 

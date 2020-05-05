@@ -3,7 +3,7 @@
  *                           reserved. YODAO PROPRIETARY/CONFIDENTIAL. Use is
  *                           subject to license terms.
  */
-package com;
+package com.example;
 
 import android.media.MediaPlayer;
 

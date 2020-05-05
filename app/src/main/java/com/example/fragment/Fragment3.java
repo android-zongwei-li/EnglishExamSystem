@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.activity.activity_in_fragment3.CollectionActivity;
 import com.example.activity.activity_in_fragment3.LoginActivity;
 import com.example.myapplication.R;
 
@@ -50,7 +51,7 @@ public class Fragment3 extends Fragment {
         btnCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),CollectionActivity.class);
+                Intent intent = new Intent(getActivity(), CollectionActivity.class);
                 startActivity(intent);
             }
         });

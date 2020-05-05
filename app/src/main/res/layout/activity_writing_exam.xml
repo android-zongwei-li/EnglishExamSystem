@@ -19,7 +19,7 @@
 
     <!-- 作文题目替换块-->
     <TextView
-        android:id="@+id/tv_writing_set"
+        android:id="@+id/tv_replace_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -32,7 +32,7 @@
 
     <!-- 作文题目-->
     <TextView
-        android:id="@+id/tv_writing_title"
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
@@ -53,7 +53,7 @@
         >
 
         <EditText
-            android:id="@+id/ed_writing_content"
+            android:id="@+id/ed_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"

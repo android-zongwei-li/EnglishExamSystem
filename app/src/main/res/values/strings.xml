@@ -5,6 +5,14 @@
     <string name="title_reading">阅读</string>
     <string name="title_listening">听力</string>
     <string name="title_translation">翻译</string>
+    <string name="title_writing_result">写作详情</string>
+    <string name="title_translation_result">翻译详情</string>
+    <string name="listening_short_news">短篇新闻</string>
+    <string name="listening_conversation">情景对话</string>
+    <string name="listening_passages">听力文章</string>
+    <string name="reading_choose_word">选词填空</string>
+    <string name="reading_quickly">快速阅读</string>
+    <string name="reading_carefully">仔细阅读</string>
 
     <string name="year">2020</string>
     <string name="month">02</string>
@@ -21,5 +29,23 @@
 
     <string name="test_paper_name">试卷名称</string>
 
+    <!-- 考试结果涉及到的的字符串-->
+    <string name="score">分数:</string>
+    <string name="total_words">单词总数:</string>
+    <string name="wrong_words">错误单词:</string>
+    <string name="submit_num">提交次数:</string>
+    <string name="total_score">满分: 106.5</string>
+    <string name="time_used">用时:</string>
+    <string name="my_writing">我的作文</string>
+    <string name="writing_comments">作文点评:</string>
+    <string name="writing_reference">参考范文:</string>
+    <string name="my_translation">我的翻译</string>
+    <string name="translation_comment">翻译点评</string>
+    <string name="translation_reference">翻译参考</string>
+    <string name="content">内容</string>
+    <string name="comments">点评</string>
+    <string name="reference">参考</string>
+
+    <string name="back_home">返回主页</string>
 
 </resources>

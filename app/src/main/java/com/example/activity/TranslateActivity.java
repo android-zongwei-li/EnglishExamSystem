@@ -14,8 +14,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.adapter.TranslateAdapter;
-import com.adapter.TranslateData;
+import com.example.adapter.TranslateAdapter;
+import com.example.adapter.TranslateData;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.myapplication.R;
 import com.example.utils.SwListDialog;

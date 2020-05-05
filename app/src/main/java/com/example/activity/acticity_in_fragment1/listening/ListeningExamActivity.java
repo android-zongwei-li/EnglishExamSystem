@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,8 +21,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.activity.acticity_in_fragment1.reading.ChooseWordActivity;
+import com.example.activity.acticity_in_fragment1.reading.ReadingExamActivity;
 import com.example.activity.base.BaseAppCompatActivity;
+import com.example.beans.CollectedListening;
+import com.example.beans.CollectionBank;
 import com.example.beans.Question;
 import com.example.myapplication.R;
 import com.example.utils.LogUtils;
@@ -34,11 +37,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListeningExamActivity extends BaseAppCompatActivity {
-    private static final String TAG = "ListeningExamActivity";
     public static final String QUESTION_TYPE = "questionType";  // 题型
-    public static final String TESTPAPER_INDEX = "testPaperIndex";  //试卷序号
+    public static final String TEST_PAPER_INDEX = "testPaperIndex";  //试卷序号
 
-    private static final String titles[] = {"短篇新闻","情景对话","听力文章"};
+    private static final int[] titles = {R.string.listening_short_news,
+            R.string.listening_conversation,R.string.listening_passages};
 
     // 选词填空：index == 0
     // 快速阅读：index == 1
@@ -63,6 +66,10 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
     String title;
     private List<Question> listeningQuestions; // 听力 25 道，8篇
     private List<Question> questionList;
+
+    CollectedListening listening = null;
+    // 记录是否已经收藏
+    private boolean isCollected = false;
 
     private Handler handler = new Handler(){
         @Override
@@ -196,6 +203,27 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
 
         //
         controlBar = findViewById(R.id.commonControlBar);
+        final ImageView ivIConCollection = controlBar.findViewById(R.id.iv_icon_collection);
+        ivIConCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CollectionBank collectionBank = CollectionBank.getInstance();
+                if (!isCollected){    //默认为false，为收藏
+                    isCollected = true;
+                    ivIConCollection.setImageResource(R.drawable.icon_collection_after);
+                    listening = new CollectedListening(testPaperIndex,index);
+                    collectionBank.add(listening);
+                    Toast.makeText(ListeningExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
+                    LogUtils.i("collectedListening",collectionBank.getCollectedListenings().toString());
+                }else {
+                    isCollected = false;
+                    ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
+                    collectionBank.remove(listening);
+                    Toast.makeText(ListeningExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
+                    LogUtils.i("collectedListening",collectionBank.getCollectedListenings().toString());
+                }
+            }
+        });
 
         //
         lv_listening = findViewById(R.id.lv_listening);
@@ -267,8 +295,8 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
     private void initData(){
         // 获取 题目信息：题型、第几套
         Intent intent = getIntent();
-        index = intent.getIntExtra(ChooseWordActivity.QUESTION_TYPE,0);
-        testPaperIndex = intent.getIntExtra(ChooseWordActivity.TESTPAPER_INDEX,0);
+        index = intent.getIntExtra(ReadingExamActivity.QUESTION_TYPE,0);
+        testPaperIndex = intent.getIntExtra(ReadingExamActivity.TEST_PAPER_INDEX,0);
         Toast.makeText(this,testPaperIndex+"",Toast.LENGTH_LONG).show();
 
         TestPaperFactory testPaperFactory = TestPaperFactory.getInstance();

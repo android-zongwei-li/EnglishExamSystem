@@ -15,7 +15,6 @@ import com.google.android.material.tabs.TabLayout;
 
 
 public class ListeningActivity extends BaseAppCompatActivity {
-    private static final String TAG = "ListeningActivity";
     private static final String TITLE = "听力";
 
     private String[] titles = {"短篇新闻","情景对话","听力文章"};

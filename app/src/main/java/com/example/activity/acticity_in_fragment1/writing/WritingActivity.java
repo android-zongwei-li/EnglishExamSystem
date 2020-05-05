@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.example.activity.acticity_in_fragment1.WritingAndTranslationExamActivity;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.beans.MySqliteManager;
 import com.example.beans.Writing;
@@ -20,7 +21,6 @@ import com.example.myapplication.R;
 import com.example.utils.SqliteDBUtils;
 import com.example.view.topbar.TopBar;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class WritingActivity extends BaseAppCompatActivity {
@@ -95,14 +95,12 @@ public class WritingActivity extends BaseAppCompatActivity {
                  * 放入Recycler中的视图,若需要用到其他layout，
                  * 则用inflate(),同一视图，用findViewBy()
                  * **/
-                if(convertView == null )
-                {
+                if(convertView == null ) {
                     LayoutInflater inflater = WritingActivity.this.getLayoutInflater();
                     view = inflater.inflate(R.layout.writing_list_item,null);
                     //view = View.inflate(getBaseContext(),R.layout.item,null);
                 }
-                else
-                {
+                else {
                     view = convertView;
                 }
 
@@ -121,16 +119,17 @@ public class WritingActivity extends BaseAppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         //这段代码还可以优化一下
-                        Intent intent = new Intent(WritingActivity.this, WritingExamActiviy.class);
+                        Intent intent = new Intent(WritingActivity.this,
+                                WritingAndTranslationExamActivity.class);
 
-                        intent.putExtra("writingBean", (Serializable) writing);
-
-                        intent.putExtra(WritingExamActiviy.QUESTION, writing.getQuestion());
-                        intent.putExtra(WritingExamActiviy.ANSWER, writing.getAnswer());
-                        intent.putExtra(WritingExamActiviy.YEAR, writing.getYear());
-                        intent.putExtra(WritingExamActiviy.MONTH, writing.getMonth());
-                        intent.putExtra(WritingExamActiviy.INDEX, writing.getIndex());
-                        intent.putExtra(WritingExamActiviy.QUESTIONID, writing.getQuestionID());
+                        intent.putExtra("writingBean", writing);
+                        intent.putExtra(WritingAndTranslationExamActivity.TYPE,"writing");
+                        intent.putExtra(WritingAndTranslationExamActivity.QUESTION, writing.getQuestion());
+                        intent.putExtra(WritingAndTranslationExamActivity.ANSWER, writing.getAnswer());
+                        intent.putExtra(WritingAndTranslationExamActivity.YEAR, writing.getYear());
+                        intent.putExtra(WritingAndTranslationExamActivity.MONTH, writing.getMonth());
+                        intent.putExtra(WritingAndTranslationExamActivity.INDEX, writing.getIndex());
+                        intent.putExtra(WritingAndTranslationExamActivity.QUESTIONID, writing.getQuestionID());
 
                         startActivity(intent);
                     }

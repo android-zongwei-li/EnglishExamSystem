@@ -73,15 +73,9 @@ public class ListeningFragment extends Fragment {
             @Override
             public View getView(final int position, View convertView, ViewGroup viewGroup) {
                 View view;
-                /**对ListView的优化，convertView为空时，创建一个新视图；
-                 * convertView不为空时，代表它是滚出,
-                 * 放入Recycler中的视图,若需要用到其他layout，
-                 * 则用inflate(),同一视图，用findViewBy()
-                 * **/
                 if(convertView == null ) {
                     LayoutInflater inflater = ListeningFragment.this.getLayoutInflater();
                     view = inflater.inflate(R.layout.examination_paper_information_item,null);
-                    //view = View.inflate(getBaseContext(),R.layout.item,null);
                 } else {
                     view = convertView;
                 }
@@ -89,13 +83,13 @@ public class ListeningFragment extends Fragment {
                 final TestPaperFromWord.TestPaperInfo testPaper = allTestPaperInfo.get(position);
 
                 TextView tv_test_paper_name = view.findViewById(R.id.tv_item_test_paper_name);
-                tv_test_paper_name.setText(testPaper.getTestPaperName());
+                tv_test_paper_name.setText(testPaper.getTestPaperName().trim());
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(),ListeningExamActivity.class);
-                        intent.putExtra(ListeningExamActivity.TESTPAPER_INDEX,position);//告诉下一个页面是第几套试卷
+                        intent.putExtra(ListeningExamActivity.TEST_PAPER_INDEX,position);//告诉下一个页面是第几套试卷
                         intent.putExtra(ListeningExamActivity.QUESTION_TYPE,index);//是什么题型
 
                         startActivity(intent);

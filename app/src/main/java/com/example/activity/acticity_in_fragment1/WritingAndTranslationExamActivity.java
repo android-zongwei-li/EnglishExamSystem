@@ -1,4 +1,4 @@
-package com.example.activity.acticity_in_fragment1.writing;
+package com.example.activity.acticity_in_fragment1;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,21 +13,20 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.activity.acticity_in_fragment1.ResultActivity;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.beans.CollectionBank;
 import com.example.beans.MySqliteManager;
+import com.example.beans.Translation;
 import com.example.beans.Writing;
 import com.example.myapplication.R;
 import com.example.utils.LogUtils;
 import com.example.view.CommonControlBar;
 import com.example.view.topbar.TopBar;
 
-public class WritingExamActiviy extends BaseAppCompatActivity {
-
-    private final String title = "写作";
+public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
 
     // 需要上一个页面传递过来的数据
+    public static final String TYPE = "type";  //记录是翻译还是写作
     public static final String QUESTION = MySqliteManager.Writing.QUESTION;//作文题目
     public static final String ANSWER = MySqliteManager.Writing.ANSWER;//范文，要传递给下一个页面
     public static final String YEAR = MySqliteManager.Writing.YEAR;// 年份
@@ -36,8 +35,10 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
     public static final String QUESTIONID = MySqliteManager.Writing.QUESTIONID;// 这个数据的标识，收藏需要用到
 
     // 作文题目
+    private String mType;//题型
     private Writing mWriting;
-    private String writingTitle;
+    private Translation mTranslation;
+    private String title;
     private String answer;    // 范文
     private String year;
     private String month;
@@ -50,19 +51,19 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
     int errorWords;//错误单词数
     int submitNum;//提交次数
 
-    TopBar topBar;
-    CommonControlBar commonControlBar;
     Chronometer chronometer;
     TextView tv_testpaper_name;//试卷名称
-    TextView tv_writing_title;//作文题目
-    EditText ed_writing_content;
-    TextView getTv_writing_title_set;
+    TextView tv_title;//作文题目
+    EditText ed_content;
+    TextView tvReplaceTitle;
 
     // 输入的作文
     String content;
 
     // 记录是否已经收藏
     private boolean isCollected = false;
+
+    private int title_type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,21 +78,29 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
     private void initData() {
 
         Intent intent = getIntent();
-        writingTitle = intent.getStringExtra(QUESTION);
+        title = intent.getStringExtra(QUESTION);
         answer = intent.getStringExtra(ANSWER);
         year = intent.getStringExtra(YEAR);
         month = intent.getStringExtra(MONTH);
         index = intent.getStringExtra(INDEX);
         questionID = intent.getStringExtra(QUESTIONID);
+        mType = intent.getStringExtra(TYPE);
 
-        mWriting = (Writing) intent.getSerializableExtra("writingBean");
+        if ( mType.equals("translation") ){
+            mTranslation = (Translation) intent.getSerializableExtra("transBean");
+            title_type = R.string.title_translation;
+        }else {
+            mWriting = (Writing) intent.getSerializableExtra("writingBean");
+            title_type = R.string.title_writing;
+        }
+
     }
 
     private void initView() {
 
         // 初始化 topbar
-        topBar = findViewById(R.id.topBar);
-        topBar.setTitle(title);
+        TopBar topBar = findViewById(R.id.topBar);
+        topBar.setTitle(title_type);
         topBar.setOnTopBarClickListener(new TopBar.topbarClickListener() {
             @Override
             public void leftClick() {
@@ -101,13 +110,14 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
             // 交卷按钮的事件处理
             @Override
             public void rightClick() {
-                content = ed_writing_content.getText().toString().trim();
+                content = ed_content.getText().toString().trim();
                 if (content.length() == 0){
                     Toast.makeText(getBaseContext(),"无内容，请完成作文",Toast.LENGTH_SHORT).show();
                 }else{
                     // 作文批阅
                     getWritingResult(content);
                     Intent intent = new Intent(getBaseContext(), ResultActivity.class);
+                    intent.putExtra(ResultActivity.TYPE,mType);
                     intent.putExtra(ResultActivity.SCORE,score);
                     intent.putExtra(ResultActivity.WORDSNUM,wd);
                     intent.putExtra(ResultActivity.WORDSERRORNUM,errorWords);
@@ -122,7 +132,7 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
         });
 
         //
-        commonControlBar = findViewById(R.id.commonControlBar);
+        CommonControlBar commonControlBar = findViewById(R.id.commonControlBar);
         chronometer = commonControlBar.findViewById(R.id.chronometer);
         final ImageView ivIConCollection = commonControlBar.findViewById(R.id.iv_icon_collection);
         ivIConCollection.setOnClickListener(new View.OnClickListener() {
@@ -132,15 +142,25 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
                 if (!isCollected){    //默认为false，为收藏
                     isCollected = true;
                     ivIConCollection.setImageResource(R.drawable.icon_collection_after);
-                    collectionBank.add(mWriting);
-                    Toast.makeText(WritingExamActiviy.this,"已收藏",Toast.LENGTH_SHORT).show();
-                    LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
+                    if (mType.equals("translation")) {
+                        collectionBank.add(mTranslation);
+                        LogUtils.i("collectedTranslation",collectionBank.getCollectedTranslations().toString());
+                    } else {
+                        collectionBank.add(mWriting);
+                        LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
+                    }
+                    Toast.makeText(WritingAndTranslationExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
                 }else {
                     isCollected = false;
                     ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
-                    collectionBank.remove(mWriting);
-                    Toast.makeText(WritingExamActiviy.this,"取消收藏",Toast.LENGTH_SHORT).show();
-                    LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
+                    if (mType.equals("translation")) {
+                        collectionBank.remove(mTranslation);
+                        LogUtils.i("collectedTranslation",collectionBank.getCollectedTranslations().toString());
+                    } else {
+                        collectionBank.remove(mWriting);
+                        LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
+                    }
+                    Toast.makeText(WritingAndTranslationExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -150,29 +170,29 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
         tv_testpaper_name.setText(year+"年"+month+"月 第"+index+"套");
 
         // 题目设置
-        tv_writing_title = findViewById(R.id.tv_writing_title);
-        tv_writing_title.setText(writingTitle);
+        tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(title);
 
         //用于替换题目
-        getTv_writing_title_set = findViewById(R.id.tv_writing_set);
-        getTv_writing_title_set.setOnClickListener(new View.OnClickListener() {
+        tvReplaceTitle = findViewById(R.id.tv_replace_title);
+        tvReplaceTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTv_writing_title_set.setVisibility(View.GONE);
-                tv_writing_title.setVisibility(View.VISIBLE);
+                tvReplaceTitle.setVisibility(View.GONE);
+                tv_title.setVisibility(View.VISIBLE);
             }
         });
 
         // 写作模块
-        ed_writing_content = findViewById(R.id.ed_writing_content);
-        ed_writing_content.setOnClickListener(new View.OnClickListener() {
+        ed_content = findViewById(R.id.ed_content);
+        ed_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               tv_writing_title.setVisibility(View.GONE);
-               getTv_writing_title_set.setVisibility(View.VISIBLE);
+               tv_title.setVisibility(View.GONE);
+               tvReplaceTitle.setVisibility(View.VISIBLE);
             }
         });
-        ed_writing_content.addTextChangedListener(new TextWatcher() {
+        ed_content.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -180,11 +200,11 @@ public class WritingExamActiviy extends BaseAppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tv_writing_title.setVisibility(View.GONE);
-                getTv_writing_title_set.setVisibility(View.VISIBLE);
+                tv_title.setVisibility(View.GONE);
+                tvReplaceTitle.setVisibility(View.VISIBLE);
                 if (s.length() == 0){
-                    getTv_writing_title_set.setVisibility(View.GONE);
-                    tv_writing_title.setVisibility(View.VISIBLE);
+                    tvReplaceTitle.setVisibility(View.GONE);
+                    tv_title.setVisibility(View.VISIBLE);
                 }
             }
 

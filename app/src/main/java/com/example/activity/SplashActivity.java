@@ -1,4 +1,4 @@
-package com.example.launchguide.splash;
+package com.example.activity;
 
 import android.app.Activity;
 import android.content.Intent;

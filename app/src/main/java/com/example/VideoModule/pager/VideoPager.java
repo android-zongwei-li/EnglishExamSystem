@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.adapter.VideoPagerAdapter;
+import com.example.adapter.VideoPagerAdapter;
 import com.example.VideoModule.base.BasePager;
 import com.example.VideoModule.videoactivity.SystemVideoPlayer;
 import com.example.beans.MediaItem;

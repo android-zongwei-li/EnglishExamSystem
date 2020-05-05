@@ -22,7 +22,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name="com.example.activity.acticity_in_fragment1.WebViewActivity"></activity>
         <!-- Splash 引导页 -->
-        <activity android:name="com.example.launchguide.splash.SplashActivity">
+        <activity android:name="com.example.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,8 +40,8 @@
         <activity android:name="com.example.VideoModule.VideoActivity" />
         <activity android:name="com.example.VideoModule.videoactivity.SystemVideoPlayer" /> <!-- Fragment3 : 登录 页面 -->
         <activity android:name="com.example.activity.activity_in_fragment3.LoginActivity" /> <!-- 选词填空 页面 -->
-        <activity android:name="com.example.activity.acticity_in_fragment1.reading.ChooseWordActivity" /> <!-- 写作页面 -->
-        <activity android:name="com.example.activity.acticity_in_fragment1.writing.WritingExamActiviy" /> <!-- 成绩显示页面 -->
+        <activity android:name="com.example.activity.acticity_in_fragment1.reading.ReadingExamActivity" /> <!-- 写作页面 -->
+        <activity android:name="com.example.activity.acticity_in_fragment1.WritingAndTranslationExamActivity" /> <!-- 成绩显示页面 -->
         <activity android:name="com.example.activity.acticity_in_fragment1.ResultActivity" /> <!-- 单词详情页面 -->
         <activity android:name="com.example.activity.acticity_in_fragment1.WordsActivity" />
         <activity android:name="com.example.activity.TranslateActivity" />
@@ -51,7 +51,7 @@
         <activity android:name="com.example.activity.acticity_in_fragment1.words.StudyWordsActivity" />
         <activity android:name="com.example.activity.acticity_in_fragment1.listening.ListeningExamActivity" />
 
-        <activity android:name="com.example.fragment.CollectionActivity"/>
+        <activity android:name="com.example.activity.activity_in_fragment3.CollectionActivity"/>
         <activity android:name="com.example.activity.activity_in_fragment3.CollectionDetailsActivity"/>
 
         <service android:name="com.example.service.AudioService" />

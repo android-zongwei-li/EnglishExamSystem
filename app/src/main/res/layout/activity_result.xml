@@ -30,7 +30,7 @@
                     android:id="@+id/tv_actual_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="分数:"
+                    android:text="@string/score"
                     android:textSize="20sp"
                     android:gravity="center"
                     />
@@ -39,7 +39,7 @@
                     android:id="@+id/tv_word_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="单词总数:"
+                    android:text="@string/total_words"
                     android:textSize="20sp"
                     android:gravity="center"
                     />
@@ -48,7 +48,7 @@
                     android:id="@+id/tv_error_word_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="错误单词:"
+                    android:text="@string/wrong_words"
                     android:textSize="20sp"
 
                     android:gravity="center"
@@ -58,7 +58,7 @@
                     android:id="@+id/tv_submit_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="提交次数:"
+                    android:text="@string/submit_num"
                     android:textSize="20sp"
                     android:gravity="center"
                     />
@@ -67,7 +67,7 @@
                     android:id="@+id/tv_total_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="满分: 106.5"
+                    android:text="@string/total_score"
                     android:textSize="20sp"
                     android:gravity="center"
                     />
@@ -82,7 +82,7 @@
                         android:id="@+id/tv_user_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="用时: "
+                        android:text="@string/time_used"
                         android:textSize="20sp"
                         />
 
@@ -97,7 +97,7 @@
 
             </LinearLayout>
 
-            <!-- 作文内容-->
+            <!-- 内容-->
             <LinearLayout
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
@@ -106,10 +106,11 @@
                 >
 
                 <TextView
+                    android:id="@+id/tv_result_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="我的作文"
+                    android:text="@string/my_writing"
                     android:textSize="25sp"
                     />
 
@@ -120,13 +121,13 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:background="#ffffff"
-                    android:text="作文内容"
+                    android:text="@string/content"
                     android:textSize="18sp"
                     />
 
             </LinearLayout>
 
-            <!-- 作文点评-->
+            <!-- 点评-->
             <LinearLayout
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
@@ -135,10 +136,11 @@
                 >
 
                 <TextView
+                    android:id="@+id/tv_result_comments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="作文点评"
+                    android:text="@string/writing_comments"
                     android:textSize="25sp"
                     />
 
@@ -149,13 +151,13 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:background="#ffffff"
-                    android:text="作文点评"
+                    android:text="@string/comments"
                     android:textSize="18sp"
                     />
 
             </LinearLayout>
 
-            <!-- 作文点评-->
+            <!-- 参考-->
             <LinearLayout
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
@@ -164,10 +166,11 @@
                 >
 
                 <TextView
+                    android:id="@+id/tv_result_reference"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
-                    android:text="参考范文"
+                    android:text="@string/writing_reference"
                     android:textSize="25sp"
                     />
 
@@ -178,7 +181,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:background="#ffffff"
-                    android:text="参考范文"
+                    android:text="@string/reference"
                     android:textSize="18sp"
                     />
 
@@ -193,10 +196,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-5dp"
         android:background="#ffffff"
         android:gravity="center"
-        android:text="返回主页"
-        android:textSize="30dp"
-        />
+        android:text="@string/back_home"
+        android:textSize="30dp" />
 
 </RelativeLayout>

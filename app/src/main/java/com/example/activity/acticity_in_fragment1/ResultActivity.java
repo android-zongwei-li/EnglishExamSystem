@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.beans.MySqliteManager;
+import com.example.beans.Translation;
+import com.example.beans.Writing;
 import com.example.myapplication.R;
 import com.example.view.topbar.TopBar;
 
@@ -16,6 +18,7 @@ import com.example.view.topbar.TopBar;
 public class ResultActivity extends BaseAppCompatActivity {
 
     // 需要上一个页面传递过来的数据
+    public static final String TYPE = "type";  //记录是翻译还是写作
     public static final String SCORE = "score";//分数
     public static final String WORDSNUM = "wordsNum";//单词数
     public static final String WORDSERRORNUM = "wordsErrorNum";//错误单词数
@@ -24,6 +27,7 @@ public class ResultActivity extends BaseAppCompatActivity {
     public static final String USERTIME = "userTime";// 用时
     public static final String ANSWER = MySqliteManager.Writing.QUESTION;//范文
 
+    private String mType; //记录是翻译还是写作
 
     double score;//分数
     int wd;//单词数
@@ -34,17 +38,7 @@ public class ResultActivity extends BaseAppCompatActivity {
     String content;
     String answer;
 
-    TopBar topBar;
-
-    TextView tv_actual_score;//分数
-    TextView tv_word_number;//单词数
-    TextView tv_error_word_num;//错误单词数
-    TextView tv_submit_num;//提交次数
-    TextView tv_writing_content;//作文内容
-    TextView tv_writing_advice;//作文点评
-    TextView tv_user_time;//用时
-    Chronometer chronometer;
-    TextView tv_writing_answer;
+    private int title_type;
 
     String advice;//点评
 
@@ -65,12 +59,19 @@ public class ResultActivity extends BaseAppCompatActivity {
         content = intent.getStringExtra(CONTENT);
         userTime = intent.getLongExtra(USERTIME,0);
         answer = intent.getStringExtra(ANSWER);
+        mType = intent.getStringExtra(TYPE);
+
+        if ( mType.equals("translation") ){
+            title_type = R.string.title_translation_result;
+        }else {
+            title_type = R.string.title_writing_result;
+        }
     }
 
     private void initView() {
         //
-        topBar = findViewById(R.id.topBar);
-        topBar.setTitle("作文详情");
+        TopBar topBar = findViewById(R.id.topBar);
+        topBar.setTitle(title_type);
         topBar.setOnTopBarClickListener(new TopBar.topbarClickListener() {
             @Override
             public void leftClick() {
@@ -84,24 +85,33 @@ public class ResultActivity extends BaseAppCompatActivity {
             }
         });
 
-        tv_actual_score = findViewById(R.id.tv_actual_score);
-        tv_word_number = findViewById(R.id.tv_word_number);
-        tv_error_word_num = findViewById(R.id.tv_error_word_num);
-        tv_submit_num = findViewById(R.id.tv_submit_num);
-        tv_writing_advice = findViewById(R.id.tv_writing_advice);
-        tv_writing_content = findViewById(R.id.tv_writing_content);
-        tv_user_time = findViewById(R.id.tv_user_time);
-        chronometer = findViewById(R.id.result_chronometer);
-        tv_writing_answer = findViewById(R.id.tv_writing_answer);
+        TextView tv_actual_score = findViewById(R.id.tv_actual_score);//分数
+        TextView tv_word_number = findViewById(R.id.tv_word_number);//单词数
+        TextView tv_error_word_num = findViewById(R.id.tv_error_word_num);//错误单词数
+        TextView tv_submit_num = findViewById(R.id.tv_submit_num);//提交次数
+        TextView tv_writing_advice = findViewById(R.id.tv_writing_advice);//作文点评
+        TextView tv_writing_content = findViewById(R.id.tv_writing_content);//作文内容
+        TextView tv_user_time = findViewById(R.id.tv_user_time);//用时
+        Chronometer chronometer = findViewById(R.id.result_chronometer);
+        TextView tv_writing_answer = findViewById(R.id.tv_writing_answer);
+
+        TextView tvContent = findViewById(R.id.tv_result_content);
+        TextView tvComments = findViewById(R.id.tv_result_comments);
+        TextView tvReference = findViewById(R.id.tv_result_reference);
+        if ( mType.equals("translation") ){
+            tvContent.setText(R.string.my_translation);
+            tvComments.setText(R.string.translation_comment);
+            tvReference.setText(R.string.translation_reference);
+        }
 
         // 分数
-        tv_actual_score.setText("分数: "+score);
+        tv_actual_score.setText(R.string.score + score + "");
         // 单词总数
-        tv_word_number.setText("单词总数: "+wd);
+        tv_word_number.setText(R.string.total_score + wd);
         // 错误单词
-        tv_error_word_num.setText("错误单词: "+errorWords);
+        tv_error_word_num.setText(R.string.wrong_words + errorWords);
         // 提交次数
-        tv_submit_num.setText("提交次数: "+submitNum);
+        tv_submit_num.setText(R.string.submit_num + submitNum);
         //用时,记录第一次提交所用的时间
         if (submitNum == 1){
             chronometer.setBase(userTime);

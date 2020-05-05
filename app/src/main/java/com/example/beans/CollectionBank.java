@@ -1,7 +1,5 @@
 package com.example.beans;
 
-import com.example.utils.testPaperUtils.TestPaperFromWord;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +21,17 @@ public class CollectionBank {
         return mCollectionBank;
     }
 
-    private List<TestPaperFromWord.ListeningFormWord> collectedListenings = new ArrayList<>();
-    private List<TestPaperFromWord.ReadingFormWord> collectedReadings = new ArrayList<>();
+    private List<CollectedListening> collectedListenings = new ArrayList<>();
+    private List<CollectedReading> collectedReading = new ArrayList<>();
     private List<Translation> collectedTranslations = new ArrayList<>();
     private List<Writing> collectedWritings = new ArrayList<>();
 
-    public List<TestPaperFromWord.ListeningFormWord> getCollectedListenings() {
+    public List<CollectedListening> getCollectedListenings() {
         return collectedListenings;
     }
 
-    public List<TestPaperFromWord.ReadingFormWord> getCollectedReadings() {
-        return collectedReadings;
+    public List<CollectedReading> getCollectedReading() {
+        return collectedReading;
     }
 
     public List<Translation> getCollectedTranslations() {
@@ -45,11 +43,11 @@ public class CollectionBank {
     }
 
     // 下列方法用于添加收藏
-    public void add(TestPaperFromWord.ListeningFormWord listening){
+    public void add(CollectedListening listening){
         collectedListenings.add(listening);
     }
-    public void add(TestPaperFromWord.ReadingFormWord reading){
-        collectedReadings.add(reading);
+    public void add(CollectedReading reading){
+        collectedReading.add(reading);
     }
     public void add(Translation translation){
         collectedTranslations.add(translation);
@@ -58,12 +56,12 @@ public class CollectionBank {
         collectedWritings.add(writing);
     }
 
-    // 下列方法用于添加收藏
-    public void remove(TestPaperFromWord.ListeningFormWord listening){
+    // 下列方法用于移除收藏
+    public void remove(CollectedListening listening){
         collectedListenings.remove(listening);
     }
-    public void remove(TestPaperFromWord.ReadingFormWord reading){
-        collectedReadings.remove(reading);
+    public void remove(CollectedReading reading){
+        collectedReading.remove(reading);
     }
     public void remove(Translation translation){
         collectedTranslations.remove(translation);

@@ -4,19 +4,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
@@ -30,6 +29,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.example.activity.base.BaseAppCompatActivity;
+import com.example.beans.CollectedReading;
+import com.example.beans.CollectionBank;
 import com.example.beans.Question;
 import com.example.beans.Range;
 import com.example.fragment.CarefullyReadingFragment;
@@ -47,13 +48,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChooseWordActivity extends BaseAppCompatActivity {
-    private static final String TAG = "ChooseWordActivity";
-    private static final String titles[] = {"选词填空","快速阅读","仔细阅读"};
-
+public class ReadingExamActivity extends BaseAppCompatActivity {
+    private final int[] titles = {R.string.reading_choose_word,
+            R.string.reading_quickly,
+            R.string.reading_carefully};
     public static final String QUESTION_TYPE = "questionType";  // 题型
-    public static final String TESTPAPER_INDEX = "testPaperIndex";  //试卷序号
-
+    public static final String TEST_PAPER_INDEX = "testPaperIndex";  //试卷序号
     // 选词填空：index == 0
     // 快速阅读：index == 1
     // 仔细阅读：index == 2
@@ -98,6 +98,10 @@ public class ChooseWordActivity extends BaseAppCompatActivity {
 
     List<Map> carefullyReadingAnswer = new ArrayList<>();
 
+    CollectedReading reading = null;
+    // 记录是否已经收藏
+    private boolean isCollected = false;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,8 +119,8 @@ public class ChooseWordActivity extends BaseAppCompatActivity {
     private void initData(){
         // 获取 题目信息：题型、第几套
         Intent intent = getIntent();
-        index = intent.getIntExtra(ChooseWordActivity.QUESTION_TYPE,0);
-        testPaperIndex = intent.getIntExtra(ChooseWordActivity.TESTPAPER_INDEX,0);
+        index = intent.getIntExtra(ReadingExamActivity.QUESTION_TYPE,0);
+        testPaperIndex = intent.getIntExtra(ReadingExamActivity.TEST_PAPER_INDEX,0);
         Toast.makeText(this,testPaperIndex+"",Toast.LENGTH_LONG).show();
 
         TestPaperFactory testPaperFactory = TestPaperFactory.getInstance();
@@ -225,6 +229,27 @@ public class ChooseWordActivity extends BaseAppCompatActivity {
 
         //
         controlBar = findViewById(R.id.commonControlBar);
+        final ImageView ivIConCollection = controlBar.findViewById(R.id.iv_icon_collection);
+        ivIConCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CollectionBank collectionBank = CollectionBank.getInstance();
+                if (!isCollected){    //默认为false，为收藏
+                    isCollected = true;
+                    ivIConCollection.setImageResource(R.drawable.icon_collection_after);
+                    reading = new CollectedReading(testPaperIndex,index);
+                    collectionBank.add(reading);
+                    Toast.makeText(ReadingExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
+                    LogUtils.i("collectedReading",collectionBank.getCollectedReading().toString());
+                }else {
+                    isCollected = false;
+                    ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
+                    collectionBank.remove(reading);
+                    Toast.makeText(ReadingExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
+                    LogUtils.i("collectedReading",collectionBank.getCollectedReading().toString());
+                }
+            }
+        });
 
         //
         tvTitleDisplay = findViewById(R.id.tv_title_display);
@@ -319,7 +344,7 @@ public class ChooseWordActivity extends BaseAppCompatActivity {
                  * **/
                 if(convertView == null )
                 {
-                    LayoutInflater inflater = ChooseWordActivity.this.getLayoutInflater();
+                    LayoutInflater inflater = ReadingExamActivity.this.getLayoutInflater();
                     view = inflater.inflate(R.layout.drawer_content_list_item,null);
                     //view = View.inflate(getBaseContext(),R.layout.item,null);
                 }
