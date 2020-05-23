@@ -77,7 +77,8 @@ public class Fragment2 extends Fragment {
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull Response response)
+                    throws IOException {
                 String json = response.body().string();
                 Gson gson = new Gson();
                 OneSentenceOneDayList list = gson.fromJson(json, OneSentenceOneDayList.class);

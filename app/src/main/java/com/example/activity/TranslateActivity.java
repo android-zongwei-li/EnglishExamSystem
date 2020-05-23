@@ -14,9 +14,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.activity.base.BaseAppCompatActivity;
 import com.example.adapter.TranslateAdapter;
 import com.example.adapter.TranslateData;
-import com.example.activity.base.BaseAppCompatActivity;
 import com.example.myapplication.R;
 import com.example.utils.SwListDialog;
 import com.example.utils.ToastUtils;
@@ -32,9 +32,6 @@ import com.youdao.sdk.ydtranslate.TranslateParameters;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author lukun
- */
 public class TranslateActivity extends BaseAppCompatActivity {
 
     // 查询列表

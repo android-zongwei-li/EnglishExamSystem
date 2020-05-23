@@ -15,9 +15,7 @@ import com.example.activity.base.BaseAppCompatActivity;
 import com.example.myapplication.R;
 import com.example.utils.LogUtils;
 import com.example.utils.TransApi;
-import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,6 +87,7 @@ public class WordsActivity extends BaseAppCompatActivity {
                 TransApi api = new TransApi(APP_ID, SECURITY_KEY);
                 //例：{"from":"en","to":"zh","trans_result":[{"src":"apple","dst":"\u82f9\u679c"}]}
                 String json = api.getTransResult(query, from, to);   //为整个json
+                LogUtils.i("翻译",json);
                 try {
                     json = URLDecoder.decode(json,"UTF-8");
                 } catch (UnsupportedEncodingException e) {

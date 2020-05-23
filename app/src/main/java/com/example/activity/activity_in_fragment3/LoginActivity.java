@@ -40,18 +40,13 @@ public class LoginActivity extends BaseAppCompatActivity {
     String APPKEY = "2e18012850b17";
     String APPSECRETE = "9e17413893d32176b7e88f7ce67ea54f";
 
-    // topbar
     TopBar topBar;
-
     // 手机号输入框
     private EditText inputPhoneEt;
-
     // 验证码输入框
     private EditText inputCodeEt;
-
     // 获取验证码按钮
     private Button requestCodeBtn;
-
     // 登录按钮
     private Button loginBtn;
 
@@ -232,7 +227,7 @@ public class LoginActivity extends BaseAppCompatActivity {
     }
 
     private void createProgressBar() {
-        FrameLayout layout = (FrameLayout) findViewById(android.R.id.content);
+        FrameLayout layout = findViewById(android.R.id.content);
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.CENTER;

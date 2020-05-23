@@ -260,7 +260,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
             initTextView();
         }
 
-        if (index == 1){    // 仔细阅读，显示右侧抽屉按钮
+        if (index == 1){    // 快速阅读，显示右侧抽屉按钮
             tvTitleDisplay.setPadding(0,0,40,0);
             drawer = findViewById(R.id.drawer);
             drawer.setVisibility(View.VISIBLE);

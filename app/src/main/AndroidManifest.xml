@@ -24,13 +24,11 @@
         <!-- Splash 引导页 -->
         <activity android:name="com.example.activity.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- ViewPager 引导页 -->
-        <activity android:name="com.example.launchguide.viewpager.ViewPagerActivity" /> <!-- ViewFlipper 引导页 -->
-        <activity android:name="com.example.launchguide.viewflipper.ViewFlipperActivity" /> <!-- 主页 -->
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <!-- ViewPager 引导页 -->
         <activity android:name="com.example.MainActivity" /> <!-- Fragment1 : 四种题型页面 -->
         <activity android:name="com.example.activity.acticity_in_fragment1.listening.ListeningActivity" /> <!-- 听力——短篇新闻 -->
         <activity android:name="com.example.activity.acticity_in_fragment1.listening.ShortNewsActivity" />
@@ -54,7 +52,12 @@
         <activity android:name="com.example.activity.activity_in_fragment3.CollectionActivity"/>
         <activity android:name="com.example.activity.activity_in_fragment3.CollectionDetailsActivity"/>
 
+        <activity android:name="com.example.activity.acticity_in_fragment1.words.UnfamiliarWordsActivity"/>
+        <activity android:name="com.example.activity.acticity_in_fragment1.words.LearnedWordsActivity"/>
+
         <service android:name="com.example.service.AudioService" />
+
+
     </application>
 
 </manifest>

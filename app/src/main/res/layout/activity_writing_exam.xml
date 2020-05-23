@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="试卷名称"
+        android:text="@string/test_paper_name"
         android:textSize="20sp"
         />
 
@@ -25,7 +25,7 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
-        android:text="显示题目"
+        android:text="@string/display_question"
         android:textSize="16sp"
         android:visibility="gone"
         />
@@ -38,7 +38,7 @@
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="作文题目"
+        android:text="@string/writing_title"
         android:textSize="16sp"
         />
 
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:hint="开始写作吧"
+            android:hint="@string/writing_and_translation_hint"
             />
 
     </ScrollView>

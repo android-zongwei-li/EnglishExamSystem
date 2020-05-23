@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.beans.MySqliteManager;
-import com.example.beans.Translation;
-import com.example.beans.Writing;
 import com.example.myapplication.R;
 import com.example.view.topbar.TopBar;
 

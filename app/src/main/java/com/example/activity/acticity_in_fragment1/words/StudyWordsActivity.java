@@ -25,15 +25,12 @@ import com.example.view.topbar.TopBar;
 import java.util.ArrayList;
 
 public class StudyWordsActivity extends AppCompatActivity {
-
-    private static final String TITLE = "单词学习";
-
-    private static final String TAG = "StudyWordsActivity";
-    // 此页面需要展示的单词数据
+    // 此页面需要学习的单词数据
     public static final String WORDS = "words";
 
     // 即将学习的单词
     private ArrayList<Word> words = new ArrayList<>();
+
     // 标识 当前是 第几个单词
     private int indexWord = 0;
 
@@ -136,10 +133,20 @@ public class StudyWordsActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         words = (ArrayList<Word>) intent.getSerializableExtra(StudyWordsActivity.WORDS);
 
-
         topBar = findViewById(R.id.topBar);
         topBar.setRighttIsVisable(false);
-        topBar.setTitle(TITLE);
+        topBar.setTitle(R.string.title_study_words);
+        topBar.setOnTopBarClickListener(new TopBar.topbarClickListener() {
+            @Override
+            public void leftClick() {
+                finish();
+            }
+
+            @Override
+            public void rightClick() {
+
+            }
+        });
 
         tv_word_index = findViewById(R.id.tv_word_index);
         //

@@ -140,11 +140,11 @@
 
     </RelativeLayout>
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/tv_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="结果"
-        />
+        />-->
 
 </LinearLayout>

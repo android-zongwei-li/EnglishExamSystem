@@ -48,4 +48,11 @@
 
     <string name="back_home">返回主页</string>
 
+    <string name="writing_and_translation_hint">开始作答吧</string>
+    <string name="writing_title">作文题目</string>
+    <string name="display_question">显示题目</string>
+    <string name="title_learned_words_book">已学单词</string>
+    <string name="title_unfamiliar_word_book">生词本</string>
+    <string name="title_study_words">单词学习</string>
+
 </resources>

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.adapter.CollectionRVAdapter;
 import com.example.beans.CollectionBank;
 import com.example.myapplication.R;
-import com.example.utils.LogUtils;
 
 /**
  * Created by: lzw.

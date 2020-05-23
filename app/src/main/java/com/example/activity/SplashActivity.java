@@ -25,7 +25,6 @@ import org.json.JSONObject;
 public class SplashActivity extends Activity {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
-
     // 延迟时间
     private static final long DELAY_TIME = 1000L;
 
@@ -46,9 +45,9 @@ public class SplashActivity extends Activity {
             }
         },DELAY_TIME);
 
-        initTestPaper();
+//        initTestPaper();
 
-        initWord();
+   //     initWord();
     }
 
     private boolean isStartMainActivity = false;
@@ -58,7 +57,8 @@ public class SplashActivity extends Activity {
     private void startMainActivity(){
         if(!isStartMainActivity){
             isStartMainActivity = true;
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashActivity.this,
+                    MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -72,12 +72,15 @@ public class SplashActivity extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStop() {
         handler.removeCallbacksAndMessages(null);
-        super.onDestroy();
+        handler = null;
+        super.onStop();
     }
 
     /**
+     * 已弃用
+     *
      * 用于加载数据，所有试卷资源在启动app后就开始加载，加载后交给testPaperManager管理
      * 启用一个子线程加载，当数据从网络获取时，就可以避免阻塞主线程了
      */
@@ -103,6 +106,8 @@ public class SplashActivity extends Activity {
     }
 
     /**
+     * 已弃用
+     *
      * 这个方法使用来读取word文件的，读取的目的是获取其中的指定string，
      * 然后使用这些string来初始化sqlite数据库
      */

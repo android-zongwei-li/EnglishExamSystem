@@ -1,10 +1,6 @@
 package com.example;
 
-/**
- * @(#)BrowserActivity.java, 2013�?10�?22�?. Copyright 2013 Yodao, Inc. All
- *                           rights reserved. YODAO PROPRIETARY/CONFIDENTIAL.
- *                           Use is subject to license terms.
- */
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,9 +20,6 @@ import com.example.utils.ToastUtils;
 import com.youdao.sdk.common.YouDaoLog;
 import com.youdao.sdk.ydtranslate.Translate;
 
-/**
- * @author lukun
- */
 public class TranslateDetailActivity extends BaseAppCompatActivity {
 
     public static void open(Activity activity, TranslateData news, Translate trs) {

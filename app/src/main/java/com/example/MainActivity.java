@@ -2,7 +2,6 @@ package com.example;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -20,12 +19,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.activity.base.BaseAppCompatActivity;
-import com.example.utils.testPaperUtils.TestPaperFromWord;
-import com.example.utils.testPaperUtils.TestPaperFactory;
 import com.example.fragment.Fragment1;
 import com.example.fragment.Fragment2;
 import com.example.fragment.Fragment3;
 import com.example.myapplication.R;
+import com.example.utils.testPaperUtils.TestPaperFactory;
+import com.example.utils.testPaperUtils.TestPaperFromWord;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
@@ -52,10 +51,15 @@ public class MainActivity extends BaseAppCompatActivity {
     }
 
     private void initData(){
-        TestPaperFactory testPaperFactory = TestPaperFactory.getInstance();
-        testPaperFactory.initData(MainActivity.this);
-        List<TestPaperFromWord> testPaperList = testPaperFactory.getTestPaperList();
-    }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TestPaperFactory testPaperFactory = TestPaperFactory.getInstance();
+                testPaperFactory.initData(MainActivity.this);
+                //       List<TestPaperFromWord> testPaperList = testPaperFactory.getTestPaperList();
+            }
+        }).start();
+   }
 
     private void initViews() {
         mToolbar = findViewById(R.id.toobar_main_ac);

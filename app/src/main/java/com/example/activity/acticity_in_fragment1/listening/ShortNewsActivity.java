@@ -1,14 +1,8 @@
 package com.example.activity.acticity_in_fragment1.listening;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,8 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -29,13 +21,8 @@ import com.example.base.MoreFragment;
 import com.example.beans.TestPaper;
 import com.example.beans.TestPaperManager;
 import com.example.myapplication.R;
-import com.example.utils.TxtUtils;
 import com.example.view.SimpleAudioPlayer;
 import com.example.view.topbar.TopBar;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
