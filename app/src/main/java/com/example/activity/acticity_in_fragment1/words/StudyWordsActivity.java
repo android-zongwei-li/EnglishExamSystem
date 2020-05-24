@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -12,24 +13,43 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.activity.base.BaseAppCompatActivity;
 import com.example.beans.Word;
 import com.example.myapplication.R;
 import com.example.service.AudioService;
+import com.example.utils.LogUtils;
+import com.example.utils.MySqlDBOpenHelper;
+import com.example.utils.ToastUtils;
 import com.example.view.topbar.TopBar;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class StudyWordsActivity extends AppCompatActivity {
+public class StudyWordsActivity extends BaseAppCompatActivity {
     // 此页面需要学习的单词数据
     public static final String WORDS = "words";
 
     // 即将学习的单词
     private ArrayList<Word> words = new ArrayList<>();
+    // 已学单词
+    private ArrayList<Word> learnedWordsBook = new ArrayList<>();
+    // 生词
+    private ArrayList<Word> unfamiliarWordsBook = new ArrayList<>();
 
     // 标识 当前是 第几个单词
     private int indexWord = 0;
@@ -130,6 +150,8 @@ public class StudyWordsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_words);
 
+        initUnfamiliarAndLearnedBook();
+
         final Intent intent = getIntent();
         words = (ArrayList<Word>) intent.getSerializableExtra(StudyWordsActivity.WORDS);
 
@@ -177,6 +199,9 @@ public class StudyWordsActivity extends AppCompatActivity {
         btn_understand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                addWordToLearnedWordsBook(indexWord);
+
                 indexWord++;
                 handler.sendEmptyMessage(0);
             }
@@ -187,6 +212,10 @@ public class StudyWordsActivity extends AppCompatActivity {
         btn_dont_understand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                addWordToLearnedWordsBook(indexWord);
+                addWordToUnfamiliarWordsBook(indexWord);
+
                 handler.sendEmptyMessage(1);
             }
         });
@@ -243,5 +272,102 @@ public class StudyWordsActivity extends AppCompatActivity {
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 点击认识或者不认识 此单词后，要查询当前单词是否存在于已学单词本中
+     * 如果已经有了，则不处理
+     * 如果没有，就把这个单词加到已学单词本中
+     */
+    private void addWordToLearnedWordsBook(int indexWord){
+        // 要处理的单词，添加还是不添加
+        Word word = words.get(indexWord);
+        // 这里新建了一个word对象，默认肯定是不包含的，根据contains的源码可知，
+        // 需要重写 word 类 的 equals方法，使得当 这个单词的 英文意思一样时，就视为相等，即包含
+        // 如果不包含，就把当前单词加进去
+        if (!learnedWordsBook.contains(word)){
+            learnedWordsBook.add(word);
+        }
+    }
+
+    /**
+     * 如果不认识当前单词，就判断生词本里有这个单词吗
+     * 没有，添加
+     * 有，do nothing
+     * @param indexWord
+     */
+    private void addWordToUnfamiliarWordsBook(int indexWord){
+        Word word = words.get(indexWord);
+
+        if (!unfamiliarWordsBook.contains(word)){
+            unfamiliarWordsBook.add(word);
+        }
+    }
+
+    /**
+     * 从map中取出数据：learnedWordsBook(已学单词本)、unfamiliarWordsBook(生词本)
+     */
+    private void initUnfamiliarAndLearnedBook(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String,Object> map = MySqlDBOpenHelper.getUserInfoFormMySql("16651605583");
+
+                if (map != null){
+                    String s = "";
+                    for (String key : map.keySet()){
+                        s += key + ":" + map.get(key) + "\n";
+                    }
+                    LogUtils.i("查询结果",s);
+
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<ArrayList<Word>>(){}.getType();
+                    if (map.get("learnedWordsBook") != null){
+                        learnedWordsBook = gson.fromJson(map.get("learnedWordsBook").toString(),type);
+                    }
+                    if (map.get("unfamiliarWordsBook") != null){
+                        unfamiliarWordsBook = gson.fromJson(map.get("unfamiliarWordsBook").toString(),type);
+                    }
+                }else {
+                    ToastUtils.show(StudyWordsActivity.this,"查询结果为空");
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * 当此activity回调此方法时，把当前的 生词、已学单词数据更新到数据库
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Gson gson = new Gson();
+        final String inputLearnedWordsBook = gson.toJson(learnedWordsBook);
+        final String inoutUnfamiliarWordsBook = gson.toJson(unfamiliarWordsBook);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Connection conn = MySqlDBOpenHelper.getConn();
+                String sql_insert = "update user set learnedWordsBook=?,unfamiliarWordsBook=? " +
+                        "where telephone = 16651605583";
+                try {
+
+                    PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                    pstm.setString(1, inputLearnedWordsBook);
+                    pstm.setString(2,inoutUnfamiliarWordsBook);
+                    pstm.executeUpdate();
+
+                    if (pstm != null){
+                        pstm.close();
+                    }
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

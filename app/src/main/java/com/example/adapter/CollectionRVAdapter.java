@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.beans.CollectedListening;
 import com.example.beans.CollectedReading;
-import com.example.beans.TestPaper;
 import com.example.beans.Translation;
 import com.example.beans.Writing;
 import com.example.myapplication.R;
@@ -77,7 +76,7 @@ public class CollectionRVAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        if (mList.size() == 0){
            View view = LayoutInflater.from(parent.getContext())
-                   .inflate(R.layout.collection_item_null,parent,false);
+                   .inflate(R.layout.item_null,parent,false);
            MyViewHolder myViewHolder = new MyViewHolder(view);
            return myViewHolder;
         }else {

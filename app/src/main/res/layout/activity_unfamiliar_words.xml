@@ -5,4 +5,10 @@
 
     <include layout="@layout/widget_topbar"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_unfamiliar_words"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </LinearLayout>

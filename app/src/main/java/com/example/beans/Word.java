@@ -1,5 +1,7 @@
 package com.example.beans;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class Word implements Serializable {
@@ -41,5 +43,27 @@ public class Word implements Serializable {
 
     public void setChinese(String chinese) {
         this.chinese = chinese;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+
+        if (this == obj){
+            return true;
+        }
+
+        // 先判断一下obj是不是word的一个对象，不是，返回false
+        if (!(obj instanceof Word)){
+            return false;
+        }
+
+        // obj 向下转型，比较 word 属性是否相等
+        Word word = (Word)obj;
+        if (this.word.equals(word.word)){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 }

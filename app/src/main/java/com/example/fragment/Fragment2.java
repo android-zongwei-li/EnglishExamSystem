@@ -56,8 +56,9 @@ public class Fragment2 extends Fragment {
         public void handleMessage(@NonNull Message msg) {
             Bitmap bitmap = (Bitmap) msg.obj;
             //对bitmap进行缩放,现在缩放并为达到预期，并且加入缩放以后，明显卡顿
-            Bitmap newBitmap = setImgSize(bitmap,
-                    mIVOneSentenceOneDay.getHeight(),mIVOneSentenceOneDay.getWidth());
+            //  oom 异常
+            /*Bitmap newBitmap = setImgSize(bitmap,
+                    mIVOneSentenceOneDay.getHeight(),mIVOneSentenceOneDay.getWidth());*/
             mIVOneSentenceOneDay.setImageBitmap(bitmap);
         }
     };

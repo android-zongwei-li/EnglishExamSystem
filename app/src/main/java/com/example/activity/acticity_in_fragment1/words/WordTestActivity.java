@@ -173,6 +173,8 @@ public class WordTestActivity extends BaseAppCompatActivity {
                 Intent intent1 = new Intent(this, UnfamiliarWordsActivity.class);
                 startActivity(intent1);
                 break;
+            default:
+                break;
         }
     }
 
