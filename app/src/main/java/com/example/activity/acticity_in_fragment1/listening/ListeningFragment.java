@@ -73,7 +73,7 @@ public class ListeningFragment extends Fragment {
             @Override
             public View getView(final int position, View convertView, ViewGroup viewGroup) {
                 View view;
-                if(convertView == null ) {
+                if(convertView == null) {
                     LayoutInflater inflater = ListeningFragment.this.getLayoutInflater();
                     view = inflater.inflate(R.layout.examination_paper_information_item,null);
                 } else {

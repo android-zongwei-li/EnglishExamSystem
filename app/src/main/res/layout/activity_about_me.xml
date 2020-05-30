@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/widget_topbar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="项目介绍"
+        android:textSize="30dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="此APP提供四级英语的学习和模拟考试"
+        android:textSize="20dp"
+        />
+
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:text="加我QQ"
+    android:textSize="30dp"
+    />
+
+    <TextView
+        android:id="@+id/tv_add_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="点击添加QQ"
+        android:textSize="20dp"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="项目地址"
+        android:textSize="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_project_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Github：点击跳转；长按复制"
+        android:textSize="20dp"
+        />
+
+</LinearLayout>

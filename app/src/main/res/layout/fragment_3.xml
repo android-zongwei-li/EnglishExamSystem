@@ -37,20 +37,13 @@
                 />
 
             <TextView
+                android:id="@+id/tv_login_tips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="登录解锁更多功能"
                 android:textSize="14dp"
                 android:textColor="#D0130C0C"
-                />
-
-            <!--<EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingRight="15dp"
-                android:background="@null"
-                android:hint="个人简介"
                 />
 -->
         </LinearLayout>
@@ -61,10 +54,34 @@
         android:id="@+id/btn_collection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         android:background="#ffffff"
+        android:layout_above="@id/btn_about_me"
         android:text="收藏"
         android:textSize="30dp"
         />
+
+    <Button
+        android:id="@+id/btn_about_me"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="#ffffff"
+        android:layout_above="@id/btn_setting"
+        android:text="关于"
+        android:textSize="30dp"
+        />
+
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:text="设置"
+        android:textSize="30dp"
+        />
+
 
 </RelativeLayout>

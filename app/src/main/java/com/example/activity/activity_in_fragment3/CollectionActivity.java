@@ -9,7 +9,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.activity.acticity_in_fragment1.listening.ListeningExamActivity;
+import com.example.beans.CollectedListening;
 import com.example.myapplication.R;
+import com.example.utils.LogUtils;
+import com.example.utils.MySqlDBOpenHelper;
+import com.example.utils.ToastUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by: lzw.
@@ -59,4 +70,5 @@ public class CollectionActivity extends AppCompatActivity implements View.OnClic
         }
         startActivity(intent);
     }
+
 }

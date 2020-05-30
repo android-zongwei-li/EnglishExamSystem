@@ -35,23 +35,60 @@ import java.util.Map;
  */
 public class CarefullyReadingFragment extends Fragment {
 
-    private String title;
-    private List<Question> carefullyReadingQuestions;
-    private List<String> choices = new ArrayList<>();
+    private String title;   //文章内容
+    private List<Question> carefullyReadingQuestions;   //问题(Question)集合
+    public CarefullyReadingFragment(String title, List<Question> carefullyReadingQuestions) {
+        this.title = title;
+        this.carefullyReadingQuestions = carefullyReadingQuestions;
+    }
 
+    public List<TextView> questionsIndexTextViews = new ArrayList<>();
+    //显示题目和选项
     private LinearLayout ll_question;
-    TextView tv_question_index;
-    List<TextView> questionsIndexTextViews = new ArrayList<>();
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_carefully_reading_exam,null);
+        //显示文章内容
+        TextView tv_carefully_reading_title = view.findViewById(R.id.tv_carefully_reading_title);
+        ll_question = view.findViewById(R.id.ll_question);
+        tv_carefully_reading_title.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ll_question.setVisibility(View.GONE);
+                return false;
+            }
+        });
+        tv_carefully_reading_title.setText(title.trim());
 
-    private int questionsIndex; //记录题号
+        //显示题号:Q1-Q5。点击后，显示题目和选项。
+        LinearLayout ll_question_index = view.findViewById(R.id.ll_question_index);
+        for (int i = 0; i < 5; i++){
+            TextView tv_question_index = (TextView) ll_question_index.getChildAt(i);
+            questionsIndexTextViews.add(tv_question_index);
+            final int finalI = i;
+            tv_question_index.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.sendEmptyMessage(finalI);
+                }
+            });
+        }
+
+        return view;
+    }
+
+    public RadioGroup rg;
+    private List<String> choices = new ArrayList<>();
     public Map questionMap = new ArrayMap();
-
+    private int questionsIndex; //记录题号
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull final Message msg) {
 
-            if (ll_question.getVisibility() == ll_question.GONE){
+            if (ll_question.getVisibility() == View.GONE){
                 ll_question.setVisibility(View.VISIBLE);
             }else if (questionsIndex == msg.what){    //两次点击相同textView
                 ll_question.setVisibility(View.GONE);
@@ -67,64 +104,46 @@ public class CarefullyReadingFragment extends Fragment {
             choices.add(carefullyReadingQuestions.get(msg.what).getChoiceC().trim());
             choices.add(carefullyReadingQuestions.get(msg.what).getChoiceD().trim());
 
-            final RadioGroup rg = (RadioGroup) ll_question.getChildAt(1);
-            if (questionMap.containsKey(questionsIndex)){   //当前题目存在，还原答案
-                rg.check((Integer) questionMap.get(questionsIndex));
-            }else { // 题目还没做
-                rg.clearCheck();
-            }
+            rg = (RadioGroup) ll_question.getChildAt(1);
+
+            LogUtils.i("RadioGroup",rg.toString());
             for (int i = 0; i < 4; i++){
                 RadioButton rb = (RadioButton) rg.getChildAt(i);
                 rb.setText(choices.get(i));
+                rb.setId(i);
             }
+
             rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    questionMap.put(questionsIndex,(rg.getCheckedRadioButtonId())%4);  //把当前的题号和题目存入map中
-                    LogUtils.i("questionsMap",questionMap.toString());
-                    questionsIndexTextViews.get(questionsIndex)
-                            .setTextColor(getResources().getColor(R.color.text_finish));
+
+                    if (checkedId != -1){
+                        //把当前的题号和题目存入map中
+                        questionMap.put(questionsIndex,(rg.getCheckedRadioButtonId())%4);
+                        LogUtils.i("questionsMap",questionMap.toString());
+                        questionsIndexTextViews.get(questionsIndex)
+                                .setTextColor(getResources().getColor(R.color.text_finish));
+                    }
+
+                    if (checkedId == -1){
+                        questionsIndexTextViews.get(questionsIndex)
+                                .setTextColor(getResources().getColor(R.color.default_text));
+                    }
+
                 }
             });
+
+            if (questionMap.size() != 0){
+                if (questionMap.containsKey(questionsIndex)){
+                    rg.check((Integer) questionMap.get(questionsIndex));
+                }else {
+                    rg.check(-1);
+                    questionMap.remove(questionsIndex);
+                    LogUtils.i("questionsMap",questionMap.toString());
+                }
+            }
 
         }
     };
-
-    public CarefullyReadingFragment(String title, List<Question> carefullyReadingQuestions) {
-        this.title = title;
-        this.carefullyReadingQuestions = carefullyReadingQuestions;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_carefully_reading_exam,null);
-        TextView tv_carefully_reading_title = view.findViewById(R.id.tv_carefully_reading_title);
-        ll_question = view.findViewById(R.id.ll_question);
-        tv_carefully_reading_title.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ll_question.setVisibility(View.GONE);
-                return false;
-            }
-        });
-        tv_carefully_reading_title.setText(title.trim());
-
-        LinearLayout ll_question_index = view.findViewById(R.id.ll_question_index);
-        for (int i = 0; i < 5; i++){
-            tv_question_index = (TextView) ll_question_index.getChildAt(i);
-            questionsIndexTextViews.add(tv_question_index);
-            final int finalI = i;
-            tv_question_index.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handler.sendEmptyMessage(finalI);
-                }
-            });
-        }
-
-        return view;
-    }
 
 }

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -16,7 +18,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,29 +29,51 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.example.MyApplication;
+import com.example.activity.acticity_in_fragment1.listening.ListeningExamActivity;
 import com.example.activity.base.BaseAppCompatActivity;
+import com.example.beans.CollectedListening;
 import com.example.beans.CollectedReading;
 import com.example.beans.CollectionBank;
 import com.example.beans.Question;
 import com.example.beans.Range;
 import com.example.fragment.CarefullyReadingFragment;
 import com.example.myapplication.R;
+import com.example.utils.AccountManager;
 import com.example.utils.LogUtils;
+import com.example.utils.MySqlDBOpenHelper;
+import com.example.utils.ToastUtils;
 import com.example.utils.testPaperUtils.TestPaperFactory;
 import com.example.utils.testPaperUtils.TestPaperFromWord;
 import com.example.view.CommonControlBar;
 import com.example.view.topbar.TopBar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ * 注：
+ * 仔细阅读，底部的textView的颜色变化还有一些问题
+ * 仔细阅读，交卷后能不能选项颜色变一下，并且设置为不能再选择。
+ */
 public class ReadingExamActivity extends BaseAppCompatActivity {
     private final int[] titles = {R.string.reading_choose_word,
             R.string.reading_quickly,
@@ -72,7 +98,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
     //
     private SlidingDrawer drawer;
     // drawer content
-    private ListView lvDrawerContent;
+    private RecyclerView lvDrawerContent;
     // 选词填空
     private ViewPager viewPager;
 
@@ -83,7 +109,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
     List<Question> carefullyReadingQuestions; // 仔细阅读的问题
 
     // 快速阅读的段落序号
-    List<String> passageLetters = Arrays.asList("A","B","C","D","E",
+    List<String> passageLetters = Arrays.asList("空","A","B","C","D","E",
             "F","G","H","I","J",
             "K","L","M","N","O");
 
@@ -102,6 +128,32 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
     // 记录是否已经收藏
     private boolean isCollected = false;
 
+    //仔细阅读底部的textView，拿过来设置颜色，正确设置绿色，错误/没做设为红色
+    private List<List<TextView>> questionsIndexTextViews = new ArrayList<>();
+
+    //记录快速阅读选择的答案
+    private Map<Integer,Integer> selectedItems = new HashMap<>();
+    //记录用户选的答案
+    private List<String> carefullyReadingUserAnswer = new ArrayList();
+    //记录交卷后的结果，true or false
+    private List<Boolean> carefullyReadingResult = new ArrayList();
+    private List<TextView> userAnswerTV = new ArrayList<>();
+
+    //已收藏听力题
+    private ArrayList<CollectedReading> collectedReading = new ArrayList<>();
+
+    private AccountManager am;
+    private String telephone;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            QuicklyRVAdapter adapter = new QuicklyRVAdapter(1,quicklyReadingQuestions,carefullyReadingUserAnswer,rightChoices);
+            lvDrawerContent.setAdapter(adapter);
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +169,14 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
      *  初始化TextView控件，并配置初始数据
      */
     private void initData(){
+
+        am = AccountManager.getInstance(getApplication());
+        telephone = am.getTelephone();
+        if (am.isOnline()){
+            initCollectedWriting(telephone);
+        }
+
+
         // 获取 题目信息：题型、第几套
         Intent intent = getIntent();
         index = intent.getIntExtra(ReadingExamActivity.QUESTION_TYPE,0);
@@ -156,7 +216,6 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
         }
     }
 
-    //快速阅读部分
     private void initView(){
         //
         final TopBar topBar = findViewById(R.id.topBar);
@@ -191,37 +250,145 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                     setResultSpan(title,rightRange,wrongRange);
                 }
 
+                //仔细阅读交卷
                 if (index == 1){
+                    LinearLayout ll_result_statistics = findViewById(R.id.ll_result_statistics);
+                    ll_result_statistics.setVisibility(View.VISIBLE);
+                    TextView tv_time_used = ll_result_statistics.findViewById(R.id.tv_time_used);
+                    TextView tv_correct_percent = ll_result_statistics.findViewById(R.id.tv_correct_percent);
+
+                    LogUtils.i("selectedItems",selectedItems.toString());
+                    LogUtils.i("rightChoices",rightChoices.toString());
+
+                    for (int i = 0; i < 10; i++){
+                        //不包含，说明没做，给它加一个没做的标识(0)
+                        if (!selectedItems.containsKey(i)){
+                            selectedItems.put(i,0);
+                        }
+                    }
+                    LogUtils.i("selectedItems",selectedItems.toString());
+
+                    for (int i = 0; i < selectedItems.size(); i++){
+                        //得到所选项序号，要转换为对应字母
+                        int answerIndex = selectedItems.get(i);
+                        //把选项(position)转化为字母
+                        String answer = passageLetters.get(answerIndex);
+                        carefullyReadingUserAnswer.add(answer);
+                    }
+                    LogUtils.i("carefullyReadingUserAnswer",carefullyReadingUserAnswer.toString());
+
+                    //正确题数
+                    int rightTotal = 0;
+                    for (int i = 0; i < rightChoices.size(); i++){
+                        //正确答案
+                        String right = rightChoices.get(i);
+
+                        //用户选择答案
+                        if (i >= carefullyReadingUserAnswer.size()){
+                            carefullyReadingUserAnswer.add("空");
+                        }
+                        String userAnswer = carefullyReadingUserAnswer.get(i);
+
+                        if (right.equals(userAnswer)){
+                            carefullyReadingResult.add(true);
+                            rightTotal++;
+                        }else {
+                            carefullyReadingResult.add(false);
+                        }
+
+                    }
+
+                    double correctPercent = rightTotal/(double)10;
+                    double result = round(correctPercent,2);
+                    tv_correct_percent.setText("正确率："+result*100+"%");
+
+                    for (int i = 0; i < userAnswerTV.size(); i++){
+                        TextView textView = userAnswerTV.get(i);
+                        textView.setText("你的答案："+carefullyReadingUserAnswer.get(i));
+                        if (!carefullyReadingResult.get(i)){
+                            textView.setTextColor(getResources().getColor(R.color.wrong_answer));
+                        }
+                    }
+
+                    //更新视图
+                    mHandler.sendEmptyMessage(0);
 
                 }
 
                 if (index == 2){
+                    topBar.setRighttIsVisable(false);
+                    controlBar.setVisibility(View.GONE);
+                    //禁用后颜色会变浅
+//                    disableRadioGroup((RadioGroup) findViewById(R.id.rg_answer1));
+
+                    LinearLayout ll_result_statistics = findViewById(R.id.ll_result_statistics);
+                    ll_result_statistics.setVisibility(View.VISIBLE);
+                    TextView tv_time_used = ll_result_statistics.findViewById(R.id.tv_time_used);
+                    TextView tv_correct_percent = ll_result_statistics.findViewById(R.id.tv_correct_percent);
+
+                    //存储最终的结果
+                    List<Boolean> answerList = new ArrayList<>();
                     // 获取carefullyReading做的答案
                     for (int i = 0; i < carefullyReadingAnswer.size(); i++){
                         Map answer = carefullyReadingAnswer.get(i);
-                        List<String> answerList = new ArrayList<>();
-                        LogUtils.i("carefullyReading",answer.toString());
-                        for (int j = 0; j < answer.size(); j++){
-                            switch ((int)answer.get(j)){
-                                case -1:    // 没选
-                                    answerList.add("-1");
-                                    break;
-                                case 1 :
-                                    answerList.add("A");
-                                    break;
-                                case 2 :
-                                    answerList.add("B");
-                                    break;
-                                case 3 :
-                                    answerList.add("C");
-                                    break;
-                                case 0 :
-                                    answerList.add("D");
-                                    break;
+
+                        List passageAnswer; // 记录每篇文章的答案
+                        if (i == 0){
+                            passageAnswer = rightChoices.subList(0,5);
+                        }else {
+                            passageAnswer = rightChoices.subList(5,10);
+                        }
+
+                        for (int j = 0; j < passageAnswer.size(); j++){
+
+                            // 判断当前的题目是否做了,true表示做了
+                            if (answer.containsKey(i)){
+                                int userAnswer = (int) answer.get(i);
+                                switch (userAnswer){
+                                    case 0 :
+                                        answerList.add(passageAnswer.get(j).equals("A"));
+                                        break;
+                                    case 1 :
+                                        answerList.add(passageAnswer.get(j).equals("B"));
+                                        break;
+                                    case 2 :
+                                        answerList.add(passageAnswer.get(j).equals("C"));
+                                        break;
+                                    case 3 :
+                                        answerList.add(passageAnswer.get(j).equals("D"));
+                                        break;
+                                }
+                            }else {
+                                answerList.add(false);
                             }
                         }
-                        LogUtils.i("answerList",answerList.toString());
+
                     }
+
+                    //统计answerList中有多少true，计算准确率
+                    int rightTotal = 0;
+                    int index = 0;
+                    for (boolean isTrue : answerList){
+                        if (isTrue){
+                            rightTotal++;
+                        }else {
+                            if (index < 5){
+                                TextView textView = questionsIndexTextViews.get(0).get(index);
+                                textView.setTextColor(getResources().getColor(R.color.wrong_answer));
+                            }else {
+                                TextView textView = questionsIndexTextViews.get(1).get(index%5);
+                                textView.setTextColor(getResources().getColor(R.color.wrong_answer));
+                            }
+                        }
+                        index = index + 1;
+                    }
+
+                    tv_time_used.setText("用时："+0.0);
+
+                    double correctPercent = rightTotal/(double)10;
+                    double result = round(correctPercent,2);
+                    tv_correct_percent.setText("正确率："+ result*100 +"%");
+
                 }
 
             }
@@ -233,21 +400,29 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
         ivIConCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CollectionBank collectionBank = CollectionBank.getInstance();
-                if (!isCollected){    //默认为false，为收藏
-                    isCollected = true;
-                    ivIConCollection.setImageResource(R.drawable.icon_collection_after);
-                    reading = new CollectedReading(testPaperIndex,index);
-                    collectionBank.add(reading);
-                    Toast.makeText(ReadingExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
-                    LogUtils.i("collectedReading",collectionBank.getCollectedReading().toString());
+                if (am.isOnline()){
+
+                    if (!isCollected){    //默认为false，为收藏
+                        isCollected = true;
+                        ivIConCollection.setImageResource(R.drawable.icon_collection_after);
+                        reading = new CollectedReading(testPaperIndex,index);
+                        if (!collectedReading.contains(reading)){
+                            collectedReading.add(reading);
+                        }
+                        Toast.makeText(ReadingExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
+                    }else {
+                        isCollected = false;
+                        ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
+                        if (collectedReading.contains(reading)){
+                            collectedReading.remove(reading);
+                        }
+                        Toast.makeText(ReadingExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
+                    }
+
                 }else {
-                    isCollected = false;
-                    ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
-                    collectionBank.remove(reading);
-                    Toast.makeText(ReadingExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
-                    LogUtils.i("collectedReading",collectionBank.getCollectedReading().toString());
+                    ToastUtils.show("登录后可使用收藏功能");
                 }
+
             }
         });
 
@@ -260,7 +435,8 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
             initTextView();
         }
 
-        if (index == 1){    // 快速阅读，显示右侧抽屉按钮
+        // 快速阅读，显示右侧抽屉按钮
+        if (index == 1){
             tvTitleDisplay.setPadding(0,0,40,0);
             drawer = findViewById(R.id.drawer);
             drawer.setVisibility(View.VISIBLE);
@@ -300,6 +476,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                     final CarefullyReadingFragment carefullyReadingFragment =
                             new CarefullyReadingFragment(title, questionList);
                     carefullyReadingAnswer.add(carefullyReadingFragment.questionMap);//拿到答案
+                    questionsIndexTextViews.add(carefullyReadingFragment.questionsIndexTextViews);
                     LogUtils.i("carefullyReadingAnswer",carefullyReadingAnswer.toString());
                     return carefullyReadingFragment;
                 }
@@ -318,59 +495,11 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
     private void initDrawerContent(){
 
         lvDrawerContent = drawer.findViewById(R.id.lv_drawer_content);
-        lvDrawerContent.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return quicklyReadingQuestions.size();
-            }
-
-            @Override
-            public Object getItem(int i) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int i) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup viewGroup) {
-                View view;
-                /**对ListView的优化，convertView为空时，创建一个新视图；
-                 * convertView不为空时，代表它是滚出,
-                 * 放入Recycler中的视图,若需要用到其他layout，
-                 * 则用inflate(),同一视图，用findViewBy()
-                 * **/
-                if(convertView == null )
-                {
-                    LayoutInflater inflater = ReadingExamActivity.this.getLayoutInflater();
-                    view = inflater.inflate(R.layout.drawer_content_list_item,null);
-                    //view = View.inflate(getBaseContext(),R.layout.item,null);
-                }
-                else
-                {
-                    view = convertView;
-                }
-
-                TextView textView = view.findViewById(R.id.tv_drawer_content_item);
-                textView.setText(quicklyReadingQuestions.get(position).getQuestion());
-
-                WheelPicker wheel = view.findViewById(R.id.wheel);
-                wheel.setData(passageLetters);
-                wheel.setIndicator(true);
-                wheel.setIndicatorColor(R.color.exit_dialog_orange);
-                wheel.setVisibleItemCount(3);
-                wheel.setItemTextColor(R.color.colorBlack);
-                wheel.setSelectedItemTextColor(R.color.colorAccent);
-                wheel.setCurtain(true);
-                wheel.setAtmospheric(true);
-                wheel.isCurved();
-
-                return view;
-
-            }
-        });
+        lvDrawerContent.setLayoutManager(new
+                LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        QuicklyRVAdapter adapter = new QuicklyRVAdapter(0,quicklyReadingQuestions,passageLetters,rightChoices);
+        lvDrawerContent.setAdapter(adapter);
+        selectedItems = adapter.getSelectedItems();
     }
 
     //选词填空部分
@@ -444,7 +573,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
         tvTitleDisplay.setText(content);
     }
 
-    class MyClickableSpan extends ClickableSpan {
+    private class MyClickableSpan extends ClickableSpan {
         // 题目序号
         int answerIndex;
 
@@ -514,4 +643,102 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
 
     }
 
+    /**
+     * double保留scale位小数
+     * @param v
+     * @param scale
+     * @return
+     */
+    public double round(Double v, int scale) {
+        if (scale < 0) {
+            throw new IllegalArgumentException("The scale must be a positive integer or zero");
+        }
+        BigDecimal b = null == v ? new BigDecimal("0.0") : new BigDecimal(Double.toString(v));
+        BigDecimal one = new BigDecimal("1");
+        return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    /**
+     * 启用RadioGroup
+     * @param radioGroup
+     */
+    public void enableRadioGroup(RadioGroup radioGroup) {
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+            radioGroup.getChildAt(i).setEnabled(true);
+        }
+    }
+
+    /**
+     * 禁用RadioGroup
+     * @param radioGroup
+     */
+    public void disableRadioGroup(RadioGroup radioGroup) {
+        for (int i = 0; i < radioGroup.getChildCount(); i++) {
+            radioGroup.getChildAt(i).setEnabled(false);
+        }
+    }
+
+    /**
+     * 从map中取出数据：collectedWriting
+     */
+    private void initCollectedWriting(final String telephone){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String,Object> map = MySqlDBOpenHelper.getUserInfoFormMySql(telephone);
+
+                if (map != null){
+                    String s = "";
+                    for (String key : map.keySet()){
+                        s += key + ":" + map.get(key) + "\n";
+                    }
+                    LogUtils.i("查询结果",s);
+
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<ArrayList<CollectedReading>>(){}.getType();
+                    if (map.get("collectedReading") != null){
+                        collectedReading = gson.fromJson(map.get("collectedReading").toString(),type);
+                    }
+                }else {
+                    ToastUtils.show(ReadingExamActivity.this,"查询结果为空");
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (am.isOnline()){
+
+            Gson gson = new Gson();
+            final String inputCollectedReading = gson.toJson(collectedReading);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Connection conn = MySqlDBOpenHelper.getConn();
+                    String sql_insert = "update user set collectedReading=? " +
+                            "where telephone = "+telephone;
+                    try {
+
+                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                        pstm.setString(1, inputCollectedReading);
+                        pstm.executeUpdate();
+
+                        if (pstm != null){
+                            pstm.close();
+                        }
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        }
+
+    }
 }

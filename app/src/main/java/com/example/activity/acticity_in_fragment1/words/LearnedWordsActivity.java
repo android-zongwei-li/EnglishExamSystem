@@ -8,10 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.MyApplication;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.adapter.WordsListRVAdapter;
 import com.example.beans.Word;
 import com.example.myapplication.R;
+import com.example.utils.AccountManager;
 import com.example.utils.LogUtils;
 import com.example.utils.MySqlDBOpenHelper;
 import com.example.utils.ToastUtils;
@@ -59,7 +61,9 @@ public class LearnedWordsActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unfamiliar_words);
 
-        getLearnedWordsBook("16651605583");
+        AccountManager am = AccountManager.getInstance(getApplication());
+        String telephone = am.getTelephone();
+        getLearnedWordsBook(telephone);
 
         TopBar topBar = findViewById(R.id.topBar);
         topBar.setTitle(R.string.title_learned_words_book);

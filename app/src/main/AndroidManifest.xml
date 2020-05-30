@@ -20,21 +20,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.example.activity.acticity_in_fragment1.WebViewActivity"></activity>
-        <!-- Splash 引导页 -->
+        <activity android:name="com.example.activity.activity_in_fragment3.SettingActivity"></activity>
+        <activity android:name="com.example.activity.activity_in_fragment3.AboutMeActivity" />
+        <activity android:name="com.example.activity.acticity_in_fragment1.WebViewActivity" /> <!-- Splash 引导页 -->
         <activity android:name="com.example.activity.SplashActivity">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        <!-- ViewPager 引导页 -->
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> <!-- ViewPager 引导页 -->
         <activity android:name="com.example.MainActivity" /> <!-- Fragment1 : 四种题型页面 -->
         <activity android:name="com.example.activity.acticity_in_fragment1.listening.ListeningActivity" /> <!-- 听力——短篇新闻 -->
         <activity android:name="com.example.activity.acticity_in_fragment1.listening.ShortNewsActivity" />
-        <activity android:name="com.example.activity.acticity_in_fragment1.reading.ReadingActivity"></activity>
-        <activity android:name="com.example.activity.acticity_in_fragment1.trans.TransActivity"></activity>
-        <activity android:name="com.example.activity.acticity_in_fragment1.writing.WritingActivity"></activity> <!-- Fragment2 : 音频 页面主页 -->
+        <activity android:name="com.example.activity.acticity_in_fragment1.reading.ReadingActivity" />
+        <activity android:name="com.example.activity.acticity_in_fragment1.trans.TransActivity" />
+        <activity android:name="com.example.activity.acticity_in_fragment1.writing.WritingActivity" /> <!-- Fragment2 : 音频 页面主页 -->
         <activity android:name="com.example.VideoModule.VideoActivity" />
         <activity android:name="com.example.VideoModule.videoactivity.SystemVideoPlayer" /> <!-- Fragment3 : 登录 页面 -->
         <activity android:name="com.example.activity.activity_in_fragment3.LoginActivity" /> <!-- 选词填空 页面 -->
@@ -48,16 +49,12 @@
         <activity android:name="com.example.activity.acticity_in_fragment1.WordsBookActivity" />
         <activity android:name="com.example.activity.acticity_in_fragment1.words.StudyWordsActivity" />
         <activity android:name="com.example.activity.acticity_in_fragment1.listening.ListeningExamActivity" />
-
-        <activity android:name="com.example.activity.activity_in_fragment3.CollectionActivity"/>
-        <activity android:name="com.example.activity.activity_in_fragment3.CollectionDetailsActivity"/>
-
-        <activity android:name="com.example.activity.acticity_in_fragment1.words.UnfamiliarWordsActivity"/>
-        <activity android:name="com.example.activity.acticity_in_fragment1.words.LearnedWordsActivity"/>
+        <activity android:name="com.example.activity.activity_in_fragment3.CollectionActivity" />
+        <activity android:name="com.example.activity.activity_in_fragment3.CollectionDetailsActivity" />
+        <activity android:name="com.example.activity.acticity_in_fragment1.words.UnfamiliarWordsActivity" />
+        <activity android:name="com.example.activity.acticity_in_fragment1.words.LearnedWordsActivity" />
 
         <service android:name="com.example.service.AudioService" />
-
-
     </application>
 
 </manifest>

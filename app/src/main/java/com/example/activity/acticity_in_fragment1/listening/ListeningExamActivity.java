@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,21 +22,39 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.MyApplication;
 import com.example.activity.acticity_in_fragment1.reading.ReadingExamActivity;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.beans.CollectedListening;
-import com.example.beans.CollectionBank;
 import com.example.beans.Question;
 import com.example.myapplication.R;
+import com.example.utils.AccountManager;
 import com.example.utils.LogUtils;
+import com.example.utils.MySqlDBOpenHelper;
+import com.example.utils.ToastUtils;
 import com.example.utils.testPaperUtils.TestPaperFactory;
+import com.example.utils.testPaperUtils.TestPaperFromWord;
 import com.example.view.CommonControlBar;
 import com.example.view.SimpleAudioPlayer;
 import com.example.view.topbar.TopBar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+/**
+ *
+ * 注：交卷后的页面最好标识出未做的题
+ * radio button最好不能再选择
+ * 在提供一个返回主页的选项，应该要在topbar中增加方法
+ */
 public class ListeningExamActivity extends BaseAppCompatActivity {
     public static final String QUESTION_TYPE = "questionType";  // 题型
     public static final String TEST_PAPER_INDEX = "testPaperIndex";  //试卷序号
@@ -47,8 +66,12 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
     // 快速阅读：index == 1
     // 仔细阅读：index == 2
     private int index;  // 题型标识
-    private int testPaperIndex; //试卷序号（第几套）
+    private int testPaperIndex; //试卷序号（第几套）,这是总的试题序号
+    private String year;
+    private String month;
+    private String whichIndex;//这个变量记录，当年试题的第几套，有1、2、3
 
+    private TopBar topBar;
     private CommonControlBar controlBar;
     private ListView lv_listening;
     private TextView tv_listening;//听力题目
@@ -60,23 +83,39 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
     private Button btn_dialog_determine,btn_dialog_cancel;//dialog中的按钮
 
     private List<Integer> checkedIdList = new ArrayList<>();//存储选中的id
-    List<Integer> rightChoices = new ArrayList<>();// 正确答案，1，2，3，4对应A,B,C,D
+    private List<Integer> rightChoices = new ArrayList<>();// 正确答案，1，2，3，4对应A,B,C,D
 
     // 文章
-    String title;
+    private String title;
     private List<Question> listeningQuestions; // 听力 25 道，8篇
     private List<Question> questionList;
 
-    CollectedListening listening = null;
+    private CollectedListening listening = null;
     // 记录是否已经收藏
     private boolean isCollected = false;
+
+    //记录未完成题目的序号
+    ArrayList<Integer> unFinishedQuestionsIndex = new ArrayList<>();
+    //记录选择的答案，有 -1、1、2、3、0
+    ArrayList<Integer> checkedAnswers = new ArrayList<>();
+
+    //已收藏听力题
+    private ArrayList<CollectedListening> collectedListening = new ArrayList<>();
+
+    private AccountManager am;
+    private String telephone;
 
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (msg.what == 0) {    // 交卷，刷新UI
+                topBar.setRighttIsVisable(false);
                 controlBar.setVisibility(View.GONE);
                 player.setVisibility(View.GONE);
+                LinearLayout ll_result_statistics = findViewById(R.id.ll_result_statistics);
+                ll_result_statistics.setVisibility(View.VISIBLE);
+                TextView tv_time_used = ll_result_statistics.findViewById(R.id.tv_time_used);
+                TextView tv_correct_percent = ll_result_statistics.findViewById(R.id.tv_correct_percent);
 
                 lv_listening.setAdapter(new BaseAdapter() {
                     @Override
@@ -97,7 +136,7 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         Question question = questionList.get(position);
-                        int checkedIndex = question.getCurrentAnswer();
+                        int checkedIndex = question.getCurrentAnswer();//1、2、3、0
 
                         convertView = View.inflate(ListeningExamActivity.this,R.layout.listening_listview_item,null);
 
@@ -116,9 +155,18 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                             rb = (RadioButton) rg.getChildAt(i);
                             rb.setText(choices[i]);
 
-                            if (i == checkedIndex-1){   //checkedIndex:[1,4]
-                                rb.setTextColor(getResources().getColor(R.color.wrong_answer));
+                            // 最后一个选项，特殊处理一下，它的序号为0，以后有时间看一下为什么会这样
+                            if (i == 3){
+                                if (checkedIndex == 0){ //表示选择了第四个答案
+                                    rb.setTextColor(getResources().getColor(R.color.wrong_answer));
+                                }
+                            }else {
+                                // 前三个选项。checkedIndex:1、2、3
+                                if (i == checkedIndex-1){
+                                    rb.setTextColor(getResources().getColor(R.color.wrong_answer));
+                                }
                             }
+
                             if (i == rightChoices.get(position)){
                                 rb.setTextColor(getResources().getColor(R.color.right_answer));
                             }
@@ -127,6 +175,48 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                         return convertView;
                     }
                 });
+
+                //未完成题目个数
+                int unFinishedNumber = unFinishedQuestionsIndex.size();
+                //总题数
+                int totalNumber = questionList.size();
+                // 正确题数
+                int rightNumber = 0;
+
+                for (int i = 0; i < questionList.size(); i++){
+                    int currentAnswer = questionList.get(i).getCurrentAnswer();
+                    checkedAnswers.add(currentAnswer);
+                }
+
+                int questionIndex = 0; //记录当前题号，每个题只比较一次
+                //isTrue ：-1、1、2、3、0  未做、A、B、C、D
+                for (int isTrue : checkedAnswers){
+                    LogUtils.i("选择的答案",isTrue+"");
+                    // 和答案对齐
+                    if (isTrue == 0){
+                        isTrue = 3;
+                    }else if (isTrue == -1){
+                        //不变
+                    }else{
+                        // 1、2、3
+                        // 变成 0、1、2  和   A、B、C对应
+                        isTrue = isTrue - 1;
+                    }
+
+                    //rightAnswer：0、1、2、3  A、B、C、D
+                    if (isTrue == rightChoices.get(questionIndex)){
+                        rightNumber++;
+                    }
+
+                    // 下一题
+                    questionIndex++;
+                }
+
+                //准确率
+                double correctPercent = rightNumber*100/(double)totalNumber;
+                LogUtils.i("correctPercent",correctPercent+"");
+                double result = round(correctPercent,2);
+                tv_correct_percent.setText("正确率："+ result +"%");
 
             }
         }
@@ -139,8 +229,14 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
 
         initData();
 
+        am = AccountManager.getInstance(getApplication());
+        telephone = am.getTelephone();
+        if (am.isOnline()){
+            initCollectedListening(telephone);
+        }
+
         //
-        TopBar topBar = findViewById(R.id.topBar);
+        topBar = findViewById(R.id.topBar);
         topBar.setTitle(titles[index]);
         topBar.setOnTopBarClickListener(new TopBar.topbarClickListener() {
             @Override
@@ -164,14 +260,15 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
 
                 //判断是否有题目未完成
                 boolean isFnished = true;  //是否全部完成
-                int[] unFinishedQuestionsIndex = new int[questionList.size()];   //记录未完成题目的序号
+
                 for (int i = 0; i < questionList.size(); i++){
                     int checkedIndex = questionList.get(i).getCurrentAnswer();
                     checkedIdList.add(checkedIndex);
 
                     if (checkedIndex == -1){    //未选择任何项
                         isFnished = false;
-                        unFinishedQuestionsIndex[i] = i;
+                        //加 1 ，题目序号从一开始记录，是真实的题目序号
+                        unFinishedQuestionsIndex.add(i+1);
                     }
                 }
 
@@ -179,7 +276,8 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                     tv_dialog_title.setText("全部完成");
                     tv_dialog_content.setText("是否交卷？");
                 }else {
-                    tv_dialog_title.setText("第 "+(unFinishedQuestionsIndex[0]+1)+" 还未完成");
+                    // 这里提示第一个未完成的题目
+                    tv_dialog_title.setText("第 "+unFinishedQuestionsIndex.get(0)+" 题还未完成");
                     tv_dialog_content.setText("确定交卷？");
                 }
                 btn_dialog_determine.setOnClickListener(new View.OnClickListener() {
@@ -207,21 +305,30 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
         ivIConCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CollectionBank collectionBank = CollectionBank.getInstance();
-                if (!isCollected){    //默认为false，为收藏
-                    isCollected = true;
-                    ivIConCollection.setImageResource(R.drawable.icon_collection_after);
-                    listening = new CollectedListening(testPaperIndex,index);
-                    collectionBank.add(listening);
-                    Toast.makeText(ListeningExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
-                    LogUtils.i("collectedListening",collectionBank.getCollectedListenings().toString());
+
+                if (am.isOnline()){
+
+                    if (!isCollected){    //默认为false，为收藏
+                        isCollected = true;
+                        ivIConCollection.setImageResource(R.drawable.icon_collection_after);
+                        listening = new CollectedListening(testPaperIndex,index);
+                        if (!collectedListening.contains(listening)){
+                            collectedListening.add(listening);
+                        }
+                        Toast.makeText(ListeningExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
+                    }else {
+                        isCollected = false;
+                        ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
+                        if (collectedListening.contains(listening)){
+                            collectedListening.remove(listening);
+                        }
+                        Toast.makeText(ListeningExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
+                    }
+
                 }else {
-                    isCollected = false;
-                    ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
-                    collectionBank.remove(listening);
-                    Toast.makeText(ListeningExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
-                    LogUtils.i("collectedListening",collectionBank.getCollectedListenings().toString());
+                    ToastUtils.show("登录后可收藏题目");
                 }
+
             }
         });
 
@@ -255,7 +362,7 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                 rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        //checked 取值范围：(1、2、3、4)*4
+                        //checked 取值范围：(1、2、3、0)*4
                         question.setCurrentAnswer(checkedId%4);   //记录下当前的选中项，默认为 -1
                     }
                 });
@@ -266,6 +373,12 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                 // question.getCurrentAnswer: -1,1,2,3,4
                 if (question.getCurrentAnswer() != -1) {
                     int i = (question.getCurrentAnswer() - 1);
+
+                    // 当选中最后一个选项时，i = -1，要重设为3
+                    if (i == -1){
+                        i = 3;
+                    }
+
                     ((RadioButton) rg.getChildAt(i)).setChecked(true);
                 }
 
@@ -285,8 +398,10 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
 
         //
         player = findViewById(R.id.simple_audio_player);
-        player.setResourceId(R.raw.cet4_201806_01);
-
+        //访问本地资源
+        player.setUrl("http://192.168.43.68:8080/listening-audio/"+year+"-"+month+"-"+whichIndex+".mp3");
+        //访问云资源
+ //       player.setUrl("https://english-exam-system-resources.oss-cn-beijing.aliyuncs.com/listening-audio/"+year+"-"+month+"-"+whichIndex+".mp3");
     }
 
     /**
@@ -297,10 +412,12 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
         Intent intent = getIntent();
         index = intent.getIntExtra(ReadingExamActivity.QUESTION_TYPE,0);
         testPaperIndex = intent.getIntExtra(ReadingExamActivity.TEST_PAPER_INDEX,0);
-        Toast.makeText(this,testPaperIndex+"",Toast.LENGTH_LONG).show();
 
         TestPaperFactory testPaperFactory = TestPaperFactory.getInstance();
-        listeningQuestions = testPaperFactory.getAllTestPaperListening().get(testPaperIndex).getListeningQuestionList();
+        listeningQuestions = testPaperFactory.getAllTestPaperListening()
+                .get(testPaperIndex)
+                .getListeningQuestionList();
+        // 答案部分
         List<String> listeningAnswer = testPaperFactory.getTestPaperList().get(testPaperIndex)
                 .getListeningAndReadingAnswer().subList(0,25);
         LogUtils.i("listeningAnswer",listeningAnswer.toString());
@@ -323,6 +440,20 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
             }
         }
 
+        // 获取年份、月份、第几套
+        TestPaperFromWord.TestPaperInfo testPaperInfo = testPaperFactory
+                .getAllTestPaperInfo().get(testPaperIndex);
+        year = testPaperInfo.getYear();
+        month = testPaperInfo.getMonth();
+        whichIndex = testPaperInfo.getIndex();
+        // 第三套卷，没有独立的听力资源，加载第二套
+        // 这里的资源后面要和实际情况比对一下，
+        // 看看每年具体的题目是怎么编排的
+        if (Integer.valueOf(whichIndex) == 3){
+            whichIndex = 2 + "";
+        }
+
+
         switch (index){ //根据题型，初始化不同的数据
             case 0: // 2，2，3
                 questionList = listeningQuestions.subList(0,7);
@@ -340,4 +471,76 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
 
     }
 
+    public double round(Double v, int scale) {
+        if (scale < 0) {
+            throw new IllegalArgumentException("The scale must be a positive integer or zero");
+        }
+        BigDecimal b = null == v ? new BigDecimal("0.0") : new BigDecimal(Double.toString(v));
+        BigDecimal one = new BigDecimal("1");
+        return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
+
+    /**
+     * 从map中取出数据：collectedListening(收藏的听力题)
+     */
+    private void initCollectedListening(final String telephone){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String,Object> map = MySqlDBOpenHelper.getUserInfoFormMySql(telephone);
+
+                if (map != null){
+                    String s = "";
+                    for (String key : map.keySet()){
+                        s += key + ":" + map.get(key) + "\n";
+                    }
+                    LogUtils.i("查询结果",s);
+
+                    Gson gson = new Gson();
+                    Type type = new TypeToken<ArrayList<CollectedListening>>(){}.getType();
+                    if (map.get("collectedListening") != null){
+                        collectedListening = gson.fromJson(map.get("collectedListening").toString(),type);
+                    }
+                }else {
+                    ToastUtils.show(ListeningExamActivity.this,"查询结果为空");
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (am.isOnline()){
+
+            Gson gson = new Gson();
+            final String inputCollectedListening = gson.toJson(collectedListening);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Connection conn = MySqlDBOpenHelper.getConn();
+                    String sql_insert = "update user set collectedListening=? " +
+                            "where telephone = "+telephone;
+                    try {
+
+                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                        pstm.setString(1, inputCollectedListening);
+                        pstm.executeUpdate();
+
+                        if (pstm != null){
+                            pstm.close();
+                        }
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        }
+
+    }
 }

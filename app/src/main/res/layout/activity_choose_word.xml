@@ -8,6 +8,34 @@
 
     <include layout="@layout/widget_common_control_bar"/>
 
+    <!-- 结果统计-->
+    <LinearLayout
+        android:id="@+id/ll_result_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/tv_time_used"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="用时："
+            />
+
+        <TextView
+            android:id="@+id/tv_correct_percent"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="正确率："
+            />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rl_exam"
         android:layout_width="match_parent"
@@ -48,7 +76,6 @@
                 />
         </ScrollView>
 
-
         <!--设置抽屉控件-->
         <SlidingDrawer
             android:id="@+id/drawer"
@@ -78,7 +105,7 @@
             </LinearLayout>
 
             <!-- 设置抽屉显示内容-->
-            <ListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lv_drawer_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

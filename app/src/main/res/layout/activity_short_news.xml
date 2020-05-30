@@ -6,6 +6,34 @@
 
     <include layout="@layout/widget_topbar"/>
 
+    <!-- 结果统计-->
+    <LinearLayout
+        android:id="@+id/ll_result_statistics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/tv_time_used"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="用时："
+            />
+
+        <TextView
+            android:id="@+id/tv_correct_percent"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="正确率："
+            />
+
+    </LinearLayout>
+
     <include layout="@layout/widget_common_control_bar"/>
 
     <!-- 题目 和 底部音频控制面板-->

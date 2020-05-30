@@ -13,15 +13,30 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.MyApplication;
+import com.example.activity.acticity_in_fragment1.listening.ListeningExamActivity;
 import com.example.activity.base.BaseAppCompatActivity;
+import com.example.beans.CollectedListening;
 import com.example.beans.CollectionBank;
 import com.example.beans.MySqliteManager;
 import com.example.beans.Translation;
 import com.example.beans.Writing;
 import com.example.myapplication.R;
+import com.example.utils.AccountManager;
 import com.example.utils.LogUtils;
+import com.example.utils.MySqlDBOpenHelper;
+import com.example.utils.ToastUtils;
 import com.example.view.CommonControlBar;
 import com.example.view.topbar.TopBar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
 
@@ -65,6 +80,14 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
 
     private int title_type;
 
+    //已收藏写作
+    private ArrayList<Writing> collectedWriting = new ArrayList<>();
+    //已收藏翻译
+    private ArrayList<Translation> collectedTranslation = new ArrayList<>();
+
+    private AccountManager am;
+    private String telephone;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +99,12 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
     }
 
     private void initData() {
+
+        am = AccountManager.getInstance(getApplication());
+        telephone = am.getTelephone();
+        if (am.isOnline()){
+            initCollectedWritingAndTranslation(telephone);
+        }
 
         Intent intent = getIntent();
         title = intent.getStringExtra(QUESTION);
@@ -138,30 +167,46 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
         ivIConCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CollectionBank collectionBank = CollectionBank.getInstance();
-                if (!isCollected){    //默认为false，为收藏
-                    isCollected = true;
-                    ivIConCollection.setImageResource(R.drawable.icon_collection_after);
-                    if (mType.equals("translation")) {
-                        collectionBank.add(mTranslation);
-                        LogUtils.i("collectedTranslation",collectionBank.getCollectedTranslations().toString());
-                    } else {
-                        collectionBank.add(mWriting);
-                        LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
+                if (am.isOnline()){
+
+                    if (!isCollected){    //默认为false，为收藏
+                        isCollected = true;
+                        ivIConCollection.setImageResource(R.drawable.icon_collection_after);
+                        if (mType.equals("translation")) {
+                            if (!collectedTranslation.contains(mTranslation)){
+                                collectedTranslation.add(mTranslation);
+                            }
+                        } else {
+                            if (!collectedWriting.contains(mWriting)){
+                                collectedWriting.add(mWriting);
+                            }
+                            //        collectionBank.add(mWriting);
+                            //       LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
+                        }
+                        Toast.makeText(WritingAndTranslationExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
+                    }else {
+                        isCollected = false;
+                        ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
+                        if (mType.equals("translation")) {
+                            if (collectedTranslation.contains(mTranslation)){
+                                collectedTranslation.remove(mTranslation);
+                            }
+                            //              collectionBank.remove(mTranslation);
+                            //             LogUtils.i("collectedTranslation",collectionBank.getCollectedTranslations().toString());
+                        } else {
+                            if (collectedWriting.contains(mWriting)){
+                                collectedWriting.remove(mWriting);
+                            }
+                            //              collectionBank.remove(mWriting);
+                            //               LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
+                        }
+                        Toast.makeText(WritingAndTranslationExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(WritingAndTranslationExamActivity.this,"已收藏",Toast.LENGTH_SHORT).show();
+
                 }else {
-                    isCollected = false;
-                    ivIConCollection.setImageResource(R.drawable.icon_collection_befor);
-                    if (mType.equals("translation")) {
-                        collectionBank.remove(mTranslation);
-                        LogUtils.i("collectedTranslation",collectionBank.getCollectedTranslations().toString());
-                    } else {
-                        collectionBank.remove(mWriting);
-                        LogUtils.i("collectedWriting",collectionBank.getCollectedWritings().toString());
-                    }
-                    Toast.makeText(WritingAndTranslationExamActivity.this,"取消收藏",Toast.LENGTH_SHORT).show();
+                    ToastUtils.show("登录后可使用收藏功能");
                 }
+
             }
         });
 
@@ -265,4 +310,73 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
 
     }
 
+    /**
+     * 从map中取出收藏的写作和翻译题
+     */
+    private void initCollectedWritingAndTranslation(final String telephone){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String,Object> map = MySqlDBOpenHelper.getUserInfoFormMySql(telephone);
+
+                if (map != null){
+                    String s = "";
+                    for (String key : map.keySet()){
+                        s += key + ":" + map.get(key) + "\n";
+                    }
+                    LogUtils.i("查询结果",s);
+
+                    Gson gson = new Gson();
+                    if (map.get("collectedWriting") != null){
+                        Type type = new TypeToken<ArrayList<Writing>>(){}.getType();
+                        collectedWriting = gson.fromJson(map.get("collectedWriting").toString(),type);
+                    }
+                    if (map.get("collectedTranslation") != null){
+                        Type type = new TypeToken<ArrayList<Translation>>(){}.getType();
+                        collectedTranslation = gson.fromJson(map.get("collectedTranslation").toString(),type);
+                    }
+                }else {
+                    ToastUtils.show(WritingAndTranslationExamActivity.this,"查询结果为空");
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (am.isOnline()){
+
+            Gson gson = new Gson();
+            final String inputCollectedWriting = gson.toJson(collectedWriting);
+            final String inputCollectedTranslation = gson.toJson(collectedTranslation);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Connection conn = MySqlDBOpenHelper.getConn();
+                    String sql_insert = "update user set collectedWriting=?,collectedTranslation=? " +
+                            "where telephone = "+telephone;
+                    try {
+
+                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                        pstm.setString(1, inputCollectedWriting);
+                        pstm.setString(2, inputCollectedTranslation);
+                        pstm.executeUpdate();
+
+                        if (pstm != null){
+                            pstm.close();
+                        }
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+        }
+
+    }
 }

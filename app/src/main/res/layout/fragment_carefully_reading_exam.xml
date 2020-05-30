@@ -87,6 +87,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:text="Q1"
+            android:textColor="@color/default_text"
             />
 
         <TextView
@@ -96,6 +97,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:text="Q2"
+            android:textColor="@color/default_text"
             />
 
         <TextView
@@ -105,6 +107,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:text="Q3"
+            android:textColor="@color/default_text"
             />
 
         <TextView
@@ -114,6 +117,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:text="Q4"
+            android:textColor="@color/default_text"
             />
 
         <TextView
@@ -123,6 +127,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:text="Q5"
+            android:textColor="@color/default_text"
             />
 
     </LinearLayout>

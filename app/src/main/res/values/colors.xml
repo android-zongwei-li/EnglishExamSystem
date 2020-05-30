@@ -25,4 +25,6 @@
     <color name="right_answer">#815CED57</color>
     <color name="wrong_answer">#82F44336</color>
 
+    <color name="default_text">#100F0F</color>
+
 </resources>

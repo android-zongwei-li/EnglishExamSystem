@@ -1,5 +1,7 @@
 package com.example.beans;
 
+import androidx.annotation.Nullable;
+
 /**
  * Created by: lzw.
  * Date: 2020/5/3
@@ -22,5 +24,17 @@ public class CollectedListening {
 
     public int getQuestionType() {
         return questionType;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == null){
+            return false;
+        }
+        if (obj == this){
+            return true;
+        }
+        CollectedListening c = (CollectedListening) obj;
+        return c.testPaperIndex == this.testPaperIndex && c.questionType == this.questionType;
     }
 }

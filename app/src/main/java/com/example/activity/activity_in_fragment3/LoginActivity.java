@@ -1,5 +1,6 @@
 package com.example.activity.activity_in_fragment3;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +16,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.example.MyApplication;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.myapplication.R;
+import com.example.utils.AccountManager;
 import com.example.utils.MySqlDBOpenHelper;
 import com.example.utils.PhoneNumberUtils;
 import com.example.view.topbar.TopBar;
@@ -93,6 +96,8 @@ public class LoginActivity extends BaseAppCompatActivity {
                         Intent intent = new Intent();
                         intent.putExtra(PARAM_PHONE,phoneNums);
                         setResult(RESULT_OK,intent);
+
+                        saveAccount(phoneNums,true);
 
                         finish();
                     }else { // 验证失败，toast提示
@@ -200,6 +205,8 @@ public class LoginActivity extends BaseAppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                createProgressBar();
+
                 if (inputPhoneEt.getText().toString().length() == 0){
                     Toast.makeText(getApplicationContext(), "请输入手机号",
                             Toast.LENGTH_SHORT).show();
@@ -219,7 +226,6 @@ public class LoginActivity extends BaseAppCompatActivity {
                 // 将收到的验证码和手机号提交再次核对
                 SMSSDK.submitVerificationCode("86", phoneNums, inputCodeEt
                         .getText().toString());
-                createProgressBar();
 
             }
         });
@@ -286,6 +292,18 @@ public class LoginActivity extends BaseAppCompatActivity {
      */
     private void insetPhoneNum(final String phoneNums) {
 
+    }
+
+    /**
+     * 把登录的账号数据保存下来，后面使用个人单词本和收藏需要用到账户
+     * @param telephone 账户唯一标识（id）
+     * @param isOnline  //暂时用不到
+     */
+    private void saveAccount(String telephone,Boolean isOnline){
+        //把当前的账户信息保存下来
+        AccountManager am = AccountManager.getInstance(getApplication());
+        am.setTelephone(telephone);
+        am.setOnline(isOnline);
     }
 
     @Override

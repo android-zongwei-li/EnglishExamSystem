@@ -10,23 +10,32 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.myapplication.R;
+import com.example.utils.ConnectServer;
 import com.example.view.topbar.TopBar;
 import com.google.android.material.tabs.TabLayout;
 
+import java.sql.Connection;
+
 
 public class ListeningActivity extends BaseAppCompatActivity {
-    private static final String TITLE = "听力";
 
-    private String[] titles = {"短篇新闻","情景对话","听力文章"};
+    private int[] titles = {R.string.listening_short_news,
+            R.string.listening_conversation,R.string.listening_passages};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listening);
 
+        //连接服务器
+        // 现在换了一种获取方式
+        // 把音频放到tomcat的webapps/ROOT文件夹下，通过网页获取。
+        // 这个暂时用不到了
+ //       ConnectServer.getConn();
+
         //
         TopBar topBar = findViewById(R.id.topBar);
-        topBar.setTitle(TITLE);
+        topBar.setTitle(R.string.title_listening);
         topBar.setRighttIsVisable(false);
         topBar.setOnTopBarClickListener(new TopBar.topbarClickListener() {
             @Override
@@ -43,7 +52,8 @@ public class ListeningActivity extends BaseAppCompatActivity {
         //
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.viewpager);
-        ListeningActivity.FmPagerAdapter pagerAdapter = new ListeningActivity.FmPagerAdapter(getSupportFragmentManager());
+        ListeningActivity.FmPagerAdapter pagerAdapter =
+                new ListeningActivity.FmPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
 
         for(int i = 0; i < titles.length; i++){
@@ -57,6 +67,7 @@ public class ListeningActivity extends BaseAppCompatActivity {
         for(int i = 0; i < titles.length; i++){
             tabLayout.getTabAt(i).setText(titles[i]);
         }
+
 
     }
 

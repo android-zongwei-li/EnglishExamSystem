@@ -19,10 +19,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.MyApplication;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.beans.Word;
 import com.example.myapplication.R;
 import com.example.service.AudioService;
+import com.example.utils.AccountManager;
 import com.example.utils.LogUtils;
 import com.example.utils.MySqlDBOpenHelper;
 import com.example.utils.ToastUtils;
@@ -81,6 +83,10 @@ public class StudyWordsActivity extends BaseAppCompatActivity {
     private AlertDialog alertDialog;
     private TextView tv_dialog_title,tv_dialog_content;// dialog中的 title 和 content
     private Button btn_dialog_determine,btn_dialog_cancel;//dialog中的按钮
+
+    //账户信息
+    private AccountManager am;
+    private String telephone;
 
     Handler handler = new Handler(){
         @Override
@@ -150,7 +156,13 @@ public class StudyWordsActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_words);
 
-        initUnfamiliarAndLearnedBook();
+        am = AccountManager.getInstance(getApplication());
+        telephone = am.getTelephone();
+        if (am.isOnline()){
+            initUnfamiliarAndLearnedBook(telephone);
+        }else {
+            ToastUtils.show("登录后可以同步学习记录");
+        }
 
         final Intent intent = getIntent();
         words = (ArrayList<Word>) intent.getSerializableExtra(StudyWordsActivity.WORDS);
@@ -192,7 +204,6 @@ public class StudyWordsActivity extends BaseAppCompatActivity {
         tv_chinese = findViewById(R.id.tv_chinese);
 
         ll_option = findViewById(R.id.ll_option);
-
 
         btn_understand = findViewById(R.id.btn_understand);
         // 发送消息，显示下一个单词
@@ -307,12 +318,12 @@ public class StudyWordsActivity extends BaseAppCompatActivity {
     /**
      * 从map中取出数据：learnedWordsBook(已学单词本)、unfamiliarWordsBook(生词本)
      */
-    private void initUnfamiliarAndLearnedBook(){
+    private void initUnfamiliarAndLearnedBook(final String telephone){
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HashMap<String,Object> map = MySqlDBOpenHelper.getUserInfoFormMySql("16651605583");
+                HashMap<String,Object> map = MySqlDBOpenHelper.getUserInfoFormMySql(telephone);
 
                 if (map != null){
                     String s = "";
@@ -343,31 +354,36 @@ public class StudyWordsActivity extends BaseAppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Gson gson = new Gson();
-        final String inputLearnedWordsBook = gson.toJson(learnedWordsBook);
-        final String inoutUnfamiliarWordsBook = gson.toJson(unfamiliarWordsBook);
+        if (am.isOnline()){
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Connection conn = MySqlDBOpenHelper.getConn();
-                String sql_insert = "update user set learnedWordsBook=?,unfamiliarWordsBook=? " +
-                        "where telephone = 16651605583";
-                try {
+            Gson gson = new Gson();
+            final String inputLearnedWordsBook = gson.toJson(learnedWordsBook);
+            final String inoutUnfamiliarWordsBook = gson.toJson(unfamiliarWordsBook);
 
-                    PreparedStatement pstm = conn.prepareStatement(sql_insert);
-                    pstm.setString(1, inputLearnedWordsBook);
-                    pstm.setString(2,inoutUnfamiliarWordsBook);
-                    pstm.executeUpdate();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Connection conn = MySqlDBOpenHelper.getConn();
+                    String sql_insert = "update user set learnedWordsBook=?,unfamiliarWordsBook=? " +
+                            "where telephone = "+telephone;
+                    try {
 
-                    if (pstm != null){
-                        pstm.close();
+                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                        pstm.setString(1, inputLearnedWordsBook);
+                        pstm.setString(2,inoutUnfamiliarWordsBook);
+                        pstm.executeUpdate();
+
+                        if (pstm != null){
+                            pstm.close();
+                        }
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                    conn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
                 }
-            }
-        }).start();
+            }).start();
+
+        }
+
     }
 }

@@ -2,22 +2,27 @@ package com.example.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RawRes;
 
 import com.example.myapplication.R;
+import com.example.utils.LogUtils;
 import com.example.utils.Utils;
 
 import java.io.IOException;
@@ -50,6 +55,8 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
     private TextView tv_duration;
 
     private static int resourceId; //资源id
+    // 音频地址
+    private static String strUrl;
 
     // 播放听力
     private MediaPlayer mediaPlayer = new MediaPlayer();
@@ -66,11 +73,24 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
 
     private Utils utils = new Utils();
 
+  //  private boolean isInitFinish = false;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             tv_current_position.setText(utils.stringForTime(currentPosition));
+
+            // 地址加载完成
+            if (msg.what == 1){
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initMediaPlayer();
+                    }
+                });
+                thread.start();
+            }
         }
     };
 
@@ -107,20 +127,25 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
 
         iv_pause.setOnClickListener(this);
 
-        initMediaPlayer();
     }
 
     /**
      * 初始化播放器
      */
     private void initMediaPlayer() {
+        LogUtils.i("初始化播放器","开始初始化");
 
-        Uri uri = Uri.parse("android.resource://com.example.myapplication/"+resourceId);
-            //       File file = new File(Environment.getExternalStorageDirectory(), "music.mp3");
+     //   Uri uri = Uri.parse("android.resource://com.example.myapplication/"+resourceId);
+        Uri uri = Uri.parse(strUrl);
+
         try {
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(context,uri);//指定音频文件路径
         } catch (IOException e) {
             e.printStackTrace();
+
+            // 初始化错误以后，设置初始失败
+            LogUtils.e("播放器初始化","失败");
         }
 
         mediaPlayer.setLooping(true);//设置为循环播放
@@ -142,6 +167,8 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
             }
 
         });
+
+ //       isInitFinish = true;
 
     }
 
@@ -194,6 +221,12 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
      */
     @Override
     public void onClick(View v) {
+
+    /*    if (!isInitFinish){
+            Toast.makeText(context, "听力资源正在加载", Toast.LENGTH_SHORT).show();
+            return;
+        }*/
+
         //开始(暂停)按钮的监听
         if (v.getId() == iv_pause.getId()){
             tv_current_position.setVisibility(View.VISIBLE);
@@ -233,7 +266,12 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
         handler = null;
     }
 
-    public static void setResourceId(@RawRes int resourceId) {
+    public static void setUrl(@RawRes int resourceId) {
         SimpleAudioPlayer.resourceId = resourceId;
+    }
+
+    public void setUrl(String strUrl) {
+        SimpleAudioPlayer.strUrl = strUrl;
+        handler.sendEmptyMessage(1);
     }
 }
