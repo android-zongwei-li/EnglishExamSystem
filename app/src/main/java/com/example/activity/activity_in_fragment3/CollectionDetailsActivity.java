@@ -143,7 +143,7 @@ public class CollectionDetailsActivity extends AppCompatActivity {
                     mHandler.sendEmptyMessage(0);
 
                 }else {
-                    ToastUtils.show(CollectionDetailsActivity.this,"查询结果为空");
+                    LogUtils.v("查询结果提示","查询结果为空");
                 }
             }
         }).start();

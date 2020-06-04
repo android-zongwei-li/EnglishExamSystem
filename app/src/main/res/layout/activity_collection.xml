@@ -13,7 +13,7 @@
         android:background="#ffffff"
         android:layout_margin="10dp"
         android:textSize="30dp"
-        android:text="听力"
+        android:text="@string/title_listening"
         />
 
     <Button
@@ -23,7 +23,7 @@
         android:background="#ffffff"
         android:textSize="30dp"
         android:layout_margin="10dp"
-        android:text="阅读"
+        android:text="@string/title_reading"
         />
 
     <Button
@@ -33,7 +33,7 @@
         android:background="#ffffff"
         android:layout_margin="10dp"
         android:textSize="30dp"
-        android:text="翻译"
+        android:text="@string/title_translation"
         />
 
     <Button
@@ -43,7 +43,7 @@
         android:background="#ffffff"
         android:layout_margin="10dp"
         android:textSize="30dp"
-        android:text="写作"
+        android:text="@string/title_writing"
         />
 
 </LinearLayout>

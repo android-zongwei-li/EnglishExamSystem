@@ -5,7 +5,7 @@
     android:orientation="vertical"
     >
 
-    <include layout="@layout/widget_topbar" />
+    <include layout="@layout/widget_top_bar" />
 
     <Button
         android:id="@+id/btn_logout"

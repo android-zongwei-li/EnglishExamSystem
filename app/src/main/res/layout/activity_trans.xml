@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/widget_topbar" />
+    <include layout="@layout/widget_top_bar" />
 
     <View
         android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
-        android:text="真题练习"
+        android:text="@string/real_exercise"
         android:textSize="20dp"
         android:textColor="#DC000000"
         />
@@ -26,123 +26,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-    <!--    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="#FFFFFF"
-            android:orientation="vertical"
-            >
-
-            &lt;!&ndash; 应用说明&ndash;&gt;
-            <LinearLayout
-                android:id="@+id/ll_apply_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="应用说明"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="37 道"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            &lt;!&ndash; 提纲情景&ndash;&gt;
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="提纲情景"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="43 道"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            &lt;!&ndash; 图画图表&ndash;&gt;
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="图画图表"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="41 道"
-                        android:textSize="10dp"
-                        android:layout_gravity="center_vertical"
-                        />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>-->
 
 </LinearLayout>

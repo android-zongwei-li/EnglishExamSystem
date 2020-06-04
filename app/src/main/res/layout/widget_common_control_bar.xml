@@ -18,7 +18,7 @@
         android:layout_width="55dp"
         android:layout_height="match_parent"
         android:layout_toRightOf="@+id/chronometer"
-        android:text="开始"
+        android:text="@string/start_text"
         />
 
     <Button
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:text="参考"
+        android:text="@string/reference_text"
         />
 
     <ImageView
@@ -45,7 +45,7 @@
         android:layout_marginLeft="10dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="1/3"
+        android:text="@string/default_time"
         android:textSize="25dp"
         android:visibility="gone"
         />

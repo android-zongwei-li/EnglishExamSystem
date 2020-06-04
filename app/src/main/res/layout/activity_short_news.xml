@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/widget_topbar"/>
+    <include layout="@layout/widget_top_bar"/>
 
     <!-- 结果统计-->
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="用时："
+            android:text="@string/time_used"
             />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="正确率："
+            android:text="@string/correct_percent"
             />
 
     </LinearLayout>

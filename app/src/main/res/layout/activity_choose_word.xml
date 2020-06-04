@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/widget_topbar" />
+    <include layout="@layout/widget_top_bar" />
 
     <include layout="@layout/widget_common_control_bar"/>
 
@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="用时："
+            android:text="@string/time_used"
             />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="正确率："
+            android:text="@string/correct_percent"
             />
 
     </LinearLayout>
@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:text="参考答案"
+                android:text="@string/reference_answer"
                 android:textSize="18dp"
                 />
         </ScrollView>
@@ -100,7 +100,7 @@
                     android:id="@+id/iv_drawer_open"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/app_icon" />
+                    android:src="@mipmap/app_icon_small" />
 
             </LinearLayout>
 
@@ -109,7 +109,7 @@
                 android:id="@+id/lv_drawer_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_001"
+                android:background="@color/exam_background"
                 />
 
         </SlidingDrawer>

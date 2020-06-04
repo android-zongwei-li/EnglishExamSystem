@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:padding="4dp"
-        android:text=" "
+        android:text="@string/space"
         android:textColor="#808080"
         android:textSize="12sp" />
 

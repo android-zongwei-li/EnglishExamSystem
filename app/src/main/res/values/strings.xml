@@ -18,9 +18,9 @@
     <string name="month">02</string>
     <string name="day">18</string>
     <string name="cet4_distance">距离四级考试还有%1$s天</string>
-    <string name="todo">TODO</string>
+    <string name="todo" translatable="false">TODO</string>
 
-    <string name="uriString">%1$md</string>
+    <string name="uriString" translatable="false">%1$md</string>
 
     <string name="dialog_exit_title">提示</string>
     <string name="dialog_exit_content">考试在即，不学了吗</string>
@@ -57,5 +57,123 @@
     <string name="logout">退出登录</string>
     <string name="title_setting">设置</string>
     <string name="title_about_me">关于</string>
+    <string name="title_website">网页浏览</string>
+    <string name="project_introduce">项目介绍</string>
+    <string name="project_introduction">此APP提供四级英语的学习和模拟考试</string>
+    <string name="add_my_qq">加我QQ</string>
+    <string name="add_qq_text">点击添加QQ</string>
+    <string name="project_address">项目地址</string>
+    <string name="project_address_text">Github：点击跳转；长按复制</string>
+    <string name="correct_percent">正确率：</string>
+    <string name="reference_answer">参考答案</string>
+    <string name="login_with_telephone">手机号登录</string>
+    <string name="input_telephone">输入手机号</string>
+    <string name="get_verification_code">| 获取验证码</string>
+    <string name="input_verification_code">输入验证码</string>
+    <string name="login">登录</string>
+    <string name="third_party_login">三方登录</string>
+    <string name="progress">进度</string>
+    <string name="default_progress" translatable="false">1/10</string>
+    <string name="words" translatable="false">words</string>
+    <string name="phonetic" translatable="false">phonetic</string>
+    <string name="study_word_tips">请说出单词发音和中文意思</string>
+    <string name="know">认识</string>
+    <string name="do_not_know">不认识</string>
+    <string name="next">下一个</string>
+    <string name="real_exercise">真题练习</string>
+    <string name="local_video">本地视频</string>
+    <string name="local_audio">本地音频</string>
+    <string name="network_video">网络视频</string>
+    <string name="network_audio">网络音频</string>
+    <string name="enter_experience">进入体验</string>
+    <string name="query_words">查单词</string>
+    <string name="result">结果</string>
+    <string name="vocabulary_book">词汇书</string>
+    <string name="cet4_vocabulary">四级词汇</string>
+    <string name="current_number" translatable="false">0</string>
+    <string name="study_today">今日学习</string>
+    <string name="total_progress">总进度</string>
+    <string name="left_oblique_line" translatable="false">/</string>
+    <string name="study_today_text" translatable="false">0</string>
+    <string name="total_number_of_learned_words" translatable="false">0000</string>
+    <string name="today_plan">今日计划</string>
+    <string name="how_much">多少</string>
+    <string name="how_much_words">个单词</string>
+    <string name="my_words_book">我的单词本</string>
+    <string name="learned">已学</string>
+    <string name="unfamiliar_words">生词</string>
+    <string name="exam">考试</string>
+    <string name="basic">基础</string>
+    <string name="mine">我的</string>
+    <string name="index_text" translatable="false">index</string>
+    <string name="writing_content">作文内容</string>
+    <string name="time_text">时间 ：</string>
+    <string name="title">题目</string>
+    <string name="correct_answer">正确答案：</string>
+    <string name="your_answer">你的答案：</string>
+    <string name="title_info">题目信息</string>
+    <string name="word_books">单词本</string>
+    <string name="start_test">开始测试</string>
+    <string name="test_tips">看看你的英语水平在什么阶段吧</string>
+    <string name="test">水平测试</string>
+    <string name="today_date" translatable="false">2020.02.18</string>
+    <string name="day_text">天</string>
+    <string name="how_much_days" translatable="false">100</string>
+    <string name="time_from_cet4">距离四级考试还有</string>
+    <string name="words_search">单词搜索</string>
+    <string name="audio_and_video">音视频</string>
+    <string name="cet_4_text" translatable="false">CET-4</string>
+    <string name="words_classification_description" translatable="false">单词分类:计划做一个文字飞入飞出的效果</string>
+    <string name="login_tips">登录解锁更多功能</string>
+    <string name="collect_text">收藏</string>
+    <string name="about_text">关于</string>
+    <string name="setting_text">设置</string>
+    <string name="q1_colon_text" translatable="false">Q1:</string>
+    <string name="a_dot_text" translatable="false">A.</string>
+    <string name="b_dot_text" translatable="false">B.</string>
+    <string name="c_dot_text" translatable="false">C.</string>
+    <string name="d_dot_text" translatable="false">D.</string>
+    <string name="q1_text" translatable="false">Q1</string>
+    <string name="q2_text" translatable="false">Q2</string>
+    <string name="q3_text" translatable="false">Q3</string>
+    <string name="q4_text" translatable="false">Q4</string>
+    <string name="q5_text" translatable="false">Q5</string>
+    <string name="q2_colon_text" translatable="false">Q2:</string>
+    <string name="q3_colon_text" translatable="false">Q3:</string>
+    <string name="no_collected">无收藏</string>
+    <string name="video_name">视频名称</string>
+    <string name="video_duration" translatable="false">10:00</string>
+    <string name="video_size" translatable="false">20MB</string>
+    <string name="search_text">搜索</string>
+    <string name="word_interpretation">单词释义</string>
+    <string name="pronunciation">发音</string>
+    <string name="english_pronunciation">英式发音</string>
+    <string name="american_pronunciation">美式发音</string>
+    <string name="translation_result_pronunciation">翻译结果发音</string>
+    <string name="see_more_definitions">查看更多释义</string>
+    <string name="space" translatable="false">" "</string>
+    <string name="icon_text" translatable="false">icon</string>
+    <string name="chinese_text">中文</string>
+    <string name="greater_than_symbol" translatable="false"><![CDATA[>]]></string>
+    <string name="english_text">英文</string>
+    <string name="hello_text">你好</string>
+    <string name="translate_input_tips">请输入要翻译的文本</string>
+    <string name="query_text">查询</string>
+    <string name="no_video_tips">没有发现视频、、</string>
+    <string name="cancel_text">取消</string>
+    <string name="start_text">开始</string>
+    <string name="reference_text">参考</string>
+    <string name="default_time" translatable="false">1/3</string>
+    <string name="current_time" translatable="false">00:00</string>
+    <string name="audio_duration" translatable="false">00:00</string>
+    <string name="chinese_meaning">chinese</string>
+    <string name="word_text">单词</string>
+    <string name="data_acquisition_failed">数据获取失败</string>
+    <string name="input_tips">请输入内容</string>
+    <string name="ceee_words" translatable="false">高考词汇</string>
+    <string name="cet4_book">CET-4 单词</string>
+    <string name="login_unfamiliar_book_tips">登录解锁生词本功能</string>
+    <string name="writing_and_translation_tips">无内容，请完成作文</string>
+    <string name="study_word">单词学习</string>
 
 </resources>

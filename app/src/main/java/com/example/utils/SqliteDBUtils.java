@@ -61,7 +61,7 @@ public class SqliteDBUtils {
                 byte[] buffer=new byte[1024];
                 int count = 0;
                 while((count = is.read(buffer))>0){
-                    Log.i("test", "得到");
+                    LogUtils.v("test", "得到");
                     fos.write(buffer,0,count);
                 }
                 //最后关闭就可以了

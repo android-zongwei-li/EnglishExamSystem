@@ -12,6 +12,6 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:textSize="22sp"
-        android:text="进入体验"/>
+        android:text="@string/enter_experience"/>
 
 </RelativeLayout>

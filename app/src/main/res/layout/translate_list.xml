@@ -37,7 +37,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:gravity="center_vertical|right"
-                android:text="中文"
+                android:text="@string/chinese_text"
                 android:textColor="#808080"
                 android:textSize="20sp" />
             
@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:gravity="center_vertical|right"
-                android:text=">"
+                android:text="@string/greater_than_symbol"
                 android:textColor="#808080"
                 android:textSize="20sp" />
 
@@ -58,7 +58,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:gravity="center_vertical|right"
-                android:text="英文"
+                android:text="@string/english_text"
                 android:textColor="#808080"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -83,8 +83,8 @@
             android:layout_height="fill_parent"
             android:layout_marginRight="50dp"
             android:background="#ffffff"
-            android:hint="请输入要翻译的文本"
-            android:text="你好"
+            android:hint="@string/translate_input_tips"
+            android:text="@string/hello_text"
             android:maxLines="1"
             android:paddingLeft="10dp"
             android:textColor="#808080"
@@ -98,7 +98,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:gravity="center_vertical|right"
-            android:text="查询"
+            android:text="@string/query_text"
             android:textColor="#808080"
             android:textSize="20sp" />
 

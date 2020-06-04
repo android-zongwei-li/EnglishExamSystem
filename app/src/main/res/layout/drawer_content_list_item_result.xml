@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="题目"
+            android:text="@string/title"
             android:textSize="22dp"
             />
 
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="正确答案："
+            android:text="@string/correct_answer"
             android:textSize="20dp"
             />
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="你的答案："
+            android:text="@string/your_answer"
             android:textSize="20dp"
             />
 

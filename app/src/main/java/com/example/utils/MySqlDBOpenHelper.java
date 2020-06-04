@@ -16,9 +16,12 @@ public class MySqlDBOpenHelper {
     private static String diver = "com.mysql.jdbc.Driver";
     private static String dataBase = "english_exam_system_database";
     // 遇到的问题：https://blog.csdn.net/qq_36478274/article/details/105156418
-    private static String ip = "10.0.2.2";
+ //   private static String ip = "10.0.2.2";
+    private static String ip = "192.168.43.68";
+ //   private static String ip = "localhost";
+
     //加入utf-8是为了后面往表中输入中文，表中不会出现乱码的情况
-    private static String url = "jdbc:mysql://"+ip+":3306/"+dataBase+"?characterEncoding=utf-8";
+    private static String url = "jdbc:mysql://"+ip+":3306/"+dataBase+"?characterEncoding=utf-8&autoReconnect=true&useSSL=false";
  //   private static String url = "jdbc:mysql://"+ip+":3306/"+dataBase+"?useOldAliasMetadataBehavior=true";
     private static String user = "user";//用户名
     private static String password = "1234";//密码
@@ -80,6 +83,7 @@ public class MySqlDBOpenHelper {
                     return null;
                 }
             }else {
+                Log.e("数据库异常","连接失败" );
                 return null;
             }
         }catch (SQLException e) {
@@ -88,6 +92,5 @@ public class MySqlDBOpenHelper {
             return null;
         }
     }
-
 
 }

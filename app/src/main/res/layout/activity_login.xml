@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/widget_topbar" />
+    <include layout="@layout/widget_top_bar" />
 
     <!-- 手机短信验证码登录 模块-->
     <LinearLayout
@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="手机号登录"
+            android:text="@string/login_with_telephone"
             android:textColor="#E63B9AFF"
             android:textSize="30dp"
             android:gravity="center_horizontal"
@@ -44,14 +44,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="输入手机号"
+                android:hint="@string/input_telephone"
                 />
 
             <Button
                 android:id="@+id/btn_login_request_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="|  获取验证码"
+                android:text="@string/get_verification_code"
                 />
 
         </LinearLayout>
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="输入验证码"
+                android:hint="@string/input_verification_code"
                 />
 
         </LinearLayout>
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="20dp"
-            android:text="登录"
+            android:text="@string/login"
             />
 
     </LinearLayout>
@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="三方登录" />
+            android:text="@string/third_party_login" />
 
         <View
             android:layout_width="100dp"
@@ -139,12 +139,5 @@
             />
 
     </RelativeLayout>
-
-   <!-- <TextView
-        android:id="@+id/tv_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="结果"
-        />-->
 
 </LinearLayout>

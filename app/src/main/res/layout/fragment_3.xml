@@ -16,7 +16,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/app_icon"
+            android:src="@mipmap/app_icon_medium"
             />
 
         <LinearLayout
@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="登录"
+                android:text="@string/login"
                 android:textSize="18dp"
                 android:textColor="#130C0C"
                 />
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="登录解锁更多功能"
+                android:text="@string/login_tips"
                 android:textSize="14dp"
                 android:textColor="#D0130C0C"
                 />
@@ -57,7 +57,7 @@
         android:layout_marginBottom="10dp"
         android:background="#ffffff"
         android:layout_above="@id/btn_about_me"
-        android:text="收藏"
+        android:text="@string/collect_text"
         android:textSize="30dp"
         />
 
@@ -68,7 +68,7 @@
         android:layout_marginBottom="10dp"
         android:background="#ffffff"
         android:layout_above="@id/btn_setting"
-        android:text="关于"
+        android:text="@string/about_text"
         android:textSize="30dp"
         />
 
@@ -79,7 +79,7 @@
         android:layout_marginBottom="10dp"
         android:background="#ffffff"
         android:layout_alignParentBottom="true"
-        android:text="设置"
+        android:text="@string/setting_text"
         android:textSize="30dp"
         />
 

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.beans.TestPaper;
 import com.example.myapplication.R;
+import com.example.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,6 @@ public class TestPaperFactory {
             WordUtils wordUtils = new WordUtils(context);
             // 初始化听力和阅读的答案
             String allListeningAndReadingAnswer = wordUtils.readWord(R.raw.listening_and_reading_answer).trim();
-            //   Log.v("list",allListeningAndReadingAnswer);
             int a = allListeningAndReadingAnswer.indexOf("答案");//*第一个出现的索引位置
             while (a != -1) {
                 int aCopy = a;
@@ -71,7 +71,7 @@ public class TestPaperFactory {
                     allListeningAndReadingAnswer.lastIndexOf("答案"),allListeningAndReadingAnswer.length()-1));//最后一个
 
             for (int i = 0; i < word.length; i++){
-                Log.v("第几套："+i,"di  "+i+"套");
+                LogUtils.v("第几套："+i,"di  "+i+"套");
                 List<String> answerList = new ArrayList<>();
                 //对答案做进一步的提取
                 String answer = listeningAndReadingAnswer.get(i);
@@ -80,12 +80,12 @@ public class TestPaperFactory {
                     answerList.add(choice.substring(choice.length()-1));
                 }
                 String choice55 = answer.substring(answer.indexOf("55.")).trim();
-                Log.i("choice55",choice55);
+                LogUtils.v("choice55",choice55);
                 answerList.add(choice55.substring(choice55.length()-1));//55题
 
                 TestPaperFromWord testPaper = new TestPaperFromWord(context,word[i]);
                 testPaper.setListeningAndReadingAnswer(answerList);
-                Log.i("listeningAndReading",testPaper.getListeningAndReadingAnswer().toString());
+                LogUtils.v("listeningAndReading",testPaper.getListeningAndReadingAnswer().toString());
                 testPaperList.add(testPaper);
 
                 allTestPaperInfo.add(testPaper.getTestPaperInfo());
@@ -93,17 +93,17 @@ public class TestPaperFactory {
                 allTestPaperListening.add(testPaper.getListeningFormWord());
                 allTestPaperReading.add(testPaper.getReadingFormWord());
                 allTestPaperTranslation.add(testPaper.getTranslationFormWord());
-                Log.v("第几套完成："+i,"di  "+i+"套");
+                LogUtils.v("第几套完成："+i,"di  "+i+"套");
             }
 
             isInit = true;
 
-            Log.v(TAG+"-初始数据","数据初始化完成");
+            LogUtils.v(TAG+"-初始数据","数据初始化完成");
 
             return;
         }
 
-        Log.v(TAG+"-初始数据","数据已经初始过了,直接调用：getTestPaperList()获取 ");
+        LogUtils.v(TAG+"-初始数据","数据已经初始过了,直接调用：getTestPaperList()获取 ");
 
     }
 

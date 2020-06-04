@@ -1,5 +1,7 @@
 package com.example;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -8,12 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -24,15 +24,30 @@ import com.example.fragment.Fragment2;
 import com.example.fragment.Fragment3;
 import com.example.myapplication.R;
 import com.example.utils.testPaperUtils.TestPaperFactory;
-import com.example.utils.testPaperUtils.TestPaperFromWord;
+import com.example.view.topbar.TopBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.List;
+import java.util.Locale;
 
+/**
+ * 这个类用于构建程序的主界面。并负责初始化试题资源。
+ *  {@link #initData()}
+ *      初始化试题资源。
+ *
+ *  {@link #initViews()}
+ *      主界面的视图由：
+ *      {@link com.example.view.topbar.TopBar}
+ *      {@link com.google.android.material.bottomnavigation.BottomNavigationView}+
+ *      {@link androidx.viewpager.widget.ViewPager}+
+ *      {@link androidx.fragment.app.Fragment} 构成。
+ *
+ */
 public class MainActivity extends BaseAppCompatActivity {
-    private Toolbar mToolbar;
+
+    private TopBar topBar;
     private ViewPager mViewPager;
-    private BottomNavigationView naview;
+    private BottomNavigationView bnv;
+
     private int pageCount = 3;
 
     // 退出对话框
@@ -44,7 +59,7 @@ public class MainActivity extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+       // initLocaleLanguage();
         initData();
 
         initViews();
@@ -56,37 +71,21 @@ public class MainActivity extends BaseAppCompatActivity {
             public void run() {
                 TestPaperFactory testPaperFactory = TestPaperFactory.getInstance();
                 testPaperFactory.initData(MainActivity.this);
-                //       List<TestPaperFromWord> testPaperList = testPaperFactory.getTestPaperList();
             }
         }).start();
    }
 
     private void initViews() {
-        mToolbar = findViewById(R.id.toobar_main_ac);
-        mViewPager = findViewById(R.id.view_pager_main_ac);
-        naview = findViewById(R.id.bov_main_nav);
-
-        // toolBar 初始化
-        getSupportActionBar();
-        String title="英语考试系统";
-        mToolbar.setTitle(title);
-        for (int i = 0; i < mToolbar.getChildCount(); i++) {
-            View view = mToolbar.getChildAt(i);
-            if (view instanceof TextView) {
-                TextView textView = (TextView) view;
-                if (title.equals(textView.getText())) {
-                    textView.setGravity(Gravity.CENTER);
-                    Toolbar.LayoutParams params = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.MATCH_PARENT);
-                    params.gravity = Gravity.CENTER;
-                    textView.setLayoutParams(params);
-                }
-            }
-
-        }
+        topBar = findViewById(R.id.topBar);
+        topBar.setLeftIsVisable(false);
+        topBar.setRighttIsVisable(false);
+        topBar.setTitle(R.string.app_name);
 
         //
-        naview.setItemIconTintList(null);
-        naview.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bnv = findViewById(R.id.bov_main_nav);
+        // 如果没有这句话，配置的颜色选择器将不会生效，icon的颜色不会随选择而变，全是黑色
+        bnv.setItemIconTintList(null);
+        bnv.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
@@ -107,6 +106,7 @@ public class MainActivity extends BaseAppCompatActivity {
         });
 
         //
+        mViewPager = findViewById(R.id.view_pager_main_ac);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @NonNull
             @Override
@@ -119,7 +119,9 @@ public class MainActivity extends BaseAppCompatActivity {
                 return pageCount;
             }
         });
-        mViewPager.setOffscreenPageLimit(pageCount);
+        //参数为预加载数量，这个数量不能太多，保持最小值就可以了，之前使用的 pageCount 滑动时卡顿严重
+        //这个改为1，效果并不明显，滑动依然卡顿
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -128,7 +130,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                naview.getMenu().getItem(position).setChecked(true);
+                bnv.getMenu().getItem(position).setChecked(true);
             }
 
             @Override
@@ -196,4 +198,15 @@ public class MainActivity extends BaseAppCompatActivity {
         });
 
     }
+
+    /**
+     * 切换英语
+     */
+    private void initLocaleLanguage() {
+        Resources resources = this.getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = new Locale("en","as");
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());//更新配置
+    }
+
 }

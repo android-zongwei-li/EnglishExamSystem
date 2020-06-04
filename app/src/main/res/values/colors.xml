@@ -27,4 +27,6 @@
 
     <color name="default_text">#100F0F</color>
 
+    <color name="exam_background">#E0F7FA</color>
+
 </resources>

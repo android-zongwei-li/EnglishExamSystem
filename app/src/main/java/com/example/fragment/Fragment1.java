@@ -17,12 +17,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.activity.TranslateActivity;
-import com.example.activity.acticity_in_fragment1.listening.ListeningActivity;
-import com.example.activity.acticity_in_fragment1.reading.ReadingActivity;
-import com.example.activity.acticity_in_fragment1.trans.TransActivity;
-import com.example.activity.acticity_in_fragment1.WebViewActivity;
-import com.example.activity.acticity_in_fragment1.words.WordTestActivity;
-import com.example.activity.acticity_in_fragment1.writing.WritingActivity;
+import com.example.activity.activity_in_fragment1.listening.ListeningActivity;
+import com.example.activity.activity_in_fragment1.reading.ReadingActivity;
+import com.example.activity.activity_in_fragment1.trans.TransActivity;
+import com.example.activity.activity_in_fragment1.WebViewActivity;
+import com.example.activity.activity_in_fragment1.words.WordTestActivity;
+import com.example.activity.activity_in_fragment1.writing.WritingActivity;
 import com.example.myapplication.R;
 import com.example.utils.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -58,9 +58,8 @@ public class Fragment1 extends Fragment {
     // 单词模块
     LinearLayout ll_words;
 
-    // 真题实练模块
-    LinearLayout ll_testpaper;
-
+/*    // 真题实练模块
+    LinearLayout ll_testpaper;*/
 
     @Nullable
     @Override
@@ -78,14 +77,14 @@ public class Fragment1 extends Fragment {
         initGridView();
 
         // 真题模块
-        ll_testpaper = view.findViewById(R.id.ll_testpaper);
+        /*ll_testpaper = view.findViewById(R.id.ll_testpaper);
         ll_testpaper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"真题",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getContext(), TranslateActivity.class));
             }
-        });
+        });*/
 
         // 单词模块
         ll_words = view.findViewById(R.id.ll_words);
@@ -103,12 +102,12 @@ public class Fragment1 extends Fragment {
         banner = view.findViewById(R.id.banner_in_fragment1);
 
         //添加图片资源
-        images.add("http://img.lanrentuku.com/img/allimg/0906/8_220800_1.jpg");
-        images.add("http://img.lanrentuku.com/img/allimg/1506/14332974643135.jpg");
-        images.add("http://img.lanrentuku.com/img/allimg/1506/14343524956456.jpg");
-        titles.add("图片——1");
-        titles.add("图片——2");
-        titles.add("图片——3");
+        images.add(R.drawable.cet4_home);
+        images.add(R.drawable.today_listening);
+        images.add(R.drawable.ziyuanwang);
+        titles.add("四级官网");
+        titles.add("每日英语听力");
+        titles.add("四级资讯网");
 
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
@@ -132,9 +131,11 @@ public class Fragment1 extends Fragment {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                String[] url = {"http://www.baidu.com","http://www.csdn.net",
-                        "https://m.51test.net/cet/baoming/",
-                        "http://cet-bm.neea.edu.cn/"};
+                String[] url = {
+                        "http://cet-bm.neea.edu.cn/",
+                        "http://dict.eudic.net/ting/",
+                        "https://m.51test.net/cet/"
+                        };
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                 intent.putExtra(WebViewActivity.URL,url[position]);
                 startActivity(intent);

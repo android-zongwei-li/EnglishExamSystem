@@ -5,20 +5,20 @@
     android:orientation="vertical"
     >
 
-    <include layout="@layout/widget_topbar"/>
+    <include layout="@layout/widget_top_bar"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="项目介绍"
+        android:text="@string/project_introduce"
         android:textSize="30dp"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="此APP提供四级英语的学习和模拟考试"
+        android:text="@string/project_introduction"
         android:textSize="20dp"
         />
 
@@ -27,7 +27,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:text="加我QQ"
+    android:text="@string/add_my_qq"
     android:textSize="30dp"
     />
 
@@ -35,7 +35,7 @@
         android:id="@+id/tv_add_qq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="点击添加QQ"
+        android:text="@string/add_qq_text"
         android:textSize="20dp"
         />
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="项目地址"
+        android:text="@string/project_address"
         android:textSize="30dp"
         />
 
@@ -52,7 +52,7 @@
         android:id="@+id/tv_project_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Github：点击跳转；长按复制"
+        android:text="@string/project_address_text"
         android:textSize="20dp"
         />
 

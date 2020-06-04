@@ -31,7 +31,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:maxWidth="260dp"
-                    android:text="单词释义"
+                    android:text="@string/word_interpretation"
                     android:textColor="#808080"
                     android:textSize="20sp" />
 
@@ -77,21 +77,20 @@
                     android:layout_height="40dp"
                     android:layout_below="@+id/titleBar"
                     android:layout_margin="20dp"
-                    android:text="发音" />
+                    android:text="@string/pronunciation" />
                 <Button
                     android:id="@+id/ukstartBtn"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
-                    android:layout_below="@+id/titleBar"
                     android:layout_margin="20dp"
-                    android:text="英式发音" />
+                    android:text="@string/english_pronunciation" />
                 <Button
                     android:id="@+id/usstartBtn"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_below="@+id/titleBar"
                     android:layout_margin="20dp"
-                    android:text="美式发音" />
+                    android:text="@string/american_pronunciation" />
                 <TextView
                     android:id="@+id/translation"
                     android:layout_width="fill_parent"
@@ -107,7 +106,7 @@
                     android:layout_height="40dp"
                     android:layout_below="@+id/titleBar"
                     android:layout_margin="20dp"
-                    android:text="翻译结果发音" />
+                    android:text="@string/translation_result_pronunciation" />
                 <TextView
                     android:id="@+id/spell"
                     android:layout_width="fill_parent"
@@ -164,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="left|top"
-                    android:text="查看更多释义"
+                    android:text="@string/see_more_definitions"
                     android:textColor="#3399ff"
                     android:textSize="16sp" />
             </LinearLayout>

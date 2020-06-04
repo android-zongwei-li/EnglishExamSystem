@@ -9,7 +9,7 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="year"
+        android:text="@string/Year"
         android:textSize="25sp"
         android:textColor="#000000"
         />
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="left"
-        android:text="month"
+        android:text="@string/Month"
         android:textSize="25sp"
         android:textColor="#000000"
         />
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="left"
-        android:text="index"
+        android:text="@string/index_text"
         android:textSize="25sp"
         android:textColor="#000000"
         />

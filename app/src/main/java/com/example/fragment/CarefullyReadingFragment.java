@@ -25,6 +25,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.beans.Question;
 import com.example.myapplication.R;
 import com.example.utils.LogUtils;
+import com.example.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,16 +52,52 @@ public class CarefullyReadingFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_carefully_reading_exam,null);
         //显示文章内容
-        TextView tv_carefully_reading_title = view.findViewById(R.id.tv_carefully_reading_title);
+        final TextView tv_carefully_reading_title = view.findViewById(R.id.tv_carefully_reading_title);
         ll_question = view.findViewById(R.id.ll_question);
         tv_carefully_reading_title.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ll_question.setVisibility(View.GONE);
-                return false;
+
+                // 情形一，看下面的解析，这种情况也能触发onClick事件。
+              //  tv_carefully_reading_title.performClick();
+
+                return true;
+            }
+        });
+        // 情形二，onTouch返回true时，事件已经被消费，在这里使用此句就不再会触发onClick了
+        // tv_carefully_reading_title.performClick();
+        /**
+         * 没有下面一行代码会出现
+         * warning：
+         *  Custom view “TextView” has ’setOnTouchListener‘ called on it but does not override 'performClick'
+         *  'onTouch' should call 'View#performClick' when a click is detected
+         *  意思是可能和点击事件发生冲突。
+         *
+         * 在onTouch中返回true,同时又添加了onClick监听,这时onClick就不会执行了,
+         * 事件被onTouch消化掉了.来查看一下执行顺序就知道了,
+         * onTouchEvent=>performClick=>onClick,所以在onTouch返回true时,同时又添加了onClick监听,
+         * 此时在onTouch中适当的地方执行performClick方法,来触发onClick.
+         *
+         * 那onTouch返回true的情况下，就不能触发onClick了吗？
+         * 也不是，看onTouch中的 “情形一”，此时也会触发onClick。
+         *
+         * 简单的结论就是：
+         * onTouch，返回true：
+         *      默认点击不触发onClick，可加入“情形一”来触发。
+         *
+         * onTouch，返回false：
+         *      不仅触发onTouch，还会触发onClick
+         *
+         */
+        tv_carefully_reading_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show(getActivity(),"onClick触发了");
             }
         });
         tv_carefully_reading_title.setText(title.trim());
+
 
         //显示题号:Q1-Q5。点击后，显示题目和选项。
         LinearLayout ll_question_index = view.findViewById(R.id.ll_question_index);
@@ -83,7 +120,6 @@ public class CarefullyReadingFragment extends Fragment {
     private List<String> choices = new ArrayList<>();
     public Map questionMap = new ArrayMap();
     private int questionsIndex; //记录题号
-    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull final Message msg) {

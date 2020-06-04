@@ -1,21 +1,17 @@
 package com.example.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +35,7 @@ import java.util.TimerTask;
  * 问题记录：
  * 1.android.content.res.Resources$NotFoundException: String resource ID
  * https://blog.csdn.net/qq_36478274/article/details/104879342
- * 2.Only the original thread that created a view hierarchy can touch its views
+ * 2.Only the original thread that created a rootView hierarchy can touch its views
  * https://blog.csdn.net/qq_36478274/article/details/104879499
  * 3.Android Studio在写XML布局的时候控件属性不自动提示
  * https://blog.csdn.net/qq_36478274/article/details/104861862

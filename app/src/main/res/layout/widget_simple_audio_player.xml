@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:text="00:00"
+            android:text="@string/current_time"
             android:textSize="18sp"
             android:visibility="gone" />
 
@@ -43,7 +43,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:text="00:00"
+            android:text="@string/audio_duration"
             android:textSize="18sp"
             android:visibility="gone" />
 

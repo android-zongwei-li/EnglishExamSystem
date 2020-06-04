@@ -13,7 +13,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="#E7E0E0"
-        android:text="Q1:"
+        android:text="@string/q1_colon_text"
         android:textSize="20sp" />
 
     <RadioGroup
@@ -26,22 +26,22 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A." />
+            android:text="@string/a_dot_text" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="B." />
+            android:text="@string/b_dot_text" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C." />
+            android:text="@string/c_dot_text" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="D." />
+            android:text="@string/d_dot_text" />
     </RadioGroup>
 
 </LinearLayout>

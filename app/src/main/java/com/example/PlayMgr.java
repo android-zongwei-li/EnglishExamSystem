@@ -7,9 +7,6 @@ package com.example;
 
 import android.media.MediaPlayer;
 
-/**
- * @author lukun 解析数据为对象
- */
 public class PlayMgr  {
 
 	private static PlayMgr mgr;

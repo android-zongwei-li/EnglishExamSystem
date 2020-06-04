@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="year"
+            android:text="@string/Year"
             android:textSize="30dp"
             />
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="month"
+            android:text="@string/Month"
             android:textSize="30dp"
             />
         <TextView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="index"
+            android:text="@string/index_text"
             android:textSize="30dp"
             />
     </LinearLayout>
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="作文内容"
+        android:text="@string/writing_content"
         android:textSize="30dp"
         android:maxLines="3"
         />
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:text="时间 ： "
+        android:text="@string/time_text"
         android:textSize="20dp"
         />
 

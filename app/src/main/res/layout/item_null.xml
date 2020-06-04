@@ -10,11 +10,10 @@
         android:id="@+id/tv_collection_null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="无收藏" />
+        tools:text="@string/no_collected" />
 </androidx.constraintlayout.widget.ConstraintLayout>

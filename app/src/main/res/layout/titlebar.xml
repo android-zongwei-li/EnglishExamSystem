@@ -26,7 +26,7 @@
         android:drawableLeft="@drawable/tv_search_drawable_selector"
         android:background="@drawable/tv_search_background_selector"
         android:textColor="@drawable/tv_search_textcolor_selector"
-        android:text="搜索"
+        android:text="@string/search_text"
         android:textSize="20sp"
         android:clickable="true"
         />

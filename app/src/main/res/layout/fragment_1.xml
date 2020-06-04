@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="距离四级考试还有"
+                android:text="@string/time_from_cet4"
                 android:textColor="#302A2A"
                 />
 
@@ -40,14 +40,14 @@
                 android:id="@+id/tv_dayDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="@string/how_much_days"
                 android:textColor="#FF9800"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="天"
+                android:text="@string/day_text"
                 android:textColor="#302A2A"
                 />
 
@@ -57,12 +57,13 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2020.02.18"
+            android:text="@string/today_date"
             />
 
     </LinearLayout>
 
     <!-- 水平测试模块-->
+<!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -76,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:paddingLeft="20dp"
-            android:text="水平测试"
+            android:text="@string/test"
             android:gravity="center"
             android:textColor="#131111"
             android:textSize="20dp"
@@ -88,7 +89,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="看看你的英语水平在什么阶段吧"
+            android:text="@string/test_tips"
             android:textColor="#131111"
             android:textSize="20dp"
             />
@@ -97,12 +98,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="开始测试"
+            android:text="@string/start_test"
             android:background="#5600E5FF"
 
             />
 
     </LinearLayout>
+-->
 
     <!-- 单词模块-->
     <LinearLayout
@@ -118,7 +120,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="单词"
+            android:text="@string/word_text"
             android:textSize="30sp"
             android:textColor="#1F1819"
             />
@@ -135,13 +137,13 @@
         android:numColumns="4"
         android:columnWidth="80dp"
         android:stretchMode="columnWidth"
-        android:layout_above="@+id/ll_testpaper"
+        android:layout_alignParentBottom="true"
         >
 
     </GridView>
 
     <!-- 真题模块-->
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/ll_testpaper"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -154,11 +156,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="真题实练"
+            android:text="@string/real_exercise"
             android:textSize="30sp"
             android:textColor="#1F1819"
             />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </RelativeLayout>

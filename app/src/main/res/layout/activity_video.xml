@@ -27,28 +27,28 @@
 
         <RadioButton
             android:id="@+id/rb_video"
-            android:text="本地视频"
+            android:text="@string/local_video"
             android:drawableTop="@drawable/rb_video_drawable_selector"
             style="@style/bottom_tag_style"
             />
 
         <RadioButton
             android:id="@+id/rb_audio"
-            android:text="本地音频"
+            android:text="@string/local_audio"
             android:drawableTop="@drawable/rb_audio_drawable_selector"
             style="@style/bottom_tag_style"
             />
 
         <RadioButton
             android:id="@+id/rb_net_video"
-            android:text="网络视频"
+            android:text="@string/network_video"
             android:drawableTop="@drawable/rb_net_video_drawable_selector"
             style="@style/bottom_tag_style"
             />
 
         <RadioButton
             android:id="@+id/rb_net_audio"
-            android:text="网络音频"
+            android:text="@string/network_audio"
             android:drawableTop="@drawable/rb_net_audio_drawable_selector"
             style="@style/bottom_tag_style"
             />

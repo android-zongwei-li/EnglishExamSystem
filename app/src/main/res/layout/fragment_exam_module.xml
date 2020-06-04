@@ -19,7 +19,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="#E7E0E0"
-            android:text="Q1:"
+            android:text="@string/q1_colon_text"
             android:textSize="20sp" />
 
         <RadioGroup
@@ -31,23 +31,19 @@
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A. 新时期" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="B. 新阶段" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="C. 新征程" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="D. 新时代" />
+                android:layout_height="wrap_content" />
         </RadioGroup>
 
     </LinearLayout>
@@ -65,7 +61,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="#E7E0E0"
-            android:text="Q2:"
+            android:text="@string/q2_colon_text"
             android:textSize="20sp" />
 
         <RadioGroup
@@ -77,23 +73,19 @@
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A. 新时期" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="B. 新阶段" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="C. 新征程" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="D. 新时代" />
+                android:layout_height="wrap_content" />
         </RadioGroup>
 
     </LinearLayout>
@@ -110,7 +102,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="#E7E0E0"
-            android:text="Q3:"
+            android:text="@string/q3_colon_text"
             android:textSize="20sp" />
 
         <RadioGroup
@@ -122,23 +114,19 @@
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A. 新时期" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="B. 新阶段" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="C. 新征程" />
+                android:layout_height="wrap_content" />
 
             <RadioButton
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="D. 新时代" />
+                android:layout_height="wrap_content" />
         </RadioGroup>
 
     </LinearLayout>

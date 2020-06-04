@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_exam"
-        android:title="考试"
+        android:title="@string/exam"
         android:icon="@drawable/exam_icon_selector"/>
     <item
         android:id="@+id/nav_basic"
-        android:title="基础"
+        android:title="@string/basic"
         android:icon="@drawable/basic_icon_selector"/>
     <item
         android:id="@+id/nav_mine"
-        android:title="我的"
+        android:title="@string/mine"
         android:icon="@drawable/mine_icon_selector"/>
 
 </menu>

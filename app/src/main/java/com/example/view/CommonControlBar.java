@@ -96,6 +96,7 @@ public class CommonControlBar extends RelativeLayout {
      * 点击参考按钮后，弹出参考模块
      */
     private void initBtnReference(){
+        btn_reference.setVisibility(View.GONE);
         btn_reference.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
