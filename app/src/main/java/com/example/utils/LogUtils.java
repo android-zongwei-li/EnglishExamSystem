@@ -20,7 +20,7 @@ public class LogUtils {
     private static final int ERROR = 4;
     private static final int NOTHING = 5;
 
-    private static int level = VERBOSE;//发布前改为 NOTHING
+    private static int level = NOTHING;//发布前改为 NOTHING
 
     public static void v(String tag, String msg){
         if (level <= VERBOSE){

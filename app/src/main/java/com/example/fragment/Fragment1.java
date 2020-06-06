@@ -25,6 +25,7 @@ import com.example.activity.activity_in_fragment1.words.WordTestActivity;
 import com.example.activity.activity_in_fragment1.writing.WritingActivity;
 import com.example.myapplication.R;
 import com.example.utils.GlideImageLoader;
+import com.example.utils.LogUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -155,7 +156,7 @@ public class Fragment1 extends Fragment {
         String sDate = dateFormat.format(new Date());
         tv_date.setText(sDate);
 
-        //  日差计算还不准
+        //日差
         Date todayDate = new Date(Integer.parseInt(sDate.substring(0,4)),Integer.parseInt(sDate.substring(5,7)),Integer.parseInt(sDate.substring(8,10)));
         Date cet4_Date = new Date(2020,6,13);
 
@@ -179,10 +180,11 @@ public class Fragment1 extends Fragment {
         cal2.setTime(date2);
         int day1 = cal1.get(Calendar.DAY_OF_YEAR);
         int day2 = cal2.get(Calendar.DAY_OF_YEAR);
+        LogUtils.v("日期查看",day1+" "+day2);
 
         int year1 = cal1.get(Calendar.YEAR);
         int year2 = cal2.get(Calendar.YEAR);
-        if (year1 != year2) {  //同一年
+        if (year1 != year2) {  //不同年
             int timeDistance = 0;
             for (int i = year1; i < year2; i++) {
                 if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {  //闰年
@@ -193,7 +195,7 @@ public class Fragment1 extends Fragment {
                 }
             }
             return timeDistance + (day2 - day1);
-        } else { //不同年
+        } else { //同年
             return day2 - day1;
         }
     }

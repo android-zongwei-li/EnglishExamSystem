@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.activity.activity_in_fragment1.BlankFragment;
+import com.example.fragment.BlankFragment;
 import com.example.activity.base.BaseAppCompatActivity;
 import com.example.myapplication.R;
 import com.example.view.topbar.TopBar;

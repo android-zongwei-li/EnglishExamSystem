@@ -359,20 +359,23 @@ public class StudyWordsActivity extends BaseAppCompatActivity {
                     Connection conn = MySqlDBOpenHelper.getConn();
                     String sql_insert = "update user set learnedWordsBook=?,unfamiliarWordsBook=? " +
                             "where telephone = "+telephone;
-                    try {
+                    if (conn != null){
+                        try {
 
-                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
-                        pstm.setString(1, inputLearnedWordsBook);
-                        pstm.setString(2,inoutUnfamiliarWordsBook);
-                        pstm.executeUpdate();
+                            PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                            pstm.setString(1, inputLearnedWordsBook);
+                            pstm.setString(2,inoutUnfamiliarWordsBook);
+                            pstm.executeUpdate();
 
-                        if (pstm != null){
-                            pstm.close();
+                            if (pstm != null){
+                                pstm.close();
+                            }
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
                     }
+
                 }
             }).start();
 

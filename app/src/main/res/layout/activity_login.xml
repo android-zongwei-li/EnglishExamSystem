@@ -93,7 +93,7 @@
     </LinearLayout>
 
     <!-- 第三方登录分割线-->
-    <RelativeLayout
+<!--    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -121,10 +121,10 @@
             android:layout_centerVertical="true"
             />
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <!-- 第三方登录 模块-->
-    <RelativeLayout
+  <!--  <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -138,6 +138,6 @@
             android:src="@drawable/qq_login"
             />
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
 </LinearLayout>

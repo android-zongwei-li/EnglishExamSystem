@@ -11,12 +11,16 @@ import java.util.HashMap;
 
 /**
  * 数据库连接帮助类
+ *
+ *  真机测试时出现连接不上，timedout、connetion refused 等错误时，解决方案：
+ *  最终发现问题在于，当前用户的权限不能在其他主机访问，重新设置权限即可。
+ *  相关设置见 图片 文件夹，后续写一篇博客记录一下这个问题。耗时一天。
  */
 public class MySqlDBOpenHelper {
     private static String diver = "com.mysql.jdbc.Driver";
-    private static String dataBase = "english_exam_system_database";
+    private static String dataBase = "english_exam_system";
     // 遇到的问题：https://blog.csdn.net/qq_36478274/article/details/105156418
- //   private static String ip = "10.0.2.2";
+  //  private static String ip = "10.0.2.2";
     private static String ip = "192.168.43.68";
  //   private static String ip = "localhost";
 

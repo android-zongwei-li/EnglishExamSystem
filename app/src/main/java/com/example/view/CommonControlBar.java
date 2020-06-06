@@ -74,22 +74,32 @@ public class CommonControlBar extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if(!isStarting){
-                    isStarting = true;
-                    // 跳过已经记录了的时间，起到继续计时的作用
-                    chronometer.setBase(SystemClock.elapsedRealtime() - recordingTime);
-                    Log.v(" recordingTime",recordingTime+"");
-                    chronometer.start();
-                    btn_chronometer.setText("暂停");
+                    start();
                 }else {
-                    isStarting = false;
-                    chronometer.stop();
-                    // 保存这次记录了的时间
-                    recordingTime = SystemClock.elapsedRealtime()- chronometer.getBase();
-                    Log.v(" recordingTime",recordingTime+"");
-                    btn_chronometer.setText("开始");
+                    stop();
                 }
             }
         });
+    }
+
+    public void start(){
+        isStarting = true;
+        // 跳过已经记录了的时间，起到继续计时的作用
+        chronometer.setBase(SystemClock.elapsedRealtime() - recordingTime);
+        Log.v(" recordingTime",recordingTime+"");
+        chronometer.start();
+        btn_chronometer.setText("暂停");
+    }
+
+    public void stop(){
+        if (isStarting){
+            isStarting = false;
+            chronometer.stop();
+            // 保存这次记录了的时间
+            recordingTime = SystemClock.elapsedRealtime()- chronometer.getBase();
+            Log.v(" recordingTime",recordingTime+"");
+            btn_chronometer.setText("开始");
+        }
     }
 
     /**
@@ -136,5 +146,9 @@ public class CommonControlBar extends RelativeLayout {
 
     public boolean isCollected() {
         return isCollected;
+    }
+
+    public long getRecordingTime() {
+        return recordingTime;
     }
 }

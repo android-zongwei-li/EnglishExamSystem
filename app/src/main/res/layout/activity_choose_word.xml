@@ -45,6 +45,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/sv_correct_answer"
             android:layout_alignParentTop="true"
             android:layout_weight="1"
             android:background="#ffffff"
@@ -60,6 +61,7 @@
 
         <!-- 参考答案-->
         <ScrollView
+            android:id="@+id/sv_correct_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

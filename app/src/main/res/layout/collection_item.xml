@@ -53,12 +53,12 @@
         android:maxLines="3"
         />
 
-    <TextView
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="@string/time_text"
         android:textSize="20dp"
-        />
+        />-->
 
 </LinearLayout>

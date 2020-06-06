@@ -140,6 +140,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+
             QuicklyRVAdapter adapter = new QuicklyRVAdapter(ReadingExamActivity.this,
                     1,quicklyReadingQuestions,carefullyReadingUserAnswer,rightChoices);
             lvDrawerContent.setAdapter(adapter);
@@ -173,7 +174,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
         Intent intent = getIntent();
         index = intent.getIntExtra(ReadingExamActivity.QUESTION_TYPE,0);
         testPaperIndex = intent.getIntExtra(ReadingExamActivity.TEST_PAPER_INDEX,0);
-        Toast.makeText(this,testPaperIndex+"",Toast.LENGTH_LONG).show();
+    //    Toast.makeText(this,testPaperIndex+"",Toast.LENGTH_LONG).show();
 
         TestPaperFactory testPaperFactory = TestPaperFactory.getInstance();
         List<String> readingAnswer = testPaperFactory.getTestPaperList().get(testPaperIndex)
@@ -220,11 +221,19 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
 
             @Override
             public void rightClick() {
+                controlBar.stop();
                 controlBar.setVisibility(View.GONE);
                 topBar.setRighttIsVisable(false);
 
                 if (index == 0){    //选词填空交卷
+                    LinearLayout ll_result_statistics = findViewById(R.id.ll_result_statistics);
+                    ll_result_statistics.setVisibility(View.VISIBLE);
+                    TextView tv_time_used = ll_result_statistics.findViewById(R.id.tv_time_used);
+                    tv_time_used.setText("用时："+controlBar.getRecordingTime()/1000+"s");
+
+                    TextView tv_correct_percent = ll_result_statistics.findViewById(R.id.tv_correct_percent);
                     TextView tv_correct_answer = findViewById(R.id.tv_correct_answer);
+
                     tv_correct_answer.setVisibility(View.VISIBLE);
                     tv_correct_answer.setText("参考答案\n"+correctAnswer.subList(0,4).toString()+"\n"+
                             correctAnswer.subList(4,8).toString()+"\n"+correctAnswer.subList(8,10));
@@ -240,6 +249,10 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                         rightRange.add(ranges.get(i));
                     }
                     setResultSpan(title,rightRange,wrongRange);
+
+                    double correctPercent = rightRange.size()/(double)10;
+                    double result = round(correctPercent,2);
+                    tv_correct_percent.setText("正确率："+result*100+"%");
                 }
 
                 //仔细阅读交卷
@@ -247,10 +260,12 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                     LinearLayout ll_result_statistics = findViewById(R.id.ll_result_statistics);
                     ll_result_statistics.setVisibility(View.VISIBLE);
                     TextView tv_time_used = ll_result_statistics.findViewById(R.id.tv_time_used);
+                    tv_time_used.setText("用时："+controlBar.getRecordingTime()/1000+"s");
+
                     TextView tv_correct_percent = ll_result_statistics.findViewById(R.id.tv_correct_percent);
 
-                    LogUtils.i("selectedItems",selectedItems.toString());
-                    LogUtils.i("rightChoices",rightChoices.toString());
+                    LogUtils.v("selectedItems",selectedItems.toString());
+                    LogUtils.v("rightChoices",rightChoices.toString());
 
                     for (int i = 0; i < 10; i++){
                         //不包含，说明没做，给它加一个没做的标识(0)
@@ -258,7 +273,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                             selectedItems.put(i,0);
                         }
                     }
-                    LogUtils.i("selectedItems",selectedItems.toString());
+                    LogUtils.v("selectedItems",selectedItems.toString());
 
                     for (int i = 0; i < selectedItems.size(); i++){
                         //得到所选项序号，要转换为对应字母
@@ -267,7 +282,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                         String answer = passageLetters.get(answerIndex);
                         carefullyReadingUserAnswer.add(answer);
                     }
-                    LogUtils.i("carefullyReadingUserAnswer",carefullyReadingUserAnswer.toString());
+                    LogUtils.v("carefullyReadingUserAnswer",carefullyReadingUserAnswer.toString());
 
                     //正确题数
                     int rightTotal = 0;
@@ -316,6 +331,8 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                     LinearLayout ll_result_statistics = findViewById(R.id.ll_result_statistics);
                     ll_result_statistics.setVisibility(View.VISIBLE);
                     TextView tv_time_used = ll_result_statistics.findViewById(R.id.tv_time_used);
+                    tv_time_used.setText("用时："+controlBar.getRecordingTime()/1000+"s");
+
                     TextView tv_correct_percent = ll_result_statistics.findViewById(R.id.tv_correct_percent);
 
                     //存储最终的结果
@@ -375,7 +392,6 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                         index = index + 1;
                     }
 
-                    tv_time_used.setText("用时："+0.0);
 
                     double correctPercent = rightTotal/(double)10;
                     double result = round(correctPercent,2);
@@ -499,19 +515,32 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
      *  设置文章的题目位置的颜色以及点击事件
      */
     private void initTextView(){
+        //之前截取文章的时候，还是会有一些多余的部分，在这里去除一下。
+        String str = "on the following passage.";
+        if (title.contains(str)){
+            title = title.substring(title.lastIndexOf(str),title.length()-1);
+        }
 
         // 找到 题目序号，这些序号要用答案来替换
         StringBuilder sb = new StringBuilder(title);
         Pattern pattern = Pattern.compile("[2-3][0-9]");
-        Matcher findMatcher = pattern.matcher(sb);
-        while(findMatcher.find()) {      //如果检索到则为true
+        Matcher m = pattern.matcher(sb);
+        String firsNumber = "26";
+        while(m.find()) {      //如果检索到则为true
+            String newMatcher = m.group();
+            int i = m.start();    // 每次检索到的下标
 
-            int i = findMatcher.start();    // 每次检索到的下标
-            Range range = new Range(i,i+2);
-            ranges.add(range);
+            if (newMatcher.equals(firsNumber)){
+                Range range = new Range(i,i+2);
+                ranges.add(range);
 
-            String answer = findMatcher.group();
-            answers.add(answer);
+                String answer = m.group();
+                answers.add(answer);
+
+                int index = Integer.parseInt(firsNumber) + 1;
+                firsNumber = index+"";
+            }
+
         }
 
         // 初始化设置
@@ -693,7 +722,7 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                         collectedReading = gson.fromJson(map.get("collectedReading").toString(),type);
                     }
                 }else {
-                    ToastUtils.show(ReadingExamActivity.this,"查询结果为空");
+                    LogUtils.v("查询结果","查询结果为空");
                 }
             }
         }).start();
@@ -714,19 +743,22 @@ public class ReadingExamActivity extends BaseAppCompatActivity {
                     Connection conn = MySqlDBOpenHelper.getConn();
                     String sql_insert = "update user set collectedReading=? " +
                             "where telephone = "+telephone;
-                    try {
+                    if (conn != null){
+                        try {
 
-                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
-                        pstm.setString(1, inputCollectedReading);
-                        pstm.executeUpdate();
+                            PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                            pstm.setString(1, inputCollectedReading);
+                            pstm.executeUpdate();
 
-                        if (pstm != null){
-                            pstm.close();
+                            if (pstm != null){
+                                pstm.close();
+                            }
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
                     }
+
                 }
             }).start();
 

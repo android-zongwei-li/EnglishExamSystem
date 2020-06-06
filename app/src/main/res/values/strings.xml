@@ -175,5 +175,6 @@
     <string name="login_unfamiliar_book_tips">登录解锁生词本功能</string>
     <string name="writing_and_translation_tips">无内容，请完成作文</string>
     <string name="study_word">单词学习</string>
+    <string name="unfamiliar_word_text" translatable="false">生词</string>
 
 </resources>

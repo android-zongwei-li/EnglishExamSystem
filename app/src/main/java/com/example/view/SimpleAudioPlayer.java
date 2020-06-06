@@ -62,7 +62,7 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
     //互斥变量，防止进度条与定时器冲突
     private boolean isSeekBarChanging;
 
-    private Timer timer;
+    private Timer timer = new Timer();
 
     // 音频时长
     int duration;
@@ -197,7 +197,6 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
             }
         });
         // 使seekbar的进度和当前播放进度同步
-        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -251,13 +250,17 @@ public class SimpleAudioPlayer extends RelativeLayout implements View.OnClickLis
      * 应该是必须要调用的，有没有什么方法可以让外部知道并一定调用这个方法呢
      */
     public void finishPlay(){
-        timer.purge();
-        timer.cancel();
-        timer = null;
+        if (timer != null){
+            timer.purge();
+            timer.cancel();
+            timer = null;
+        }
 
-        mediaPlayer.stop();
-        mediaPlayer.release();
-        mediaPlayer = null;
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
 
         handler = null;
     }

@@ -1,4 +1,4 @@
-package com.example.activity.activity_in_fragment1;
+package com.example.activity.activity_in_fragment2;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -31,20 +30,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.IllegalFormatCodePointException;
-import java.util.List;
 
 public class WordsBookActivity extends BaseAppCompatActivity {
     public static final String TYPE = "TYPE";
     public static final int CEEE_BOOK = 0;
     public static final int CET4_BOOK = 1;
 
-    TopBar topBar;
+    private TopBar topBar;
 
     private ListView lv_words;
     private ArrayList<Word> wordslist;
@@ -72,7 +66,7 @@ public class WordsBookActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_words_book);
 
-        initUnfamiliarBook();
+     //   initUnfamiliarBook();
 
         Intent intent = getIntent();
         int type = intent.getIntExtra(TYPE,3);
@@ -157,27 +151,16 @@ public class WordsBookActivity extends BaseAppCompatActivity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
+                LayoutInflater inflater = WordsBookActivity.this.getLayoutInflater();
+                convertView = inflater.inflate(R.layout.word_list_item,null);
 
-                View view;
-                /**对ListView的优化，convertView为空时，创建一个新视图；
-                 * convertView不为空时，代表它是滚出,
-                 * 放入Recycler中的视图,若需要用到其他layout，
-                 * 则用inflate(),同一视图，用findViewBy()
-                 * **/
-                if(convertView == null ) {
-                    LayoutInflater inflater = WordsBookActivity.this.getLayoutInflater();
-                    view = inflater.inflate(R.layout.word_list_item,null);
-                }
-                else {
-                    view = convertView;
-                }
 
                 final Word word = wordsList.get(position);
                 //
-                TextView tv_word = view.findViewById(R.id.tv_word);
+                TextView tv_word = convertView.findViewById(R.id.tv_word);
                 tv_word.setText(word.getWord());
                 //
-                final TextView tv_chinese  = view.findViewById(R.id.tv_chinese);
+                final TextView tv_chinese  = convertView.findViewById(R.id.tv_chinese);
                 tv_chinese.setText(word.getChinese());
                 tv_chinese.setOnClickListener(new View.OnClickListener() {
                     boolean setBg = false;//tv_chinese是否设置了背景颜色
@@ -192,24 +175,42 @@ public class WordsBookActivity extends BaseAppCompatActivity {
                         }
                     }
                 });
-                //把单词添加到生词本
-                ImageView ivAddWord = view.findViewById(R.id.iv_add_word);
-                ivAddWord.setOnClickListener(new View.OnClickListener() {
+                /*//把单词添加到生词本
+                final TextView tvAddWord = convertView.findViewById(R.id.iv_add_word);
+                tvAddWord.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (am.isOnline()){
                             //添加生词
                             if (!unfamiliarWordsBook.contains(word)){
                                 unfamiliarWordsBook.add(word);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tvAddWord.setText("生词");
+                                        tvAddWord.setTextSize(20);
+                                        tvAddWord.setBackground(getResources().getDrawable(R.drawable.border_text));
+                                    }
+                                });
                             }
+                            *//*else {
+                                unfamiliarWordsBook.remove(word);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tvAddWord.setText("+");
+                                        tvAddWord.setBackground(null);
+                                    }
+                                });
+                            }*//*
 
                         }else {
                             ToastUtils.show(WordsBookActivity.this,getString(R.string.login_unfamiliar_book_tips));
                         }
                     }
-                });
+                });*/
 
-                return view;
+                return convertView;
 
             }
 
@@ -296,7 +297,7 @@ public class WordsBookActivity extends BaseAppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     protected void onPause() {
         super.onPause();
 
@@ -329,5 +330,5 @@ public class WordsBookActivity extends BaseAppCompatActivity {
             }).start();
 
         }
-    }
+    }*/
 }

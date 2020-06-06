@@ -114,6 +114,8 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                 LinearLayout ll_result_statistics = findViewById(R.id.ll_result_statistics);
                 ll_result_statistics.setVisibility(View.VISIBLE);
                 TextView tv_time_used = ll_result_statistics.findViewById(R.id.tv_time_used);
+                tv_time_used.setText("用时："+controlBar.getRecordingTime()/1000+"s");
+
                 TextView tv_correct_percent = ll_result_statistics.findViewById(R.id.tv_correct_percent);
 
                 lv_listening.setAdapter(new BaseAdapter() {
@@ -245,6 +247,9 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
 
             @Override
             public void rightClick() {
+                controlBar.stop();
+
+                player.finishPlay();
                 alertDialog = new AlertDialog.Builder(ListeningExamActivity.this).create();
                 alertDialog.show();
                 Window window = alertDialog.getWindow();
@@ -400,7 +405,7 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
         //访问本地资源
         player.setUrl("http://192.168.43.68:8080/listening-audio/"+year+"-"+month+"-"+whichIndex+".mp3");
         //访问云资源
- //       player.setUrl("https://english-exam-system-resources.oss-cn-beijing.aliyuncs.com/listening-audio/"+year+"-"+month+"-"+whichIndex+".mp3");
+  //      player.setUrl("https://english-exam-system-resources.oss-cn-beijing.aliyuncs.com/listening-audio/"+year+"-"+month+"-"+whichIndex+".mp3");
     }
 
     /**
@@ -502,7 +507,7 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                         collectedListening = gson.fromJson(map.get("collectedListening").toString(),type);
                     }
                 }else {
-                    ToastUtils.show(ListeningExamActivity.this,"查询结果为空");
+                    LogUtils.v("查询结果","查询结果为空");
                 }
             }
         }).start();
@@ -523,23 +528,29 @@ public class ListeningExamActivity extends BaseAppCompatActivity {
                     Connection conn = MySqlDBOpenHelper.getConn();
                     String sql_insert = "update user set collectedListening=? " +
                             "where telephone = "+telephone;
-                    try {
 
-                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
-                        pstm.setString(1, inputCollectedListening);
-                        pstm.executeUpdate();
+                    if (conn != null){
+                        try {
 
-                        if (pstm != null){
-                            pstm.close();
+                            PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                            pstm.setString(1, inputCollectedListening);
+                            pstm.executeUpdate();
+
+                            if (pstm != null){
+                                pstm.close();
+                            }
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
                     }
+
                 }
             }).start();
 
         }
+
+        player.finishPlay();
 
     }
 }

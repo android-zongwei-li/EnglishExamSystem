@@ -65,7 +65,6 @@ public class ListeningActivity extends BaseAppCompatActivity {
             tabLayout.getTabAt(i).setText(titles[i]);
         }
 
-
     }
 
     //ViewPager适配器

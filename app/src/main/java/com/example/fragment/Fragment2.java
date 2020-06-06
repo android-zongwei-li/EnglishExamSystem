@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,9 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.VideoModule.VideoActivity;
-import com.example.activity.activity_in_fragment1.WordsActivity;
-import com.example.activity.activity_in_fragment1.WordsBookActivity;
+import com.example.activity.activity_in_fragment2.ShowImageActivity;
+import com.example.activity.activity_in_fragment2.WordsActivity;
+import com.example.activity.activity_in_fragment2.WordsBookActivity;
 import com.example.base.OneSentenceOneDayList;
 import com.example.myapplication.R;
 import com.example.utils.GlideImageLoader;
@@ -109,6 +107,18 @@ public class Fragment2 extends Fragment {
 
                         }
                     });
+            mIVOneSentenceOneDay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (imgUrl != null){
+                        Intent intent = new Intent(getActivity(), ShowImageActivity.class);
+                        intent.putExtra("url",imgUrl);
+                        startActivity(intent);
+                    }else {
+                        ToastUtils.show(getActivity(),"网络无连接");
+                    }
+                }
+            });
 
             //单词搜索
             final EditText etSearchWord = rootView.findViewById(R.id.ed_search_word);

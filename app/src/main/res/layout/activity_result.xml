@@ -43,14 +43,14 @@
                     android:gravity="center"
                     />
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/tv_error_word_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/wrong_words"
                     android:textSize="20sp"
                     android:gravity="center"
-                    />
+                    />-->
 
                 <TextView
                     android:id="@+id/tv_submit_num"

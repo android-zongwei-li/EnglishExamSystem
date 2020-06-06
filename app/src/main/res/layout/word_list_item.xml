@@ -31,13 +31,15 @@
         android:textColor="@color/textview_word_chinese_bg"
         />
 
-    <ImageView
+    <!--<TextView
         android:id="@+id/iv_add_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/icon_add"
+        android:text="+"
+        android:textSize="50dp"
+        android:textColor="@color/actionsheet_gray"
         android:layout_gravity="center_vertical"
         android:layout_margin="5dp"
-        />
+        />-->
 
 </LinearLayout>

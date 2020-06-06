@@ -14,9 +14,6 @@ import android.util.Log;
 import com.youdao.sdk.common.YouDaoLog;
 import com.youdao.sdk.common.util.AsyncTasks;
 
-/**
- * @author lukun
- */
 public class AudioMgr {
     public static final String PLAY_LOG = "TranslatePlay ：";
 

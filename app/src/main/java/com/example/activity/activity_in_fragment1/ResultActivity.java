@@ -2,6 +2,7 @@ package com.example.activity.activity_in_fragment1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.example.myapplication.R;
 import com.example.utils.AccountManager;
 import com.example.utils.LogUtils;
 import com.example.utils.MySqlDBOpenHelper;
+import com.example.utils.ToastUtils;
 import com.example.view.topbar.TopBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -103,7 +105,7 @@ public class ResultActivity extends BaseAppCompatActivity {
 
         TextView tv_actual_score = findViewById(R.id.tv_actual_score);//分数
         TextView tv_word_number = findViewById(R.id.tv_word_number);//单词数
-        TextView tv_error_word_num = findViewById(R.id.tv_error_word_num);//错误单词数
+       // TextView tv_error_word_num = findViewById(R.id.tv_error_word_num);//错误单词数
         TextView tv_submit_num = findViewById(R.id.tv_submit_num);//提交次数
         TextView tv_writing_advice = findViewById(R.id.tv_writing_advice);//作文点评
         TextView tv_writing_content = findViewById(R.id.tv_writing_content);//作文内容
@@ -125,7 +127,7 @@ public class ResultActivity extends BaseAppCompatActivity {
         wd = wordSum(content);
         tv_word_number.setText(getString(R.string.total_words) + wd);
         // 错误单词
-        tv_error_word_num.setText(getString(R.string.wrong_words) + errorWords);
+   //     tv_error_word_num.setText(getString(R.string.wrong_words) + errorWords);
         // 提交次数
         tv_submit_num.setText(getString(R.string.submit_num) + submitNum);
 
@@ -136,9 +138,8 @@ public class ResultActivity extends BaseAppCompatActivity {
 */
 
         //用时,记录第一次提交所用的时间
-        if (submitNum == 1){
-            chronometer.setBase(userTime);
-        }
+        ToastUtils.show(Long.toString(userTime));
+        chronometer.setBase(SystemClock.elapsedRealtime()-userTime);
 
 
         // 作文：在结果页面标识出错误单词

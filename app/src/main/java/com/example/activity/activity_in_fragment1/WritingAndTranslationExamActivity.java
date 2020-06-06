@@ -84,6 +84,9 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
     private AccountManager am;
     private String telephone;
 
+    private long usedTime;
+    CommonControlBar commonControlBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,7 +151,8 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
                     intent.putExtra(ResultActivity.WORDSERRORNUM,errorWords);
                     intent.putExtra(ResultActivity.SUBMITNUM,++submitNum);
                     intent.putExtra(ResultActivity.CONTENT,content);
-                    intent.putExtra(ResultActivity.USERTIME,chronometer.getBase());
+                    commonControlBar.stop();
+                    intent.putExtra(ResultActivity.USERTIME,commonControlBar.getRecordingTime());
                     intent.putExtra(ResultActivity.ANSWER,answer);
                     startActivity(intent);
                 }
@@ -157,8 +161,7 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
         });
 
         //
-        CommonControlBar commonControlBar = findViewById(R.id.commonControlBar);
-        chronometer = commonControlBar.findViewById(R.id.chronometer);
+        commonControlBar = findViewById(R.id.commonControlBar);
         final ImageView ivIConCollection = commonControlBar.findViewById(R.id.iv_icon_collection);
         ivIConCollection.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,20 +358,23 @@ public class WritingAndTranslationExamActivity extends BaseAppCompatActivity {
                     Connection conn = MySqlDBOpenHelper.getConn();
                     String sql_insert = "update user set collectedWriting=?,collectedTranslation=? " +
                             "where telephone = "+telephone;
-                    try {
+                    if (conn != null){
+                        try {
 
-                        PreparedStatement pstm = conn.prepareStatement(sql_insert);
-                        pstm.setString(1, inputCollectedWriting);
-                        pstm.setString(2, inputCollectedTranslation);
-                        pstm.executeUpdate();
+                            PreparedStatement pstm = conn.prepareStatement(sql_insert);
+                            pstm.setString(1, inputCollectedWriting);
+                            pstm.setString(2, inputCollectedTranslation);
+                            pstm.executeUpdate();
 
-                        if (pstm != null){
-                            pstm.close();
+                            if (pstm != null){
+                                pstm.close();
+                            }
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                        conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
                     }
+
                 }
             }).start();
 

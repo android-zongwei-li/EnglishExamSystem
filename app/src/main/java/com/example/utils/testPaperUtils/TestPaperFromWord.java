@@ -7,6 +7,7 @@ import androidx.annotation.RawRes;
 
 import com.example.beans.Question;
 import com.example.myapplication.R;
+import com.example.utils.LogUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -339,7 +340,7 @@ public class TestPaperFromWord {
  //       insertIntoSqliteChooseWord(question);
 
  //       LogUtils.longlog("List:questionsALL",questions.toString());
-        Log.v("List:questions size",""+questions.size());
+        LogUtils.v("List:questions size",""+questions.size());
 
     }
 
