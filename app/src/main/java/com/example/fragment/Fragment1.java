@@ -24,6 +24,7 @@ import com.example.activity.activity_in_fragment1.WebViewActivity;
 import com.example.activity.activity_in_fragment1.words.WordTestActivity;
 import com.example.activity.activity_in_fragment1.writing.WritingActivity;
 import com.example.myapplication.R;
+import com.example.utils.DateUtils;
 import com.example.utils.GlideImageLoader;
 import com.example.utils.LogUtils;
 import com.youth.banner.Banner;
@@ -41,11 +42,11 @@ import java.util.Map;
 
 public class Fragment1 extends Fragment {
 
-    Banner banner;
-    List images = new ArrayList<>();
-    List titles = new ArrayList<>();
+    private Banner banner;
+    private List images = new ArrayList<>();
+    private List titles = new ArrayList<>();
 
-    View view;
+    private View view;
 
     // 显示当前日期
     private TextView tv_date;
@@ -57,10 +58,10 @@ public class Fragment1 extends Fragment {
     private SimpleAdapter sim_adapter;
 
     // 单词模块
-    LinearLayout ll_words;
+    private LinearLayout ll_words;
 
-/*    // 真题实练模块
-    LinearLayout ll_testpaper;*/
+    // 真题实练模块
+    private LinearLayout ll_testpaper;
 
     @Nullable
     @Override
@@ -73,26 +74,26 @@ public class Fragment1 extends Fragment {
 
         initDayDistanceTV();
 
-        //  以下为  考试题型 控件的设计
-        gv_examItem = view.findViewById(R.id.gv_examItem);
-        initGridView();
-
-        // 真题模块
-        /*ll_testpaper = view.findViewById(R.id.ll_testpaper);
-        ll_testpaper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"真题",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext(), TranslateActivity.class));
-            }
-        });*/
-
         // 单词模块
         ll_words = view.findViewById(R.id.ll_words);
         ll_words.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), WordTestActivity.class));
+            }
+        });
+
+        //  以下为  考试题型 控件的设计
+        gv_examItem = view.findViewById(R.id.gv_examItem);
+        initGridView();
+
+        // 真题模块
+        ll_testpaper = view.findViewById(R.id.ll_testpaper);
+        ll_testpaper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"真题",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), TranslateActivity.class));
             }
         });
 
@@ -160,44 +161,8 @@ public class Fragment1 extends Fragment {
         Date todayDate = new Date(Integer.parseInt(sDate.substring(0,4)),Integer.parseInt(sDate.substring(5,7)),Integer.parseInt(sDate.substring(8,10)));
         Date cet4_Date = new Date(2020,6,13);
 
-        tv_dayDistance.setText(calcDayOffset(todayDate,cet4_Date)+"");
+        tv_dayDistance.setText(DateUtils.calcDayOffset(todayDate,cet4_Date)+"");
 
-    }
-
-    /**
-     *
-     * date2比date1多的天数
-     *
-     * @param date1
-     * @param date2
-     * @return
-     */
-    public static int calcDayOffset(Date date1, Date date2) {
-        Calendar cal1 = Calendar.getInstance();
-        cal1.setTime(date1);
-
-        Calendar cal2 = Calendar.getInstance();
-        cal2.setTime(date2);
-        int day1 = cal1.get(Calendar.DAY_OF_YEAR);
-        int day2 = cal2.get(Calendar.DAY_OF_YEAR);
-        LogUtils.v("日期查看",day1+" "+day2);
-
-        int year1 = cal1.get(Calendar.YEAR);
-        int year2 = cal2.get(Calendar.YEAR);
-        if (year1 != year2) {  //不同年
-            int timeDistance = 0;
-            for (int i = year1; i < year2; i++) {
-                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {  //闰年
-                    timeDistance += 366;
-                } else {  //不是闰年
-
-                    timeDistance += 365;
-                }
-            }
-            return timeDistance + (day2 - day1);
-        } else { //同年
-            return day2 - day1;
-        }
     }
 
     /**

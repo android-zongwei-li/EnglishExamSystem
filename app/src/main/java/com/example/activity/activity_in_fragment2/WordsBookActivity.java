@@ -224,6 +224,9 @@ public class WordsBookActivity extends BaseAppCompatActivity {
         wordslist = new ArrayList<>();
         SqliteDBUtils sqliteDBUtils = new SqliteDBUtils();
         SQLiteDatabase db = sqliteDBUtils.openDatabase(getApplicationContext());
+        if (db == null){
+            return;
+        }
         Cursor cursor = db.rawQuery("select * from cet4_words",null);
         while(cursor.moveToNext()){
             String word = cursor.getString(cursor.getColumnIndex("words"));

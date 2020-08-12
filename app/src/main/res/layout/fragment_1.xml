@@ -143,7 +143,7 @@
     </GridView>
 
     <!-- 真题模块-->
-    <!--<LinearLayout
+    <LinearLayout
         android:id="@+id/ll_testpaper"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -161,6 +161,6 @@
             android:textColor="#1F1819"
             />
 
-    </LinearLayout>-->
+    </LinearLayout>
 
 </RelativeLayout>

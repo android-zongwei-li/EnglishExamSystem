@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/round_corner_bg2"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:text="五分钟测试英语真实水平"
+                />
+
+            <TextView
+                android:layout_below="@id/tv_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="预计你的测试结果进行专属个性化方案指定"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:gravity="bottom|center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:gravity="bottom"
+                android:layout_marginRight="20dp"
+                android:background="@color/light_gray"
+                android:text="@string/num_425"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="bottom"
+                android:layout_marginRight="20dp"
+                android:background="@color/light_gray"
+                android:text="@string/num_425_475"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="75dp"
+                android:gravity="bottom"
+                android:layout_marginRight="20dp"
+                android:background="@color/light_gray"
+                android:text="@string/num_475_525"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:gravity="bottom"
+                android:background="@color/light_gray"
+                android:text="@string/num_525"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:text="@string/start_level_test"
+                android:textColor="@color/colorBlack"
+                android:background="@drawable/round_corner_bg"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

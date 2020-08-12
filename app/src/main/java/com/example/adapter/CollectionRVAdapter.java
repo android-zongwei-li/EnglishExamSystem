@@ -74,16 +74,16 @@ public class CollectionRVAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       if (mList.size() == 0){
-           View view = LayoutInflater.from(parent.getContext())
-                   .inflate(R.layout.item_null,parent,false);
-           MyViewHolder myViewHolder = new MyViewHolder(view);
-           return myViewHolder;
+        if (mList.size() == 0){
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_null,parent,false);
+            MyViewHolder myViewHolder = new MyViewHolder(view);
+            return myViewHolder;
         }else {
-           View view = LayoutInflater.from(parent.getContext())
-                   .inflate(R.layout.collection_item,parent,false);
-           MyViewHolder myViewHolder = new MyViewHolder(view);
-           return myViewHolder;
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.collection_item,parent,false);
+            MyViewHolder myViewHolder = new MyViewHolder(view);
+            return myViewHolder;
         }
     }
 

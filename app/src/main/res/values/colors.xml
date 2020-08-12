@@ -31,5 +31,7 @@
 
     <color name="text_background">#31F8E4</color>
 
+    <color name="yellow">#FFEB3B</color>
+    <color name="light_gray">#E8E2E2</color>
 
 </resources>

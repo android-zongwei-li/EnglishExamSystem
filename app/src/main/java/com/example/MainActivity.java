@@ -22,6 +22,7 @@ import com.example.activity.base.BaseAppCompatActivity;
 import com.example.fragment.Fragment1;
 import com.example.fragment.Fragment2;
 import com.example.fragment.Fragment3;
+import com.example.fragment.Fragment4;
 import com.example.myapplication.R;
 import com.example.utils.testPaperUtils.TestPaperFactory;
 import com.example.view.topbar.TopBar;
@@ -143,7 +144,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private Fragment getFragmentByPosition(int position) {
         if(position==0){
-            return new Fragment1();
+            return new Fragment4();
         }else if(position==1){
             return new Fragment2();
         }else if(position==2){

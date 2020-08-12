@@ -132,4 +132,5 @@
     <string name="writing_and_translation_tips">No content, please finish the composition</string>
     <string name="login_unfamiliar_book_tips">Log in to unlock the new word book function</string>
     <string name="study_word">study_word</string>
+    <string name="start_level_test">Start Level Test</string>
 </resources>
