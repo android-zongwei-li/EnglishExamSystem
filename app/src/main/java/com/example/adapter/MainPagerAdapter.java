@@ -252,7 +252,7 @@ public class MainPagerAdapter extends RecyclerView.Adapter {
                     R.drawable.trans, R.drawable.write };
             String[] iconName = { "听力", "阅读", "翻译", "写作"};
 
-            for(int i=0;i<icon.length;i++){
+            for(int i=0; i<icon.length; i++){
                 Map<String, Object> map = new HashMap<>();
                 map.put("image", icon[i]);
                 map.put("text", iconName[i]);

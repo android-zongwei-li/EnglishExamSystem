@@ -14,7 +14,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:4.0.0'
 
         // SMSSDK
         classpath "com.mob.sdk:MobSDK:2018.0319.1724"
