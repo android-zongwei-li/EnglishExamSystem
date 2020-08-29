@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
@@ -19,15 +18,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             >
 
             <TextView
                 android:id="@+id/tv_tips"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
                 android:gravity="center"
                 android:textColor="@color/colorBlack"
                 android:text="五分钟测试英语真实水平"
+                android:textSize="20sp"
                 />
 
             <TextView
@@ -41,7 +43,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="120dp"
             android:gravity="bottom|center"
             >
 
@@ -82,11 +84,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
             >
 
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:text="@string/start_level_test"
                 android:textColor="@color/colorBlack"
@@ -95,4 +99,16 @@
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_close_level_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/icon_add"
+        android:background="@drawable/round_corner_bg_grey"
+        />
+</RelativeLayout>

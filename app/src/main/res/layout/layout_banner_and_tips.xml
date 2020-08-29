@@ -35,6 +35,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/time_from_cet4"
                 android:textColor="#302A2A"
+                android:textSize="20sp"
                 />
 
             <TextView
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/how_much_days"
                 android:textColor="#FF9800"
+                android:textSize="20sp"
                 />
 
             <TextView
@@ -50,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/day_text"
                 android:textColor="#302A2A"
+                android:textSize="20sp"
                 />
 
         </LinearLayout>
@@ -59,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/today_date"
+            android:textSize="20sp"
             />
 
     </LinearLayout>

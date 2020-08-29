@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -31,6 +32,8 @@ import com.youth.banner.listener.OnBannerListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,31 +51,37 @@ public class MainPagerAdapter extends RecyclerView.Adapter {
      */
     public static final int TYPE_BANNER = 0;
     /**
+     * 水平测试模块
+     */
+    public static final int TYPE_LEVEL_TEST = 1;
+    /**
      * 试卷各种题型模块，包括单词、听力、阅读、翻译、写作、真题实战
      */
-    public static final int TYPE_PAPER = 1;
+    public static final int TYPE_PAPER = 2;
     /**
      * 其他模块，可以放一些视频之类的。
      */
-    public static final int TYPE_OTHER = 2;
-    /**
-     * 水平测试模块
-     */
-    public static final int TYPE_LEVEL_TEST = 3;
+    public static final int TYPE_OTHER = 3;
+
     /**
      * 什么都不显示
      */
     public static final int TYPE_NOTHING = 999;
 
-    private int[] itemController = {0,3,1,2};
+    private List<Integer> itemControllerList = new ArrayList<>();
 
     public MainPagerAdapter(Context context) {
         mActivity = context;
+
+        itemControllerList.add(0);
+        itemControllerList.add(1);
+        itemControllerList.add(2);
+        itemControllerList.add(3);
     }
 
     @Override
     public int getItemViewType(int position) {
-        int whichItem = itemController[position];
+        int whichItem = itemControllerList.get(position);
         return whichItem;
     }
 
@@ -107,7 +116,7 @@ public class MainPagerAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return itemController.length;
+        return itemControllerList.size();
     }
 
 
@@ -298,6 +307,18 @@ public class MainPagerAdapter extends RecyclerView.Adapter {
 
         public OtherHolder(@NonNull View itemView) {
             super(itemView);
+
+            LinearLayout parentView = (LinearLayout) itemView;
+            ImageView ivOtherImage = new ImageView(mActivity);
+            ivOtherImage.setImageDrawable(mActivity.getDrawable(R.drawable.app_icon));
+            ivOtherImage.setBackground(mActivity.getDrawable(R.drawable.round_corner_bg2));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,400);
+            params.leftMargin = 10;
+            params.rightMargin = 10;
+            params.bottomMargin = 10;
+            ivOtherImage.setLayoutParams(params);
+
+            parentView.addView(ivOtherImage,2);
         }
     }
 
@@ -306,9 +327,17 @@ public class MainPagerAdapter extends RecyclerView.Adapter {
      * 提供并初始化 布局：layout_level_test
      */
     private class LevelTestHolder extends RecyclerView.ViewHolder {
+        private ImageView ivCloseLevelTest;
 
-        public LevelTestHolder(@NonNull View itemView) {
+        public LevelTestHolder(@NonNull final View itemView) {
             super(itemView);
+            ivCloseLevelTest = itemView.findViewById(R.id.iv_close_level_test);
+            ivCloseLevelTest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeItem(1);
+                }
+            });
         }
     }
 
@@ -320,5 +349,17 @@ public class MainPagerAdapter extends RecyclerView.Adapter {
         public NothingHolder(@NonNull View itemView) {
             super(itemView);
         }
+    }
+
+    public void removeItem(int position){
+        itemControllerList.remove(position);//删除数据源,移除集合中当前下标的数据
+        notifyItemRemoved(position);//刷新被删除的地方
+        notifyItemRangeChanged(position,getItemCount()); //刷新被删除数据，以及其后面的数据
+    }
+
+    public void addItem(int position){
+        itemControllerList.add(position);//添加数据源,移除集合中当前下标的数据
+        notifyItemRemoved(position);//刷新添加的地方
+        notifyItemRangeChanged(position,getItemCount()); //刷新添加的数据，以及其后面的数据
     }
 }
