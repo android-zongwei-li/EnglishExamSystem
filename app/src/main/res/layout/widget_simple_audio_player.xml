@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.view.SimpleAudioPlayer xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lzw.view.SimpleAudioPlayer xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -50,4 +50,4 @@
     </RelativeLayout>
 
 
-</com.example.view.SimpleAudioPlayer>
+</com.lzw.view.SimpleAudioPlayer>

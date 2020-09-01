@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="data_sort">
+        <item>近远</item>
+        <item>远近</item>
+    </string-array>
+
+    <string-array name="data_years">
+        <item>全部</item>
+        <item>2020</item>
+        <item>2019</item>
+        <item>2018</item>
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+    </string-array>
+
+    <string-array name="data_month">
+        <item>全部</item>
+        <item>6</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="data_paper_index">
+        <item>全部</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="data_average_score">
+        <item>无</item>
+        <item>高低</item>
+        <item>低高</item>
+    </string-array>
+
+    <string-array name="data_people_number">
+        <item>无</item>
+        <item>多少</item>
+        <item>少多</item>
+    </string-array>
+</resources>

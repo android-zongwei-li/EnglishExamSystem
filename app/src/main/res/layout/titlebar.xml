@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.view.TitleBar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lzw.view.TitleBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:background="#FFEB3B"
@@ -64,4 +64,4 @@
         android:background="@drawable/ic_history"
         />
 
-</com.example.view.TitleBar>
+</com.lzw.view.TitleBar>

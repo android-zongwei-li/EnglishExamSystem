@@ -181,5 +181,6 @@
     <string name="num_425_475">425-475</string>
     <string name="num_475_525">475-525</string>
     <string name="num_525"><![CDATA[    >525    ]]></string>
+    <string name="average_score">平均分</string>
 
 </resources>

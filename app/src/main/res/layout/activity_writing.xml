@@ -6,25 +6,6 @@
 
     <include layout="@layout/widget_top_bar" />
 
-    <View
-    android:layout_width="wrap_content"
-    android:layout_height="10dp"
-    />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
-        android:text="@string/real_exercise"
-        android:textSize="20dp"
-        android:textColor="#DC000000"
-        />
-
-    <ListView
-        android:id="@+id/lv_writing"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    />
+    <include layout="@layout/fragment_blank"/>
 
 </LinearLayout>
