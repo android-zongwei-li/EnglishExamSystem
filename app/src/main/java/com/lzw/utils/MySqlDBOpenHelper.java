@@ -21,7 +21,7 @@ public class MySqlDBOpenHelper {
     private static String dataBase = "english_exam_system";
     // 遇到的问题：https://blog.csdn.net/qq_36478274/article/details/105156418
   //  private static String ip = "10.0.2.2";
-    private static String ip = "192.168.43.68";
+    private static String ip = "192.168.43.35";
  //   private static String ip = "localhost";
 
     //加入utf-8是为了后面往表中输入中文，表中不会出现乱码的情况

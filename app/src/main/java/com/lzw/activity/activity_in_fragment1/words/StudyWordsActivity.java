@@ -81,7 +81,7 @@ public class StudyWordsActivity extends BaseAppCompatActivity {
     private AccountManager am;
     private String telephone;
 
-    Handler handler = new Handler(){
+    private Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);

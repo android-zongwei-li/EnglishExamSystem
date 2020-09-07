@@ -231,6 +231,18 @@ public class TestPaperFromWord {
         public CarefulReadingBean getCarefulReadingBean() {
             return carefulReadingBean;
         }
+
+        public String getChooseWordReading() {
+            return chooseWordReading;
+        }
+
+        public String getQuicklyReading() {
+            return quicklyReading;
+        }
+
+        public String getCarefulReading() {
+            return carefulReading;
+        }
     }
 
     public class TranslationFormWord {

@@ -27,7 +27,8 @@ public class TestPaperFactory {
 
     private boolean isInit = false; // 标识 是否已经初始化，默认false
 
-    private int[] word = {R.raw.cet4_2016_06_01,R.raw.cet4_2016_06_02,R.raw.cet4_2016_06_03,
+    private int[] word = {
+            R.raw.cet4_2016_06_01,R.raw.cet4_2016_06_02,R.raw.cet4_2016_06_03,
             R.raw.cet4_2016_12_01,R.raw.cet4_2016_12_02,R.raw.cet4_2016_12_03,
             R.raw.cet4_2017_06_01,R.raw.cet4_2017_06_02,R.raw.cet4_2017_06_03,
             R.raw.cet4_2017_12_01,R.raw.cet4_2017_12_02,R.raw.cet4_2017_12_03,
