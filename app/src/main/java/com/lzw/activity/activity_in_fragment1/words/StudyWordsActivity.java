@@ -22,7 +22,7 @@ import com.lzw.englishExamSystem.R;
 import com.lzw.service.AudioService;
 import com.lzw.utils.AccountManager;
 import com.lzw.utils.LogUtils;
-import com.lzw.utils.MySqlDBOpenHelper;
+import com.lzw.utils.database.MySqlDBOpenHelper;
 import com.lzw.utils.ToastUtils;
 import com.lzw.view.topbar.TopBar;
 import com.google.gson.Gson;

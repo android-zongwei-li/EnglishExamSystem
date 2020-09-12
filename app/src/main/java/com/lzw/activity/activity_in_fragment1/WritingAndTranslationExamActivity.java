@@ -20,7 +20,7 @@ import com.lzw.beans.Writing;
 import com.lzw.englishExamSystem.R;
 import com.lzw.utils.AccountManager;
 import com.lzw.utils.LogUtils;
-import com.lzw.utils.MySqlDBOpenHelper;
+import com.lzw.utils.database.MySqlDBOpenHelper;
 import com.lzw.utils.ToastUtils;
 import com.lzw.view.CommonControlBar;
 import com.lzw.view.topbar.TopBar;

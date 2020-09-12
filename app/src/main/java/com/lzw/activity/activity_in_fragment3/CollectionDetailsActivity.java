@@ -19,7 +19,7 @@ import com.lzw.beans.Writing;
 import com.lzw.englishExamSystem.R;
 import com.lzw.utils.AccountManager;
 import com.lzw.utils.LogUtils;
-import com.lzw.utils.MySqlDBOpenHelper;
+import com.lzw.utils.database.MySqlDBOpenHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

@@ -18,7 +18,7 @@ import com.lzw.activity.base.BaseAppCompatActivity;
 import com.lzw.beans.MySqliteManager;
 import com.lzw.beans.Writing;
 import com.lzw.englishExamSystem.R;
-import com.lzw.utils.SqliteDBUtils;
+import com.lzw.utils.database.SqliteDBUtils;
 import com.lzw.view.topbar.TopBar;
 
 import java.util.ArrayList;

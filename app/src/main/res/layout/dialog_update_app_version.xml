@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:background="#ffffff"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:background="@drawable/app_updater"
+        android:scaleType="centerCrop"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="我是标题"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:textColor="@android:color/black"
+        />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:text="我是内容"
+        android:textSize="12dp"
+        android:textColor="@android:color/black"
+        />
+
+    <TextView
+        android:id="@+id/tv_update"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:background="@drawable/shape_dialog_updater_btn"
+        android:text="开始更新"
+        android:textColor="@android:color/black"
+        />
+
+</LinearLayout>

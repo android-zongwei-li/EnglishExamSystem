@@ -1,5 +1,7 @@
 package com.lzw.utils;
 
+import com.lzw.utils.net.HttpGet;
+
 import java.util.HashMap;
 import java.util.Map;
 

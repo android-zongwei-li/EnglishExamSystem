@@ -177,10 +177,11 @@
     <string name="study_word">单词学习</string>
     <string name="unfamiliar_word_text" translatable="false">生词</string>
     <string name="start_level_test">开始测试</string>
-    <string name="num_425"><![CDATA[    <425    ]]></string>
-    <string name="num_425_475">425-475</string>
-    <string name="num_475_525">475-525</string>
-    <string name="num_525"><![CDATA[    >525    ]]></string>
+    <string name="num_425" translatable="false"><![CDATA[    <425    ]]></string>
+    <string name="num_425_475" translatable="false">425-475</string>
+    <string name="num_475_525" translatable="false">475-525</string>
+    <string name="num_525" translatable="false"><![CDATA[    >525    ]]></string>
     <string name="average_score">平均分</string>
+    <string name="check_version" translatable="false">检测新版本</string>
 
 </resources>

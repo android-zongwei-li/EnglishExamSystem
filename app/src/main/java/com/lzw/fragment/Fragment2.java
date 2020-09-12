@@ -30,7 +30,7 @@ import com.lzw.base.OneSentenceOneDayList;
 import com.lzw.englishExamSystem.R;
 import com.lzw.utils.FileUtils;
 import com.lzw.utils.GlideImageLoader;
-import com.lzw.utils.HttpUtil;
+import com.lzw.utils.net.HttpUtil;
 import com.lzw.utils.LogUtils;
 import com.lzw.utils.ToastUtils;
 import com.lzw.utils.testPaperUtils.TestPaperFactory;
