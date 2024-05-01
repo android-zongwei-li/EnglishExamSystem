@@ -6,10 +6,17 @@ buildscript {
         // 添加MobSDK的maven地址
         maven {
             url "http://mvn.mob.com/android"
+            allowInsecureProtocol = true
         }
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            allowInsecureProtocol = true
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+            allowInsecureProtocol = true
+        }
 
 
     }
@@ -26,8 +33,14 @@ buildscript {
 allprojects {
     repositories {
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+            allowInsecureProtocol = true
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+            allowInsecureProtocol = true
+        }
 
     }
 }
